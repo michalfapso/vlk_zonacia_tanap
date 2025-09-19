@@ -1,0 +1,4618 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Ing. Stanislav Motyčkai" >
+<meta name="description" content="Interactive Map of State Nature Conservancy of Slovak republic">
+<meta name="keywords" content="Webgis,Map,ŠOP SR,Heron-mc,Openlayers">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="https://www.sopsr.sk/web/images/favicon.ico" />
+
+<!-- External lib: ExtJS -->
+<link rel="stylesheet" type="text/css" href="https://lib.heron-mc.org/ext/3.4.1.1/resources/css/ext-all.css">
+<!--link rel="stylesheet" type="text/css" href="../lib/heron-mc/apps/previewapp/external/ext/3.4.0/resources/css/ext-all.css"-->
+<script type="text/javascript" src="https://lib.heron-mc.org/ext/3.4.1.1/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="https://lib.heron-mc.org/ext/3.4.1.1/ext-all.js"></script>
+
+<!-- External lib: Proj4JS (reproject lib) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/1.1.0/proj4js-compressed.js" type="text/javascript"></script>
+<!--script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.3/proj4.js" type="text/javascript"></script-->
+<!--script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js" type="text/javascript"></script-->
+
+<!-- External lib: OpenLayers -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/theme/default/style.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+<!-- SM, 03.03.2017 >>> -->
+
+<style>
+  .olControlAttribution {
+	font-size: smaller;
+	/*background-color: white;*/
+	width: 55%;
+	height: 62px;
+	background-image: url("https://www.ssj.sk/sk/images/design/logo_sop.png");
+	background-repeat: no-repeat;
+	background-size: 38px auto;
+	background-position: right center;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+	left: 3px;
+	bottom: 0px;
+	position: absolute;
+	display: block;
+	/*border: 1px solid blue;*/
+	vertical-align: bottom;
+  }
+  .olControlAttribution span {
+	background-color: white;
+  }
+</style>
+
+<!-- SM, 03.03.2017 <<< -->
+<!--script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/lib/OpenLayers/Layer/ArcGISCache.js"></script-->
+<!--script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/lib/Firebug/firebug.js"></script-->
+
+<!--script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script-->
+
+<!-- External lib: GeoExt -->
+<script src="https://lib.heron-mc.org/geoext/1.1/script/GeoExt.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="https://lib.heron-mc.org/heron/latest/ux/gxp/git/src/theme/all.css">
+    <script type="text/javascript" src="https://lib.heron-mc.org/heron/latest/ux/gxp/gxp.js"></script>
+<!--script src="../lib/heron-latest/ux/gxp/gxp.js"></script-->
+
+<link rel="stylesheet" type="text/css" href="https://lib.heron-mc.org/heron/latest/resources/css/default.css">
+<!--link rel="stylesheet" type="text/css" href="../lib/heron-latest/resources/css/default.css"-->
+
+<!-- External lib: Editor -->
+<script src="https://lib.heron-mc.org/heron/latest/ux/oleditor/ole/client/lib/Editor/Lang/en.js" type="text/javascript"></script>
+<script src="https://lib.heron-mc.org/heron/latest/ux/oleditor/ole/ole.min.js" type="text/javascript"></script>
+<!--script src="../lib/heron-latest/ux/oleditor/ole/client/lib/Editor/Lang/en.js" type="text/javascript"></script>
+<script src="../lib/heron-latest/ux/oleditor/ole/ole.min.js" type="text/javascript"></script-->
+
+<!--link rel="stylesheet" href="http://lib.heron-mc.org/heron/latest/ux/timeslider/css/dateslider.css"-->
+
+<link rel="stylesheet" type="text/css" href="https://lib.heron-mc.org/heron/latest/resources/css/default.css">
+<!--link rel="stylesheet" type="text/css" href="../lib/heron-latest/resources/css/default.css"-->
+<link rel="stylesheet" type="text/css" href="https://lib.heron-mc.org/heron/latest/ux/oleditor/ole/client/theme/geosilk/geosilk.css">
+<!--link rel="stylesheet" type="text/css" href="../lib/heron-latest/ux/oleditor/ole/client/theme/geosilk/geosilk.css"-->
+
+<!-- application -->
+<!--script type="text/javascript" src="http://lib.heron-mc.org/heron/latest/lib/DynLoader.js"></script-->
+
+<!-- Script and css resources for printpreview ux -->
+<script type="text/javascript" src="https://lib.heron-mc.org/heron/latest/ux/printpreview/lib/GeoExt.ux/PrintPreview.js"></script>
+<script type="text/javascript" src="https://lib.heron-mc.org/heron/latest/ux/printpreview/lib/locale/PrintPreview-en.js"></script>
+<link rel="stylesheet" type="text/css" href="https://lib.heron-mc.org/heron/latest/ux/printpreview/resources/css/printpreview.css">
+
+<!--script src="http://lib.heron-mc.org/heron/latest/lib/i18n/cs_CZ.js" type="text/javascript"></script-->
+<script src="https://lib.heron-mc.org/heron/latest/lib/i18n/sk_SK.js" type="text/javascript"></script>
+<!--script src="http://lib.heron-mc.org/heron/latest/script/Heron.js" type="text/javascript"></script-->
+<script src="https://lib.heron-mc.org/heron/latest/script/Heron-with-ux.js" type="text/javascript"></script>
+<!--script src="../lib/heron-latest/script/Heron.js" type="text/javascript"></script-->
+
+<!--script type="text/javascript" src="http://lib.heron-mc.org/openlayers/2.12/lib/OpenLayers/Lang/sk.js"></script>
+<script type="text/javascript">OpenLayers.Lang.setCode('sk');</script-->
+
+<!--script type="text/javascript" src="http://lib.heron-mc.org/heron/latest/ux/timeslider/js/date-en-US.js"></script>
+<script type="text/javascript" src="http://lib.heron-mc.org/heron/latest/ux/timeslider/js/dateslider.js"></script>
+<script type="text/javascript" src="http://lib.heron-mc.org/heron/latest/ux/timeslider/js/TimeSliderPanel.js"></script-->
+
+
+<script type="text/javascript">
+
+
+// >>>>>> DEFINICIE sur. systemov pre Proj4js kniznicu >>>>>>
+
+// S-JTSK - bez transformacnych klucov
+//Proj4js.defs["EPSG:102067"] = "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=0 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=589,76,480,0,0,0,0 +units=m +no_defs ";
+// predch. definícia je nesprávna, chce to "pm=ferro", nasledovná -> už je správna
+Proj4js.defs["EPSG:102067"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=485.0,169.5,483.8,7.786,4.398,4.103,0";
+//proj4.defs["EPSG:102067"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=485.0,169.5,483.8,7.786,4.398,4.103,0";
+
+// S-JTSK (oficiálný kľúč GKÚ pre SR (kľúč netransformuje výšku!)) (max. odchylka v polohe[xy] <2m, výške[z] N/A )
+//Proj4js.defs["EPSG:102067_1"] = "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +pm=greenwich +units=m +no_defs +towgs84=485.0,169.5,483.8,7.786,4.398,4.103,0";
+//Proj4js.defs["EPSG:102067_1"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=485.0,169.5,483.8,7.786,4.398,4.103,0";
+//proj4.defs["EPSG:102067_1"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=485.0,169.5,483.8,7.786,4.398,4.103,0";
+
+// S-JTSK (kľúč 2013 Bárta pre SR) (max. odchylka v polohe(xy) <1m, výške(z) <3m )
+//Proj4js.defs["EPSG:102067_2"] = "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +pm=greenwich +units=m +no_defs +towgs84=511.9,92.0,437.3,6.305,2.823,5.944,12.2";
+//Proj4js.defs["EPSG:102067_2"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=511.9,92.0,437.3,6.305,2.823,5.944,12.2";
+//proj4.defs["EPSG:102067_2"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=511.9,92.0,437.3,6.305,2.823,5.944,12.2";
+
+// S-JTSK (kľúč 2013 Bárta pre obe zeme ČR a SR) (max. odchylka v polohe[xy] <2m, výške[z] <2m )
+//Proj4js.defs["EPSG:102067_3"] = "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +pm=greenwich +units=m +no_defs +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96";
+//Proj4js.defs["EPSG:102067_3"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96";
+//proj4.defs["EPSG:102067_3"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96";
+
+// S-JTSK (102067) (oficiálný kľúč ČÚZK pre ČR) (max. odchylka v poloze[xy] <1m, výšce[z] <2m )
+//Proj4js.defs["EPSG:102067_4"] = "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +pm=greenwich +units=m +no_defs +towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56";
+//Proj4js.defs["EPSG:102067_4"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56";
+//proj4.defs["EPSG:102067_4"] = "+proj=krovak +lat_0=49.5 +lon_0=42.5 +alpha=30.28813972222222 +k=0.9999 +x_0=-0 +y_0=-0 +ellps=bessel +pm=ferro +to_meter=-1 +no_defs +towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56";
+
+// S-42 3.pasmo >>>
+Proj4js.defs["EPSG:28403"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=3500000 +y_0=0 +ellps=krass +units=m +no_defs";
+//proj4.defs["EPSG:28403"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=3500000 +y_0=0 +ellps=krass +units=m +no_defs";
+
+// S-42 4.pasmo >>>
+Proj4js.defs["EPSG:28404"] = "+proj=tmerc +lat_0=0 +lon_0=21 +k=1 +x_0=4500000 +y_0=0 +ellps=krass +units=m +no_defs";
+//proj4.defs["EPSG:28404"] = "+proj=tmerc +lat_0=0 +lon_0=21 +k=1 +x_0=4500000 +y_0=0 +ellps=krass +units=m +no_defs";
+
+//SM, 10.05.2016 >>
+//https://epsg.io/5514
+Proj4js.defs["EPSG:5514"] = "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=485.0,169.5,483.8,7.786,4.398,4.103,0 +units=m +no_defs";
+//Proj4js.defs["EPSG:5514"]="+proj=krovak +lat_0=49.5 +lon_0=24.8333333333333 +alpha=30.2881397527778 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=589,76,480,0,0,0,0 +units=m +no_defs +type=crs";
+
+// Google mercator >>>
+Proj4js.defs["EPSG:900913"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+//proj4.defs["EPSG:900913"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+Proj4js.defs["EPSG:3857"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+
+// <<<<<< DEFINICIE sur. systemov pre Proj4js kniznicu <<<<<<
+
+Ext.namespace("Heron.options");
+Ext.namespace("Heron.scratch");
+OpenLayers.Util.onImageLoadErrorColor = "transparent";
+OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
+//Ext.BLANK_IMAGE_URL = 'http://lib.heron-mc.org/ext/3.4.1.1/resources/images/default/s.gif';
+Ext.BLANK_IMAGE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/extjs/3.4.1-1/resources/images/default/s.gif';
+
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+// make OL compute scale according to WMS spec
+OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
+//Heron.globals.serviceUrl  = '/cgi-bin/heron.cgi.20131017';
+Heron.globals.serviceUrl  = '/cgi-bin/heron.cgi.20140526';
+//Heron.globals.serviceUrl  = '/cgi-bin/heron.cgi';
+var default_wms_properties = {isBaseLayer: false, visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", opacity: 0.3,};
+
+//OpenLayers.Util.getElement("graphic").innerHTML = 'pokus';
+
+Ext.namespace("Heron.options.map");
+
+Ext.namespace("Heron.options.wfs");
+
+    var matrixIds = new Array(12);
+    for (var i=0; i<12; ++i) {
+        matrixIds[i] = "EPSG:900913:" + i;
+    }
+/*    var zbgisMatrix=[
+{
+identifier:"0", scaleDenominator:4354125.143421019, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256, matrixWidth:108, matrixHeight:113 }, { identifier:"1", scaleDenominator:2177062.571711008, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"2", scaleDenominator:1088531.3057917529, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"3", scaleDenominator:544265.6429282505, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"4", scaleDenominator:272132.8214631284, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"5", scaleDenominator:136066.6798843788, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"6", scaleDenominator:68033.2053657821, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"7", scaleDenominator:34016.60268338948, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"8", scaleDenominator:17008.30134169474, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"9", scaleDenominator:8504.150671345802, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"10", scaleDenominator:4252.0753346760375, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"11", scaleDenominator:2126.0376678364505, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 }, { identifier:"12", scaleDenominator:1063.0188339182253, topLeftCorner: new OpenLayers.LonLat([-3.36998e7,3.36998e7]), tileWidth:256, tileHeight:256 } ];
+*/
+Heron.scratch.layermap = {
+
+/*
+ * podkladove mapy
+ */
+
+        bez: new OpenLayers.Layer(
+		"Bez podkladovej mapy",
+		{
+			isBaseLayer: true
+			,visibility: false
+		}
+	),
+
+
+	svp_vodstvo: new OpenLayers.Layer.WMS(
+		'SVP - Vodné toky',
+//		'https://mpt.svp.sk/server/services/portal/vodstvo/MapServer/WMSServer',
+		'https://gis.sopsr.sk/wms',
+		{
+//		    layers: '0,1,2,4,5,6'
+		    layers: 'svp_toky'
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+//		    ,crs: 'EPSG:4326'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: false
+		    ,visibility: false
+		    ,hideInLegend: false
+//		    ,featureInfoFormat: "application/vnd.ogc.wms_xml"
+//		    ,projection: new OpenLayers.Projection("EPSG:3857")
+                        ,featureInfoFormat: "application/vnd.ogc.gml"
+                        ,projection: 'EPSG:3857'
+		    ,attribution: '<span>&copy; <a target="_blank" href="https://www.geoportal.sk/">GKÚ</a>, <a target="_blank" href="https://www.svp.sk">SVP</a></span>'
+//		    ,maxScale:1000
+//		    ,minScale:20000
+		}
+	),
+
+	geoportal_zbgis: new OpenLayers.Layer.WMS(
+		'ZBGIS',
+		'https://zbgisws.skgeodesy.sk/zbgis_wms_featureinfo/service.svc/get',
+		{
+		    layers: ''
+/*
+			+ '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93'
+			+ ',96'
+			+ ',98,99,100,101'
+			+ ',103,104,105,106'
+			+ ',108'
+			+ ',110,111,112,113'
+			+ ',115,116,117,118,119,120'
+			+ ',122,123,124,125,126,127'
+			+ ',129'
+			+ ',131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146'
+			+ ',149'
+			+ ',151'
+			+ ',153,154,155,156,157,158'
+			+ ',160,161,162,163,164,165'
+			+ ',167,168'
+*/
+			+ '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96'
+			+ ',99,100,101,102'
+			+ ',104,105,106,107'
+			+ ',109'
+			+ ',111,112,113,114'
+			+ ',116,117,118,119,120,121'
+			+ ',123,124,125,126,127,128'
+			+ ',130,131,132,133,134,135'
+			+ ',137'
+			+ ',139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154'
+			+ ',157'
+			+ ',159'
+			+ ',161,162'
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: true
+		    ,visibility: false
+		    ,hideInLegend: false
+		    ,featureInfoFormat: "application/vnd.ogc.wms_xml"
+		    ,projection: new OpenLayers.Projection("EPSG:3857")
+		    ,attribution: '<span>&copy; Úrad geodézie, kartografie a katastra SR (GKÚ Bratislava; r. 2017; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)</span>'
+//		    ,maxScale:1000
+//		    ,minScale:20000
+		}
+	),
+
+/*
+	mapyCZletecka: new OpenLayers.Layer.XYZ(
+               	"MAPY.CZ_letecka",
+//		"http://m1.mapserver.mapy.cz/ophoto-m/(z)-(x)-(y).jpg",
+		"http://m1.mapserver.mapy.cz/ophoto-m/${z}-${x}-${y}.jpg",
+                {
+		    numZoomLevels: 19,
+		    projection: new OpenLayers.Projection("EPSG:900913"),
+		    isBaseLayer: true,
+		    attribution: "<span>Map <a href='http://www.mapy.cz/' target='_blank'><img src='http://api4.mapy.cz/img/api/logo.png' border='0'></a><br>&copy;GEODIS BRNO, s.r.o<br>&copy;Seznam.cz, a.s.</span>",
+		    sphericalMercator: true,
+//		    getURL: getURLtemplate
+                }
+	),
+*/
+
+
+	migracne_bariery: new OpenLayers.Layer.WMS(
+		"Migračné biotopy",
+		'https://maps.sopsr.sk/wms-migracnebariery/service?',
+		{layers: "VsetkyMigracneVrstvy", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage", version: '1.1.1'/*, srs: new OpenLayers.Projection("EPSG:4326"), projection: new OpenLayers.Projection("EPSG:3857")*/},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', maxScale:3000}
+	),
+/*
+	migracne_bariery_rastre: new OpenLayers.Layer.WMS(
+		"Migračné obmedzenia a migračné koridory",
+		'https://maps.sopsr.sk/wms-migracnebariery/service?',
+		{layers: "MigracneObmedzeniaMigracneKoridory", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+*/
+//VLSM 3.8.2023
+konsolidovane_UEV: new OpenLayers.Layer.WMS(
+		"Konsolidované UEV",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:UEV_konsolidovane", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false,  opacity: 0.5, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR,2022</a></span>'}
+	),
+//VLSM 28.4.2023
+//VLSM 28.2.2023
+/*navrhovane_rozsirenie_UEV: new OpenLayers.Layer.WMS(
+		"Navrhované rozšírenie UEV",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:navrhovane_rozsirenie_UEV", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR,2022</a></span>'}
+	),
+
+navrhovane_zmeny_stupna_ochrany_UEV: new OpenLayers.Layer.WMS(
+		"Navrhované zmeny stupňa ochrany UEV",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:navrhovane_zvysenie_STO_v_UEV", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR,2022</a></span>'}
+	),
+*/
+//VLSM 16.2.2023
+prvky_RUSES_genofondove_lokality_CHKO_kysuce: new OpenLayers.Layer.WMS(
+		"Genofondové lokality - CHKO Kysuce",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:Genofondove_lokality", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sazp.sk">SAŽP,</a> <a target="_blank" href="https://www.sopsr.sk">ŠOP SR,2022</a></span>'}
+	),
+
+prvky_RUSES_biocentra_CHKO_kysuce: new OpenLayers.Layer.WMS(
+		"Biocentrá - CHKO Kysuce",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:Biocentra", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sazp.sk">SAŽP,</a> <a target="_blank" href="https://www.sopsr.sk">ŠOP SR,2022</a></span>'}
+	),
+
+prvky_RUSES_biokoridory_CHKO_kysuce: new OpenLayers.Layer.WMS(
+		"Biokoridory - CHKO Kysuce",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:Biokoridory", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sazp.sk">SAŽP,</a> <a target="_blank" href="https://www.sopsr.sk">ŠOP SR,2022</a></span>'}
+	),
+
+migracne_bariery_rastre_migracne_koridory: new OpenLayers.Layer.WMS(
+		"Migračné koridory",
+		'https://maps.sopsr.sk/wms-migracnebariery/service?',
+		{layers: "MigracneKoridory", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	migracne_bariery_rastre_migracne_obmedzenia: new OpenLayers.Layer.WMS(
+		"Migračné obmedzenia",
+		'https://maps.sopsr.sk/wms-migracnebariery/service?',
+		{layers: "MigracneObmedzenia", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	ekosystemy: new OpenLayers.Layer.WMS(
+		'Ekosystémy',
+		'https://maps.sopsr.sk/wms-ekosystemy/service?',
+		{layers: "Ekosystemy", format: "image/png", transparent: true, exceptions: "application/vnd.ogc.se_inimage"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", singleTile: true, ratio: 1, projection: new OpenLayers.Projection("EPSG:3857"), opacity: 0.8, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', maxScale:5000}
+/*
+		'http://192.168.70.105:8095/tms/',
+		{layername: 'Ekosystemy/grid_kims_webgis_5514', isBaseLayer: false, type: 'png',tileSize: new OpenLayers.Size(256, 256),
+//		    resolutions: [529.167725002, 264.583862501, 132.291931251, 52.9167725002,26.4583862501, 13.2291931251, 6.61459, 2.64583862501, 1.32291931251, 0.529167725002,0.264583862501]
+		    resolutions:[76.43702827148438,38.21851413574219,19.109257067871095,9.554628533935547,4.777314266967774]
+		},
+*/
+	),
+
+	orog: new OpenLayers.Layer.WMS(
+		"Geomorfologické jednotky",
+		'http://gis.geology.sk/arcgis/services/WMS/GMC/MapServer/WMSServer?VERSION=1.3.0',
+		{layers: "0,1", format: "image/png", transparent: true, crs: 'EPSG:3857'},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.wms_xml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.geology.sk">Štátny geologický ústav Dionýza Štúra</a></span>', projection: 'EPSG:3857'}
+	),
+//SM, 15.11.2016 >>>
+	bioregiony: new OpenLayers.Layer.WMS(
+		"Biogeografické regióny",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "IG_BIOGEOGRAPHIC_REGION", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 15.11.2016 <<<
+
+	chvu: new OpenLayers.Layer.WMS(
+		"Chránené vtáčie územia",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "IG_vPROTECTEDSITES_CHVU", format: "image/png", transparent: true },
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	skuev: new OpenLayers.Layer.WMS(
+		"Územia európskeho významu",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+//		{layers: "IG_vPROTECTEDSITES_UEV,IG_UEV_ANNO", format: "image/png", transparent: true},
+		{layers: "IG_vPROTECTEDSITES_UEV", format: "image/png", transparent: true},
+//		{layers: "sk_uev", format: "image/png", transparent: true, srs: 'EPSG:900913'},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+/*
+	skuev_D: new OpenLayers.Layer.Vector(
+		"Návrh C+ etapy ÚEV",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/uev_detapa_1faza_so.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: "${label_vlastny}"
+//				title: "pokus${UEV_NAZOV}" // nefunguje
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FFFFFF"
+				,fillOpacity: 0
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    },
+			    {
+				context: {
+					label_vlastny:function(feature) {
+						if(feature.attributes['UEV_NAZOV']) {
+//							return feature.attributes.UEV_NAZOV;
+							text = feature.attributes.UEV_NAZOV;
+							// medzery nahradím novým riadkom
+							return text.split(" ").join("\n");
+						}
+						else {
+							return '';
+						}
+					}
+				}
+			    }
+			)
+		    })
+		}
+	),
+*/
+
+/*
+	skuev_D_1: new OpenLayers.Layer.WMS(
+		"návrh C+ etapa ÚEV 1. fáza",
+		'https://www.sopsr.sk/geoserver/pracovne/ows?',
+		{
+		    layers: "UEV_d_etapa_1faza"
+		    ,format: "image/png"
+		    ,transparent: true
+		},
+		{
+		    isBaseLayer: false
+		    ,visibility: false
+		    ,hideInLegend: false
+		    ,featureInfoFormat: "application/vnd.ogc.gml"
+		    ,attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+		}
+	),
+
+	skuev_D_2: new OpenLayers.Layer.WMS(
+		"návrh C+ etapa ÚEV 2. fáza",
+		'https://www.sopsr.sk/geoserver/pracovne/ows?',
+		{
+		    layers: "UEV_d_etapa_2faza"
+		    ,format: "image/png"
+		    ,transparent: true
+		},
+		{
+		    isBaseLayer: false
+		    ,visibility: false
+		    ,hideInLegend: false
+		    ,featureInfoFormat: "application/vnd.ogc.gml"
+		    ,attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+		}
+	),
+*/
+
+/*	skuev_C_plus: new OpenLayers.Layer.WMS(
+		"C+ etapa ÚEV - návrh",
+		'https://www.sopsr.sk/geoserver/pracovne/ows?',
+		{
+		    layers: "C_plus_etapa_UEV"
+		    ,format: "image/png"
+		    ,transparent: true
+		},
+		{
+		    isBaseLayer: false
+		    ,visibility: false
+		    ,hideInLegend: false
+		    ,featureInfoFormat: "application/vnd.ogc.gml"
+		    ,attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+		}
+	),
+*/
+
+	vchu: new OpenLayers.Layer.WMS(
+		"Veľkoplošné chránené územia",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+                {
+			layers: "sopsr:IG_vPROTECTEDSITES_VCHU"
+			,format: "image/png"
+			,transparent: true
+			,version: '1.1.1'
+//			,crs: 'EPSG:3857'
+		},
+		{
+			isBaseLayer: false
+			,visibility: false
+			,hideInLegend: false
+			,featureInfoFormat: "application/vnd.ogc.gml"
+			,attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+/*			,metadata: {
+				wfs: {
+					protocol: 'fromWMSLayer',
+				}
+			}
+*/
+		}
+	),
+/*
+                'https://maps.sopsr.sk/geoserver/ows?',
+                {layers: "zonacia_pienap", format: "image/png", transparent: true},
+                {iisBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+*/
+	mchu: new OpenLayers.Layer.WMS(
+		"Maloplošné chránené územia",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "IG_vPROTECTEDSITES_MCHU", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+	degree: new OpenLayers.Layer.WMS(
+		"Stupne ochrany",
+		'https://www.sopsr.sk/geoserver/sz/wms?',
+		{layers: "sz:sz_protection_degree", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+/*
+	chu: new OpenLayers.Layer.WMS(
+		"Chránené územia",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "IG_PROTECTEDSITES", format: "image/png", transparent: true},
+		{displayInLayerSwitcher: false, isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+*/
+
+	zonacia_pienap: new OpenLayers.Layer.WMS(
+		"Zonácia (PIENAP)",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "zonacia_pienap", format: "image/png", transparent: true},
+		{iisBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	zonacia_slovraj: new OpenLayers.Layer.WMS(
+		"Zonácia (NP Slovenský raj)",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "zonacia_slovensky_raj", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	zonacia_hornaorava: new OpenLayers.Layer.WMS(
+		"Zonácia (CHKO Horná Orava)",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "zonacia_chko_horna_orava", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	zonacia_murplanina: new OpenLayers.Layer.WMS(
+		"Zonácia (NP Muránska planina)",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "zonacia_mur_planina", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+	zonacia_velkafatra: new OpenLayers.Layer.WMS(
+		"Zonácia (NP Veľká Fatra)",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "np_velka_fatra_zony", format: "image/png", transparent: true},
+		{iisBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+	sop_efp_hornaorava: new OpenLayers.Layer.WMS(
+		"EFP: CHVÚ Horná Orava",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "EFP_SKCHVU008", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 18.01.2021 >>>
+	sop_efp_malekarpaty: new OpenLayers.Layer.WMS(
+		"EFP: CHKO Malé Karpaty",
+		'https://www.sopsr.sk/geoserver/public/ows?',
+		{layers: "public:EFP_CHKO_MaleKarpaty", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 18.01.2021 <<<
+
+	mchu_chkola: new OpenLayers.Layer.WMS(
+		"MCHÚ - CHKO Latorica",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "mchu_chko_latorica", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+//SM, 23.01.2020 >>>
+/*	mchu_pr_pralesy: new OpenLayers.Layer.WMS(
+		"MCHÚ - PR Pralesy",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "pr_pralesy", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+*/
+//SM, 23.01.2020 <<<
+/*
+	mchu_zahorie: new OpenLayers.Layer.WMS(
+		"MCHÚ - CHKO Záhorie",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "mchu_chko_zahorie", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+*/
+	mchu_zahorie_stupne: new OpenLayers.Layer.WMS(
+		"MCHÚ - CHKO Záhorie (stupne ochr.)",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "mchu_chko_zahorie_st_ochr", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+//SM, 11.01.2018 >>>
+	chkobk_cha_tematinskevrchy_zony: new OpenLayers.Layer.WMS(
+		"CHA Tematinske vrchy - zony",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "chkobk_cha_tematinske-vrchy_zony", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 11.01.2018 <<<
+
+//SM, 24.02.2020 >>>
+        np_muranskaplanina_zonacia_hranica: new OpenLayers.Layer.WMS(
+		"NP Muránska planina - hranica",
+		'http://kn.sopsr.sk/geoserver/kataster_temp_npmp/ows?',
+		{layers: "hranica_NP_a_OP", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+/*
+	np_muranskaplanina_zonacia_zony: new OpenLayers.Layer.WMS(
+		"NP Muránska planina - zóny",
+		'http://kn.sopsr.sk/geoserver/kataster_temp_npmp/ows?',
+		{layers: "ZONY", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+*/
+	np_muranskaplanina_zonacia_efp: new OpenLayers.Layer.WMS(
+		"NP Muránska planina - EFP",
+		'http://kn.sopsr.sk/geoserver/kataster_temp_npmp/ows?',
+		{layers: "EFP", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	np_muranskaplanina_zonacia_vyznamnelokality: new OpenLayers.Layer.WMS(
+		"NP Muránska planina - významné lokality",
+		'http://kn.sopsr.sk/geoserver/kataster_temp_npmp/ows?',
+		{layers: "vyznamne_lok_np_murplanina", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	np_muranskaplanina_zonacia_zaujmovelokality: new OpenLayers.Layer.WMS(
+		"NP Muránska planina - záujmové lokality",
+		'http://kn.sopsr.sk/geoserver/kataster_temp_npmp/ows?',
+		{layers: "zaujmove_lok_op_murplanina", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 24.02.2020 <<<
+//SM, 23.11.2020 >>>
+	np_muranskaplanina_nahodne_tazby: new OpenLayers.Layer.WMS(
+		"NP Muránska planina - náhodné ťažby",
+		'https://www.sopsr.sk/geoserver/pracovne/ows?',
+		{layers: "nahodne_tazby", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 23.11.2020 <<<
+
+	ramsar: new OpenLayers.Layer.WMS(
+		"Ramsarské lokality",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:IG_vPROTECTEDSITES_RAMSAR", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	chranene_stromy: new OpenLayers.Layer.WMS(
+		"Chránené stromy",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:IG_PROTECTEDTREES", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+//SM, 13.05.2020 >>>
+	chranene_stromy_ksk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v KSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20221231/CHS_aktualizacia_2022_KSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_ksk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v KSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20221231/CHS_OP_2022_KSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 13.05.2020 <<<
+
+//SM, 02.06.2020 >>>
+	chranene_stromy_nsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v NSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200602/CHS_aktualizacia_2020_NSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_nsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v NSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200602/CHS_OP_2020_NSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 02.06.2020 <<<
+
+//SM, 09.06.2020 >>>
+	chranene_stromy_bsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v BSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200609/CHS_aktualizacia_2020_BSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_bsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v BSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200609/CHS_OP_2020_BSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 02.06.2020 <<<
+
+//SM, 15.06.2020 >>>
+	chranene_stromy_ttsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v TTSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200615/CHS_aktualizacia_2020_TTSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_ttsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v TTSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200615/CHS_OP_2020_TTSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 15.06.2020 <<<
+
+//SM, 19.06.2020 >>>
+	chranene_stromy_psk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v PSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20221231/CHS_aktualizacia_2022_PSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_psk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v PSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20221231/CHS_OP_2022_PSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 19.06.2020 <<<
+
+//SM, 06.07.2020 >>>
+chranene_stromy_tnsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v TNSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20221231/CHS_aktualizacia_2022_TNSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_tnsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v TNSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20221231/CHS_OP_2022_TNSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 06.07.2020 <<<
+
+//SM, 16.07.2020 >>>
+chranene_stromy_bbsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v BBSK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200716/CHS_aktualizacia_2020_BBSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_bbsk_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v BBSK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200716/CHS_OP_2020_BBSK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 16.07.2020 <<<
+
+//SM, 28.09.2020 >>>
+chranene_stromy_zask_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v ZASK (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200928/CHS_aktualizacia_2020_ZASK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+			    {
+				label: ""
+				,pointRadius: 2
+				,strokeColor: "green"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "green"
+				,fillOpacity: 0.9
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+
+	chranene_stromy_op_zask_revizia: new OpenLayers.Layer.Vector(
+		"Chránené stromy v ZASK (OP) (podklad pre revíziu chránených stromov)",
+		{ 
+		    strategies: [new OpenLayers.Strategy.Fixed()],
+		    projection: new OpenLayers.Projection('EPSG:4326'),
+		    visibility: false,
+//		    attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+		    protocol: new OpenLayers.Protocol.HTTP({
+			url: "https://maps.sopsr.sk/data/20200928/CHS_OP_2020_ZASK.gml",
+			format: new OpenLayers.Format.GML({
+			    extractStyles: true, 
+			    extractAttributes: true,
+			    maxDepth: 2
+			})
+		    }),
+		    styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style(
+
+			    {
+				label: ""
+				,strokeColor: "red"
+				,fontColor: "#FF0916"
+				,fontSize: "9px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+//				,strokeColor: "#FF0916"
+				,fillColor: "#FF0916"
+				,fillOpacity: 0.1
+				,fontFamily: "Courier New, monospace"
+				,labelAlign: "cb"
+//				,labelYOffset: 25
+				,labelOutlineColor: "white"
+				,labelOutlineWidth: 3
+			    }
+			)
+		    })
+		}
+	),
+//SM, 28.09.2020 <<<
+
+
+//SM, 30.01.2018 >>>
+	biotop_hluchan_npmp_2010: new OpenLayers.Layer.WMS(
+		"Hlucháň - NP Muránska planina",
+		'https://maps.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "biotop_hluchan_muran_planina_stolica_2010", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+//SM, 30.01.2018 <<<
+
+	europsky_diplom: new OpenLayers.Layer.WMS(
+		"Európsky diplom pre chránené územia",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "europsky_diplom", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml"}
+	),
+
+	biosfericke_rezervacie: new OpenLayers.Layer.WMS(
+		"Biosférické rezervácie",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "IG_vPROTECTEDSITES_BIOSFERICKE_REZERVACIE", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+	unesco: new OpenLayers.Layer.WMS(
+		"Lokality svetového dedičstva UNESCO",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "IG_vPROTECTEDSITES_UNESCO", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
+	),
+
+//19.09.2016 >>>
+	ozprales_pralesy:new OpenLayers.Layer.WMS(
+		"Pralesy",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "pralesy", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.pralesy.sk">OZ Prales</a></span>'}
+	),
+
+	ozprales_pralesy_zvysky:new OpenLayers.Layer.WMS(
+		"Pralesy - zvyšky",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "pralesy_zvysky", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.pralesy.sk">OZ Prales</a></span>'}
+	),
+//19.09.2016 <<<
+
+	grid_kmsiet: new OpenLayers.Layer.WMS(
+		'GRID: KM-sieť',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "gis_klad_kmsiet", format: "image/png", transparent: true},
+		{
+		  isBaseLayer: false,
+		  visibility: false,
+		  group:'GRIDY/SK',
+		  featureInfoFormat: "application/vnd.ogc.gml",
+		  maxScale:1000,
+		  minScale:20000
+		  ,attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+		}
+	),
+
+	grid_kmsiet_3a4pasmo: new OpenLayers.Layer.WMS(
+		'GRID: KM-sieť: 3.,4. pásmo',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "kmsiet_3a4pasmo", format: "image/png", transparent: true},
+		{
+		  isBaseLayer: false,
+		  visibility: false,
+		  group:'GRIDY/SK',
+		  featureInfoFormat: "application/vnd.ogc.gml",
+		  maxScale:1000,
+		  minScale:20000,
+		  attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+		}
+	),
+
+	grid_dfs: new OpenLayers.Layer.WMS(
+		'GRID: DFS',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "gis_klad_dfs", format: "image/png", transparent: true, projection: 'EPSG:900913', version: '1.1.1', srs: 'EPSG:4326'},
+		{isBaseLayer: false, visibility: false, group:'GRIDY/SK', featureInfoFormat: "application/vnd.ogc.gml", opacity: 0.3
+		  ,metadata: {
+		    wfs: {
+                      protocol: 'fromWMSLayer',
+                      downloadFormats: Heron.options.wfs.downloadFormats
+		    }
+		  }
+		  ,xy: ["EPSG:4326"], srs: 'EPSG:4326'}
+	),
+
+	grid_klad_5000: new OpenLayers.Layer.WMS(
+		'GRID: 5000',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "klad_5000", format: "image/png", transparent: true},
+		{isBaseLayer: false, visibility: false, group:'GRIDY/SK', featureInfoFormat: "application/vnd.ogc.gml", minScale: 600000}
+	),
+
+	grid_klad_10000: new OpenLayers.Layer.WMS(
+		'GRID: 10000',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "gis_klad_10000", format: "image/png", transparent: true},
+		{isBaseLayer: false, visibility: false, group:'GRIDY/SK', featureInfoFormat: "application/vnd.ogc.gml", minScale: 1100000}
+	),
+
+	grid_klad_25000: new OpenLayers.Layer.WMS(
+		'GRID: 25000',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "gis_klad_25000", format: "image/png", transparent: true},
+		{isBaseLayer: false, visibility: false, group:'GRIDY/SK', featureInfoFormat: "application/vnd.ogc.gml"}
+	),
+
+	grid_klad_50000: new OpenLayers.Layer.WMS(
+		'GRID: 50000',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "klad_50000", format: "image/png", transparent: true},
+		{isBaseLayer: false, visibility: false, group:'GRIDY/SK', featureInfoFormat: "application/vnd.ogc.gml"}
+	),
+
+	grid_etrs100: new OpenLayers.Layer.WMS(
+		'GRID: ETRS 100km',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "sk_100km", format: "image/png", transparent: true},
+		{isBaseLayer: false, visibility: false, group:'GRIDY/SK', featureInfoFormat: "application/vnd.ogc.gml"}
+	),
+
+	grid_etrs10: new OpenLayers.Layer.WMS(
+		"GRID: ETRS 10km",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "sk_10km", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", minScale:2200000}
+	),
+
+	grid_etrs1: new OpenLayers.Layer.WMS(
+		'GRID: ETRS 1km',
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "sk_1km", format: "image/png", transparent: true},
+		{
+		  isBaseLayer: false,
+		  visibility: false,
+		  group:'GRIDY/SK',
+		  featureInfoFormat: "application/vnd.ogc.gml",
+		  maxScale:1000,
+		  minScale:300000
+		}
+	),
+
+/*
+        grid_etrs1: new OpenLayers.Layer.WMTS(
+		{
+			name: 'GRID: ETRS 1km',
+			url: 'https://maps.sopsr.sk/geoserver/gwc/service/wmts',
+			layer: "sk_1km",
+		        matrixSet: "EPSG:900913",
+		        matrixIds: matrixIds,
+		        format: "image/png",
+		        style: "_null",
+		        opacity: 0.7,
+		        isBaseLayer: false
+		}
+	),
+*/
+
+        sop_posobnost: new OpenLayers.Layer.WMS(
+		"Pôsobnosť ŠOP SR",
+		'https://www.sopsr.sk/geoserver/sopsr/ows?',
+		{layers: "sopsr:IG_COMPETENCE", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+//SM, 13.01.2020, aby sa zobrazila v hr_gxpquerypanel-i >>>
+		  ,metadata: {
+	                wfs: {
+        	            protocol: 'fromWMSLayer',
+                	}
+		  }
+//SM, 13.01.2020 <<<
+		}
+	),
+
+        ztmh_posobnost: new OpenLayers.Layer.WMS(
+		"Pôsobnosť ZTMH",
+		'https://maps.sopsr.sk/server/services/Server/Zasahovy_tim/MapServer/WMSServer?',
+		{layers: "gis.portaluser2.zasahovy_tim,gis.portaluser2.zasahovy_tim_sidla", format: "image/png", transparent: true,srs:"EPSG:4326"},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, singleTile: true, projection: new OpenLayers.Projection("EPSG:3857"), featureInfoFormat: "application/vnd.ogc.wms_xml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+//SM, 13.01.2020, aby sa zobrazila v hr_gxpquerypanel-i >>>
+		  ,metadata: {
+	                wfs: {
+        	            protocol: 'fromWMSLayer',
+                	}
+		  }
+//SM, 13.01.2020 <<<
+		}
+	),
+        sizp_posobnost: new OpenLayers.Layer.WMS(
+		"Pôsobnosť SIŽP - Ochrana prírody",
+		'https://maps.sopsr.sk/geoserver/ows?',
+		{layers: "sopsr:sizp_posobnosti", format: "image/png", transparent: true},
+		{isBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+		  ,metadata: {
+	                wfs: {
+        	            protocol: 'fromWMSLayer',
+                	}
+		  }
+		}
+	),
+
+	geoportal_retm: new OpenLayers.Layer.WMS(
+		'Topografické mapy RETM (TM50, TM25)',
+		'https://zbgisws.skgeodesy.sk/retm_wms/service.svc/get',
+		{
+		    layers: ''
+			+ '1' //TM25
+			+ ',5' //TM50
+		    ,format: 'image/png'
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: true
+		    ,visibility: false
+		    ,noLegend: true
+		    ,featureInfoFormat: 'application/vnd.ogc_wms.xml'
+		    ,projection: new OpenLayers.Projection('EPSG:3857')
+		    ,attribution: '<span>&copy; Úrad geodézie, kartografie a katastra SR (GKÚ Bratislava; r. 2017; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)</span>'
+//		    ,maxScale:1000
+		    ,minScale:2500000
+		}
+	),
+
+	geoportal_zmsr: new OpenLayers.Layer.WMS(
+		'Základné mapy SR (ZM1000000 - ZM10000)',
+		'https://zbgisws.skgeodesy.sk/zmsr_wms/service.svc/get',
+		{
+		    layers: ''
+			+ '1' //ZM10
+			+ ',5' //ZM25
+			+ ',9' //ZM50
+			+ ',13' //ZM100
+			+ ',17' //ZM200
+			+ ',21' //ZM500
+			+ ',25' //ZM1mil
+		    ,format: 'image/png'
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: true
+		    ,visibility: false
+		    ,noLegend: true
+		    ,featureInfoFormat: 'application/vnd.ogc_wms.xml'
+		    ,projection: new OpenLayers.Projection('EPSG:3857')
+		    ,attribution: '<span>&copy; Úrad geodézie, kartografie a katastra SR (GKÚ Bratislava; r. 2017; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)</span>'
+//		    ,maxScale:1000
+		    ,minScale:2500000
+		}
+	),
+
+	tur_atlas_50: new OpenLayers.Layer.WMS(
+		'Turistický atlas 1:50 000',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "6", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:2000000
+		}
+	),
+
+	hist_sm75: new OpenLayers.Layer.WMS(
+		'Špeciálna mapa 1:75 000',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "14", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+/*
+	hist_smo5: new OpenLayers.Layer.WMS(
+		'SMO5',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "SMO5", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+*/
+	hist_tm10_1957: new OpenLayers.Layer.WMS(
+		'TM10 1957-1971',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "16", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+
+	hist_tm25_1952: new OpenLayers.Layer.WMS(
+		'TM25 1952-1957',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "17", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+
+	hist_tm5_1955: new OpenLayers.Layer.WMS(
+		'TM5 1955-1961',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "15", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+
+	voj_1764: new OpenLayers.Layer.WMS(
+		'Vojenská mapa 1764-1787',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "8", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+
+	voj_1810: new OpenLayers.Layer.WMS(
+		'Vojenská mapa 1810-1869',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "9", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+
+	voj_1875: new OpenLayers.Layer.WMS(
+		'Vojenská mapa 1875-1884',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "10", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+/*
+	voj_1897: new OpenLayers.Layer.WMS(
+		'Vojenská mapa 1897 (V.Tatry)',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "12", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+*/
+	voj_1920: new OpenLayers.Layer.WMS(
+		'Vojenská mapa 1920-1934',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "11", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+/*
+	voj_1931: new OpenLayers.Layer.WMS(
+		'Vojenská mapa 1931 (V.Tatry)',
+		'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+		{layers: "13", format: "image/png", transparent: true, srs: "EPSG:4326"},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+		  maxScale:1000,
+		  minScale:200000
+		}
+	),
+*/
+	kims_tml: new OpenLayers.Layer.WMS(
+		'Trvalé monitorovacie lokality',
+//		'http://192.168.70.105:6081/arcgis/services/TML_Base_TML/MapServer/WMSServer?',
+		'https://arcgis-kims.sopsr.sk/arcgis/services/TML_Base_TML/MapServer/WMSServer?',
+//		'https://gis.sopsr.sk/wms',
+		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:102067'},
+//		{layers: "TML", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:102067'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity:0.6 }
+//		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity:0.6 }
+	),
+
+	kims_tml_bot: new OpenLayers.Layer.WMS(
+		'Trvalé monitorovacie lokality - botanické',
+		'https://www.sopsr.sk/geoserver/sopsr/wms',
+		{layers: "sopsr:tml_botanical", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:5514'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity:0.6 }),
+	kims_tml_hab: new OpenLayers.Layer.WMS(
+		'Trvalé monitorovacie lokality - biotopové',
+		'https://www.sopsr.sk/geoserver/sopsr/wms',
+		{layers: "sopsr:tml_habitat", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:5514'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity:0.6 }),
+	kims_tml_zoo: new OpenLayers.Layer.WMS(
+		'Trvalé monitorovacie lokality - zoologické',
+		'https://www.sopsr.sk/geoserver/sopsr/wms',
+		{layers: "sopsr:tml_zoological", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:5514'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity:0.6 }),
+	nlc_sop_jprl_2017: new OpenLayers.Layer.WMS(
+		'JPRL - 2017 (od NLC pre ŠOP)',
+		'https://gis.sopsr.sk/wms',
+		{layers: "nlc_jprl_2017", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale:0, minScale:150000, attribution: '<span>&copy; <a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen, 2017</a></span>' }
+	),
+
+	nlc_sop_jprl_2018: new OpenLayers.Layer.WMS(
+		'JPRL - 2018 (od NLC pre ŠOP)',
+		'https://gis.sopsr.sk/wms',
+		{layers: "nlc_jprl_2018", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale:0, minScale:150000, attribution: '<span>&copy; <a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen, 2018 (aktuálne k 31.12.2018)</a></span>' }
+	),
+/*
+//	lvu_nlcsk_porastova: new OpenLayers.Layer.ArcGISCache(
+	lvu_nlcsk_porastova: new OpenLayers.Layer.WMS(
+		'Porastová mapa',
+		'http://192.168.125.90:8080/service',
+		{layers: "PorastovaMapa", format: "image/png", transparent: true},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:102067', maxScale:0, minScale:2000000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+*/
+	nlc_lhc: new OpenLayers.Layer.WMS(
+		'Lesné hospodárske celky',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LHC/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		'https://www.nlcsk.org/arcgis/services/InspireWMS/lhc_wms/MapServer/WMSServer?',
+		{layers: "AM.ForestManagementArea", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:5000000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_lo: new OpenLayers.Layer.WMS(
+		'Lesné oblasti',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LesneOblasti/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		'https://www.nlcsk.org/arcgis/services/Inspire/LesneOblasti/MapServer/WMSServer?',
+		{layers: "LC.LandCoverSurfaces", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:2000000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_tmp: new OpenLayers.Layer.WMS(
+		'Trvalé monitorovacie plochy',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/TMP/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/TMP/MapServer/WMSServer?',
+		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>'}
+	),
+
+	nlc_tvp: new OpenLayers.Layer.WMS(
+		'Trvalé výskumné plochy',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/TVP/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/TVP/MapServer/WMSServer?',
+		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>'}
+	),
+
+	nlc_tokysr: new OpenLayers.Layer.WMS(
+		'Vodné toky',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/TokySR/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/TokySR/MapServer/WMSServer?',
+		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:500000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_podnetypy: new OpenLayers.Layer.WMS(
+		'Lesné pôdne typy',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/PodneTypy/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/PodneTypy/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{layers: "SO.SoilBody", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:70000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_lestypy: new OpenLayers.Layer.WMS(
+		'Lesné typy',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LesneTypy/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/LesneTypy/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{layers: "LC.LandCoverSurfaces", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:70000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_lescesty: new OpenLayers.Layer.WMS(
+		'Lesné cesty',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LesneCesty/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/LesneCesty/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{layers: "0,1,2", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:500000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_jprl: new OpenLayers.Layer.WMS(
+		'Jednotky priestorového rozdelenia lesa',
+//		'https://gis.sopsr.sk/wms',
+		'https://www.nlcsk.org/arcgis/services/InspireWMS/jprl_wms/MapServer/WMSServer?',
+		{
+//		    layers: 'nlc_jprl'
+//SM, 19.02.2021 >>>
+//		    layers: "JPRL"
+/*                    layers: ''
+                        + '1'
+                        + ',2'
+                        + ',3'
+                        + ',4'
+                        + ',5'
+                        + ',6'
+                        + ',7'
+                        + ',8'
+                        + ',9'
+                        + ',10'
+//SM, 19.02.2021 <<<
+*/
+		 layers: 'LU.ExistingLandUse'
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: false
+		    ,visibility: false
+		    ,featureInfoFormat: "application/vnd.ogc.wms_xml"
+		    ,projection: 'EPSG:3857' // projection: 'EPSG:102067'
+		    ,maxScale:0
+		    ,minScale:50000
+		    ,attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>'
+		}
+	),
+
+	nlc_drevzlozenie: new OpenLayers.Layer.WMS(
+		'Drevinové zloženie',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/DrevinoveZlozenie/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:102067'},
+		'https://www.nlcsk.org/arcgis/services/Inspire/DrevinoveZlozenie/MapServer/WMSServer?',
+		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:102067'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:100000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	nlc_polreviry: new OpenLayers.Layer.WMS(
+		'Poľovné revíry',
+//		'http://gis.nlcsk.org/ArcGIS/services/Inspire/PolovneReviry/MapServer/WMSServer?',
+		'https://www.nlcsk.org/arcgis/services/Inspire/PolovneReviry/MapServer/WMSServer?',
+//		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{layers: "LU.ExistingLandUse", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:250000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+	),
+
+	sop_lpis: new OpenLayers.Layer.WMS(
+		'LPIS 2019',
+		'https://gis.sopsr.sk/wms',
+		{layers: "lpis", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale:0, minScale:600000, attribution: '<span>&copy; ???, 2019</span>' }
+	),
+
+	sop_kataster_c: new OpenLayers.Layer.WMS(
+		'C parcely (spracované ŠOPSR)',
+		'https://gis.sopsr.sk/wms',
+		{
+		    layers: "kataster_SK_KN_C", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale:0, minScale:50000, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a>,29.9.2023</span>'
+		}
+	),
+
+	sop_kataster_e: new OpenLayers.Layer.WMS(
+		'E parcely (spracované ŠOPSR)',
+		'https://gis.sopsr.sk/wms',
+		{
+		    layers: "kataster_SK_KN_E", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale:0, minScale:50000, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a>,29.9.2023</span>' 
+		}
+	),
+
+	geoportal_eskn_parcely_c: new OpenLayers.Layer.WMS(
+		'Parcely registra C',
+		'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+//		'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_orto/MapServer/WMSServer?',
+//		'http://144.91.81.168:8090/service?',
+		{
+			layers: "5"
+//			layers: "Parcely_C"
+			,format: "image/png"
+			,transparent: true
+			,version: '1.3.0'
+			,crs: 'EPSG:3857'
+		},
+		{
+			isBaseLayer: false
+			,visibility: false
+			,featureInfoFormat: "application/vnd.ogc.wms_xml"
+//			,featureInfoFormat: "application/vnd.esri.wms_featureinfo_xml"
+//			,featureInfoFormat: "application/vnd.ogc.gml"
+			,projection: 'EPSG:3857'
+			,maxScale:0
+			,minScale:10000
+			,attribution: '<span>&copy; <a href="https://www.geoportal.sk/sk/sluzby/mapove-sluzby/wms/wms-eskn.html" target="_blank">Úrad geodézie, kartografie a katastra SR</a> (GKÚ Bratislava; r. 2015; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)'
+		}
+	),
+
+	geoportal_eskn_parcely_e: new OpenLayers.Layer.WMS(
+		'Parcely registra E',
+		'https://kataster.skgeodesy.sk/eskn/services/NR/uo_wms_norm/MapServer/WMSServer?',
+//		'https://kataster.skgeodesy.sk/eskn/services/NR/uo_wms_orto/MapServer/WMSServer?',
+//		'http://144.91.81.168:8090/service?',
+		{
+			layers: "0"
+//			layers: "Parcely_E"
+			,format: "image/png"
+			,transparent: true
+			,version: '1.3.0'
+			,crs: 'EPSG:3857'
+		},
+		{
+			isBaseLayer: false
+			,visibility: false
+			//,featureInfoFormat: "application/vnd.ogc.wms_xml"
+			,featureInfoFormat: "application/vnd.esri.wms_featureinfo_xml"
+			,projection: 'EPSG:3857'
+			,maxScale:0
+			,minScale:10000
+			,attribution: '<span>&copy; <a href="https://www.geoportal.sk/sk/sluzby/mapove-sluzby/wms/wms-eskn.html" target="_blank">Úrad geodézie, kartografie a katastra SR</a> (GKÚ Bratislava; r. 2015; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)'
+		}
+	),
+
+	geoportal_eskn_obec: new OpenLayers.Layer.WMS(
+		'Obce',
+		'https://zbgisws.skgeodesy.sk/zbgis_administrativne_hranice_wms_featureinfo/service.svc/get',
+		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:150000, attribution: '<span>ZB<i>GIS</i>&reg; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+	),
+
+	geoportal_eskn_parcely_ku: new OpenLayers.Layer.WMS(
+		'Katastrálne územia',
+		'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+		{layers: "13", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:100000, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+	),
+
+	geoportal_eskn_parcely_okres: new OpenLayers.Layer.WMS(
+		'Okresy',
+		'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+		{layers: "14", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:0, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+	),
+
+	geoportal_eskn_parcely_kraj: new OpenLayers.Layer.WMS(
+		'Kraje',
+		'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+		{layers: "15", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857', info_format: 'application/vnd.ogc.wms_xml'},
+//		{layers: "10", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: false, visibility: false, projection: 'EPSG:3857', maxScale:0, minScale:0, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+//		{layers: "15", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857', info_format: 'text/xml'},
+//		{layers: "15", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:102067'},
+//		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.esri.wms_featureinfo_xml", projection: 'EPSG:3857', maxScale:0, minScale:0 }
+	),
+
+/*
+	hiking_tzt: new OpenLayers.Layer.TileCache(
+		'Turistické chodníky (hiking)',
+		"http://mapy.hiking.sk/layers/",
+		"tzt",
+		{isBaseLayer:false, visibility: false, sphericalMercator:true, buffer:0, minScale: 1000000, maxScale: 15000, attribution: 'hiking.sk'}
+	),
+*/
+/*
+	//view-source:https://mapy.hiking.sk/lib/HikingMaps-3.6.6.js
+	hiking_tzt: new OpenLayers.Layer.XYZ(
+		'Turistické chodníky (hiking)',
+		[
+//		  "https://static.mapy.hiking.sk/tzt/${z}/${x}/${y}.png"
+		  "https://tile.mapy.hiking.sk/tzt/${z}/${x}/${y}.png"
+		]
+		,{attribution:'<BR /><span>Značky a rázcestia &copy; HIKING.SK</span>',sphericalMercator:true,buffer:0,resolutions:[76.43702827148438,38.21851413574219,19.109257067871095,9.554628533935547,4.777314266967774],isBaseLayer:false, visibility:false}
+	),
+
+	//view-source:https://mapy.hiking.sk/lib/HikingMaps-3.6.6.js
+	hiking_cykloznacky: new OpenLayers.Layer.XYZ(
+		'Cykloznačky (waymarkedtrails.org)'
+		,[
+			"http://tile.waymarkedtrails.org/cycling/${z}/${x}/${y}.png"
+		]
+		,{attribution:'<br /><span>Waymarkedtrails.org, OpenStreetMap contributors</span>',sphericalMercator:true,buffer:0,resolutions:[76.43702827148438,38.21851413574219,19.109257067871095,9.554628533935547,4.777314266967774],transitionEffect:'resize',isBaseLayer:false,numZoomLevels:16,visibility:false,opacity:0.7}
+	),
+*/
+	freemap_tch: new OpenLayers.Layer.XYZ(
+		'Turistické chodníky (freemap)'
+		,[
+			"http://tiles.freemap.sk/trails/${z}/${x}/${y}.png"
+		]
+		,{isBaseLayer: false, visibility: false, projection: 'EPSG:3857', attribution: '<br /><span>Mapa &copy; Freemap Slovakia, dáta &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a></span>', maxScale:8000, minScale:2000000 }
+	),
+
+	freemap_cyclo: new OpenLayers.Layer.XYZ(
+		'Cyklotrasy (freemap)'
+		,[
+			"http://tiles.freemap.sk/cycle/${z}/${x}/${y}.png"
+		]
+		,{isBaseLayer: false, visibility: false, projection: 'EPSG:3857', attribution: '<br /><span>Mapa &copy; Freemap Slovakia, dáta &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a></span>', maxScale:8000, minScale:2000000 }
+	),
+/*
+	mig_zaklad_biotopy: new OpenLayers.Layer.WMTS(
+		{
+			name: "MIG",
+			url: "https://www.sopsr.sk/geoserver/gwc/service/wmts",
+			layer: "skuska:ZAKLAD_MIGRACNE_BIOTOPY",
+//			singleTile: false,
+			matrixSet: "EPSG:900913",
+			matrixIds: matrixIds,
+//			matrixIds: Array["EPSG:5514:0"],
+			format: "image/png",
+			style: "_null",
+			isBaseLayer: false
+		}
+	),
+*/
+
+	osm: new OpenLayers.Layer.OSM(
+		'OpenStreetMap'
+		,[
+			"https://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+			"https://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
+			"https://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
+		]
+		,{visibility: false, attribution: '<span>&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a></span>'}
+	),
+
+	opentopomap: new OpenLayers.Layer.OSM(
+		'OpenTopoMap'
+		,[
+			"https://a.tile.opentopomap.org/${z}/${x}/${y}.png",
+			"https://b.tile.opentopomap.org/${z}/${x}/${y}.png",
+			"https://c.tile.opentopomap.org/${z}/${x}/${y}.png"
+		]
+		,{visibility: false, attribution: '<span>Kartendaten: &copy; <a href="https://openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>-Mitwirkende, SRTM Kartendarstellung: &copy; <a href="http://opentopomap.org/" target="_blank">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC-BY-SA</a>)</span>',type: 'png', numZoomLevels:18, useCanvas: OpenLayers.Layer.Grid.ONECANVASPERTILE}
+	),
+
+	geoportal_relief_tien: new OpenLayers.Layer.WMS(
+       		"Tieňovaný reliéf", // name for display in LayerSwitcher
+	        "https://zbgisws.skgeodesy.sk/zbgis_dmr3_wms/service.svc/get", // service endpoint
+		{
+		    layers: "0"
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: true
+		    ,visibility: false
+		    ,featureInfoFormat: null
+		    ,projection: 'EPSG:3857'
+		    ,maxScale:0
+		    ,minScale:0
+		    ,attribution: '<span>ZB<i>GIS</i>&reg; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>'
+		}
+	),
+
+	geoportal_relief_dmr: new OpenLayers.Layer.WMS(
+       		"Digitálny model reliéfu", // name for display in LayerSwitcher
+	        "https://zbgisws.skgeodesy.sk/zbgis_dmr3_wms/service.svc/get", // service endpoint
+		{
+		    layers: "1"
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+//SM, 22.12.2020 >>>
+//		    isBaseLayer: true
+		    isBaseLayer: false
+		    ,opacity: '0.6'
+//SM, 22.12.2020 <<<
+		    ,visibility: false
+//SM, 22.12.2020 >>> 
+//		    ,featureInfoFormat: null
+		    ,featureInfoFormat: 'application/vnd.ogc.wms_xml'
+//SM, 22.12.2020 <<<
+		    ,projection: 'EPSG:3857'
+		    ,maxScale:0
+		    ,minScale:0
+		    ,attribution: '<span>ZB<i>GIS</i>&reg; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>'
+		    ,useCanvas: OpenLayers.Layer.Grid.ONECANVASPERTILE
+		}
+	),
+
+//SM, 19.07.2018 >>>
+	geoportal_ortofotomozaika: new OpenLayers.Layer.WMS(
+		"Ortofotomozaika",
+		"https://zbgisws.skgeodesy.sk/zbgis_ortofoto_wms/service.svc/get", // service endpoint
+		{
+		    layers: "1"
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: true
+		    ,visibility: false
+		    ,featureInfoFormat: null
+		    ,projection: 'EPSG:3857'
+		    ,maxScale:0
+		    ,minScale:0
+		    ,attribution: '<span>&copy; <a target="_blank" href="https://www.geoportal.sk/files/zbgis/objednavky/podmienky_poskytovania_a_pouzivania_udajov_ortofotomozaiky.pdf">GKÚ Bratislava, NLC</a></span>'
+		    ,noLegend: true
+		}
+	),
+//SM, 19.07.2018 <<<
+	ortofotomozaika_freemap: new OpenLayers.Layer.XYZ(
+           
+            'Ortofotomozaika_freemap',
+            "https://ofmozaika.tiles.freemap.sk/${z}/${x}/${y}.jpg",
+            { isBaseLayer: true }
+
+        ),
+	/*geoportal_ortofotomozaika_wmts: new OpenLayers.Layer.WMTS(
+		{
+			name: 'Ortofotomozaika_wmts',
+			url: 'https://zbgisws.skgeodesy.sk/zbgis_ortofoto_wmts/service.svc/get/tile',
+                        requestEncoding:"REST",
+			layer: "WMS_zbgis_ortofoto_wmts",
+		        matrixSet: "default028mm",
+		        matrixIds: zbgisMatrix,
+		        format: "image/png",
+		        style: "default",
+		        isBaseLayer: true
+		}
+	),*/
+
+/*
+	sop_geoportal_ortofotomozaika: new OpenLayers.Layer.WMS(
+		"Ortofotomozaika (cez ŠOP)",
+		"https://gis.sopsr.sk/wms", // service endpoint
+		{layers: "geoportal_ortofotomozaika", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+		{isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale:0, minScale:0, attribution: '<span>&copy; <a target="_blank" href="https://www.geoportal.sk/files/zbgis/objednavky/podmienky_poskytovania_a_pouzivania_udajov_ortofotomozaiky.pdf">GKÚ Bratislava, NLC</a></span>', displayOutsideMaxExtent: false }
+	),
+*/
+
+//SM, 06.03.2017 >>>
+	kml_grid_50: new OpenLayers.Layer.Vector(
+		"GRID: 50x50 km",
+		{ 
+		  strategies: [new OpenLayers.Strategy.Fixed()],
+		  projection: new OpenLayers.Projection('EPSG:4326'),
+		  visibility: false,
+		  attribution: '<span>&copy;&nbsp;<a target="_blank" href="http://www.sioc.cat/">SIOC</a></span>',
+	          protocol: new OpenLayers.Protocol.HTTP({
+	            url: "http://www.sioc.cat/EBBA2/slovakia_50x50.kml",
+	            format: new OpenLayers.Format.KML({
+	                extractStyles: false, 
+	                extractAttributes: true,
+	                maxDepth: 2
+	            })
+	          }),
+		  styleMap: new OpenLayers.StyleMap({
+			'default':{
+				label: "50x50km:\n\"${description}\""
+				,fontColor: "#FF0916"
+				,fontSize: "11px"
+				,fontWeight: "bold"
+				,labelAlign: "center"
+				,strokeColor: "#FF0916"
+				,fillColor: "#FFFFFF"
+				,fillOpacity: 0
+			}
+		  })
+		}
+	),
+//SM, 06.03.2017 <<<
+
+//SM, 18.01.2021 >>>
+	rozne__rybarske_reviry: new OpenLayers.Layer.WMS(
+       		"Rybárske revíry",
+	        "https://www.sopsr.sk/geoserver/intranet/ows",
+		{
+		    layers: "intranet:rybarske_reviry"
+		    ,format: "image/png"
+		    ,transparent: true
+		    ,version: '1.3.0'
+		    ,crs: 'EPSG:3857'
+		},
+		{
+		    isBaseLayer: false
+		    ,visibility: false
+		    ,featureInfoFormat: 'application/vnd.ogc.gml'
+		    ,projection: 'EPSG:3857'
+		    ,maxScale:0
+		    ,minScale:0
+		    ,attribution: '<span>Zdroj neznámy.</span>'
+		}
+	),
+//SM, 18.01.2021 <<<
+
+};
+
+Heron.options.map.layers = [
+
+	Heron.scratch.layermap.osm,
+	Heron.scratch.layermap.opentopomap,
+
+	Heron.scratch.layermap.geoportal_ortofotomozaika,
+	Heron.scratch.layermap.ortofotomozaika_freemap,
+
+//	Heron.scratch.layermap.sop_geoportal_ortofotomozaika,
+
+	Heron.scratch.layermap.geoportal_relief_dmr,
+	Heron.scratch.layermap.geoportal_relief_tien,
+
+	Heron.scratch.layermap.bez,
+	Heron.scratch.layermap.migracne_bariery,
+	Heron.scratch.layermap.konsolidovane_UEV,
+	//Heron.scratch.layermap.navrhovane_rozsirenie_UEV,
+	//Heron.scratch.layermap.navrhovane_zmeny_stupna_ochrany_UEV,
+	Heron.scratch.layermap.prvky_RUSES_genofondove_lokality_CHKO_kysuce,
+	Heron.scratch.layermap.prvky_RUSES_biocentra_CHKO_kysuce,
+	Heron.scratch.layermap.prvky_RUSES_biokoridory_CHKO_kysuce,
+	Heron.scratch.layermap.migracne_bariery_rastre_migracne_koridory,
+	Heron.scratch.layermap.migracne_bariery_rastre_migracne_obmedzenia,
+	Heron.scratch.layermap.ekosystemy,
+	Heron.scratch.layermap.orog,
+	Heron.scratch.layermap.kims_tml,
+	Heron.scratch.layermap.kims_tml_bot,
+	Heron.scratch.layermap.kims_tml_hab,
+	Heron.scratch.layermap.kims_tml_zoo,
+
+	Heron.scratch.layermap.bioregiony,
+	Heron.scratch.layermap.chvu,
+	Heron.scratch.layermap.skuev,
+//	Heron.scratch.layermap.skuev_D_1,
+//	Heron.scratch.layermap.skuev_D_2,
+//	Heron.scratch.layermap.skuev_C_plus,
+
+	Heron.scratch.layermap.vchu,
+	Heron.scratch.layermap.mchu,
+	Heron.scratch.layermap.degree,
+	Heron.scratch.layermap.ramsar,
+//	Heron.scratch.layermap.chu,
+
+	Heron.scratch.layermap.grid_kmsiet,
+	Heron.scratch.layermap.grid_kmsiet_3a4pasmo,
+	Heron.scratch.layermap.grid_dfs,
+	Heron.scratch.layermap.grid_klad_5000,
+	Heron.scratch.layermap.grid_klad_10000,
+	Heron.scratch.layermap.grid_klad_25000,
+	Heron.scratch.layermap.grid_klad_50000,
+	Heron.scratch.layermap.grid_etrs100,
+	Heron.scratch.layermap.grid_etrs10,
+	Heron.scratch.layermap.grid_etrs1,
+//	Heron.scratch.layermap.SOP_2007,
+//	Heron.scratch.layermap.SOP_2012,
+//	Heron.scratch.layermap.SOP_2014,
+	Heron.scratch.layermap.sop_posobnost,
+	Heron.scratch.layermap.ztmh_posobnost,
+	Heron.scratch.layermap.sizp_posobnost,
+	Heron.scratch.layermap.svp_vodstvo,
+	Heron.scratch.layermap.geoportal_zbgis,
+	Heron.scratch.layermap.geoportal_retm,
+	Heron.scratch.layermap.geoportal_zmsr,
+	Heron.scratch.layermap.tur_atlas_50,
+	Heron.scratch.layermap.hist_sm75,
+//	Heron.scratch.layermap.hist_smo5,
+	Heron.scratch.layermap.hist_tm10_1957,
+	Heron.scratch.layermap.hist_tm25_1952,
+	Heron.scratch.layermap.hist_tm5_1955,
+	Heron.scratch.layermap.voj_1764,
+	Heron.scratch.layermap.voj_1810,
+	Heron.scratch.layermap.voj_1875,
+//	Heron.scratch.layermap.voj_1897,
+	Heron.scratch.layermap.voj_1920,
+//	Heron.scratch.layermap.voj_1931,
+	Heron.scratch.layermap.nlc_lhc,
+	Heron.scratch.layermap.nlc_lo,
+	Heron.scratch.layermap.nlc_tmp,
+	Heron.scratch.layermap.nlc_tvp,
+	Heron.scratch.layermap.nlc_tokysr,
+	Heron.scratch.layermap.nlc_podnetypy,
+	Heron.scratch.layermap.nlc_lestypy,
+	Heron.scratch.layermap.nlc_lescesty,
+	Heron.scratch.layermap.nlc_jprl,
+	Heron.scratch.layermap.nlc_drevzlozenie,
+	Heron.scratch.layermap.nlc_polreviry,
+
+//	Heron.scratch.layermap.lvu_nlcsk_porastova,
+
+	Heron.scratch.layermap.sop_lpis,
+	Heron.scratch.layermap.sop_kataster_c,
+	Heron.scratch.layermap.sop_kataster_e,
+
+	Heron.scratch.layermap.geoportal_eskn_parcely_c,
+	Heron.scratch.layermap.geoportal_eskn_parcely_e,
+	Heron.scratch.layermap.geoportal_eskn_obec,
+	Heron.scratch.layermap.geoportal_eskn_parcely_ku,
+	Heron.scratch.layermap.geoportal_eskn_parcely_okres,
+	Heron.scratch.layermap.geoportal_eskn_parcely_kraj,
+	Heron.scratch.layermap.nlc_sop_jprl_2017,
+	Heron.scratch.layermap.nlc_sop_jprl_2018,
+	Heron.scratch.layermap.chranene_stromy,
+//SM, 13.05.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_ksk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_ksk_revizia,
+//SM, 13.05.2020 <<<
+//SM, 02.06.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_nsk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_nsk_revizia,
+//SM, 02.06.2020 <<<
+//SM, 09.06.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_bsk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_bsk_revizia,
+//SM, 09.06.2020 <<<
+//SM, 15.06.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_ttsk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_ttsk_revizia,
+//SM, 15.06.2020 <<<
+//SM, 19.06.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_psk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_psk_revizia,
+//SM, 19.06.2020 <<<
+//SM, 06.07.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_tnsk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_tnsk_revizia,
+//SM, 06.07.2020 <<<
+//SM, 16.07.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_bbsk_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_bbsk_revizia,
+//SM, 16.07.2020 <<<
+//SM, 28.09.2020 >>>
+	Heron.scratch.layermap.chranene_stromy_zask_revizia,
+	Heron.scratch.layermap.chranene_stromy_op_zask_revizia,
+//SM, 28.09.2020 <<<
+	Heron.scratch.layermap.europsky_diplom,
+	Heron.scratch.layermap.biosfericke_rezervacie,
+	Heron.scratch.layermap.unesco,
+	Heron.scratch.layermap.mchu_chkola,
+//SM, 23.01.2020 >>>
+//	Heron.scratch.layermap.mchu_pr_pralesy,
+//SM, 23.01.2020 <<<
+	Heron.scratch.layermap.mchu_zahorie_stupne,
+//	Heron.scratch.layermap.mapyCZletecka,
+//	Heron.scratch.layermap.hiking_tzt,
+//	Heron.scratch.layermap.hiking_cykloznacky,
+	Heron.scratch.layermap.freemap_tch,
+	Heron.scratch.layermap.freemap_cyclo,
+
+	Heron.scratch.layermap.chkobk_cha_tematinskevrchy_zony,
+//SM, 24.02.2020 >>>
+        Heron.scratch.layermap.np_muranskaplanina_zonacia_hranica,
+//	Heron.scratch.layermap.np_muranskaplanina_zonacia_zony,
+	Heron.scratch.layermap.np_muranskaplanina_zonacia_efp,
+	Heron.scratch.layermap.np_muranskaplanina_zonacia_vyznamnelokality,
+	Heron.scratch.layermap.np_muranskaplanina_zonacia_zaujmovelokality,
+//SM, 24.02.2020 <<<
+//SM, 23.11.2020 >>>
+	Heron.scratch.layermap.np_muranskaplanina_nahodne_tazby,
+//SM, 23.11.2020 <<<
+
+
+
+        Heron.scratch.layermap.ozprales_pralesy,
+        Heron.scratch.layermap.ozprales_pralesy_zvysky,
+
+	Heron.scratch.layermap.zonacia_pienap,
+	Heron.scratch.layermap.zonacia_slovraj,
+	Heron.scratch.layermap.zonacia_hornaorava,
+        Heron.scratch.layermap.sop_efp_hornaorava,
+	Heron.scratch.layermap.zonacia_murplanina,
+	Heron.scratch.layermap.zonacia_velkafatra,
+//SM, 18.01.2021 >>>
+        Heron.scratch.layermap.sop_efp_malekarpaty,
+//SM, 18.01.2021 <<<
+	Heron.scratch.layermap.kml_grid_50,
+
+	Heron.scratch.layermap.biotop_hluchan_npmp_2010,
+
+//SM, 18.01.2021 >>>
+	Heron.scratch.layermap.rozne__rybarske_reviry,
+//SM, 18.01.2021 <<<
+];
+
+//SM, 13.01.2020 >>>
+Ext.namespace("Heron.examples");
+
+
+/* To test if  gridCellRenderers are triggered.
+ * https://github.com/heron-mc/heron-mc/issues/302 */
+Heron.options.gridCellRenderers =
+	[
+	    {
+		featureType: 'IG_vPROTECTEDSITES_UEV',
+		attrName: 'SITEID',
+		renderer: {
+		    fn: Heron.widgets.GridCellRenderer.directLink,
+			options: {
+			url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=5&kod={SITEID}',
+			target: '_new'
+		    }
+		}
+	    }
+	    ,{
+		featureType: 'IG_vPROTECTEDSITES_CHVU',
+		attrName: 'SITEID',
+		renderer: {
+		    fn: Heron.widgets.GridCellRenderer.directLink,
+			options: {
+			url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=21&kod={SITEID}',
+			target: '_new'
+		    }
+		}
+	    }
+        ];
+
+/* Allow the same export/download formats for each result panel.*/
+//Heron.options.exportFormats=['XLS', 'GMLv2', 'GeoJSON', 'WellKnownText', 'GeoPackage', 'Shapefile'];
+Heron.options.exportFormats=[
+	 'XLS'
+	,{
+		name: 'GeoJSON (EPSG:4326 - WGS84)',
+                formatter: 'OpenLayersFormatter',
+                format: 'OpenLayers.Format.GeoJSON',
+                targetFormat: 'GeoJSON',
+                targetSrs: 'EPSG:4326',
+                fileExt: '_EPSG4326.geojson',
+                mimeType: 'text/plain'
+	}
+/*
+	,{//nefunguje, ogr2ogr je zastaraly
+		name: 'CSV (EPSG:4326)',
+                formatter: 'OpenLayersFormatter',
+		format: 'OpenLayers.Format.GeoJSON',
+                targetFormat: 'CSV',
+                targetSrs: 'EPSG:4326',
+		fileExt: '.csv',
+		mimeType: 'text/plain'
+	}
+*/
+/*
+	,{//nefunguje, ogr2ogr je zastaraly
+		name: 'Well-Known-Text (EPSG:4326)',
+                formatter: 'OpenLayersFormatter',
+		format: 'OpenLayers.Format.WKT',
+//                targetFormat: 'WKT',
+                targetSrs: 'EPSG:4326',
+		fileExt: '.wkt',
+		mimeType: 'text/plain'
+	}
+*/
+	,{
+                name: 'Esri Shapefile (EPSG:4326 - WGS84)',
+                formatter: 'OpenLayersFormatter',
+                format: 'OpenLayers.Format.GeoJSON',
+                targetFormat: 'ESRI Shapefile',
+                targetSrs: 'EPSG:4326',
+                fileExt: '.zip',
+                mimeType: 'application/zip'
+        }
+/*
+	,{//nefunguje, ogr2ogr je zastaraly
+		name: 'GPS Exchange Format (GPX) (EPSG:4326)',
+                formatter: 'OpenLayersFormatter',
+		format: 'OpenLayers.Format.GeoJSON',
+                targetFormat: 'GPX',
+                targetSrs: 'EPSG:4326',
+		fileExt: '.gpx',
+		mimeType: 'text/xml'
+	}
+*/
+	,{//nefunguje, ogr2ogr je zastaraly
+		name: 'KML (EPSG:4326 - WGS84)',
+                formatter: 'OpenLayersFormatter',
+		format: 'OpenLayers.Format.GeoJSON',
+                targetFormat: 'KML',
+                targetSrs: 'EPSG:4326',
+		fileExt: '.kml',
+		mimeType: 'text/xml'
+	}
+
+];
+
+/** Create a config for the search panel. This panel may be embedded into the accordion
+ * or bound to the "find" button in the toolbar. Here we use the toolbar button.
+ */
+Heron.examples.searchPanelConfig = {
+    xtype: 'hr_multisearchcenterpanel',
+    hropts: [
+	{
+//SM, 05.08.2020 >>>
+	    searchPanel: {
+                xtype: 'hr_formsearchpanel',
+                name: 'Chránené územie',
+                header: false,
+                protocol: new OpenLayers.Protocol.WFS({
+                    version: "1.1.0",
+                    url: "https://www.sopsr.sk/geoserver/sopsr/ows?service=wfs",
+                    srsName: "EPSG:3857",
+                    featureType: "IG_PROTECTEDSITES"
+                }),
+		abortPrevious: true,
+                items: [
+		    {
+			xtype: 'combo', // http://mapas.dgterritorio.pt/heron/docs/lib/Heron/jst/widgets/search/GeocoderCombo.html
+//			xtype: 'hr_geocodercombo',
+			queryParam: 'query', //pri 'hr_geocodercombo' je default "q", pri 'combo' je "query"
+			queryDelay: 700,
+			id: 'SITETITLE_SK', // pod takymto id sa bude formulárová položka odosielať
+			name: 'SITETITLE_SK__like', // aby použilo metodu "OpenLayers.Filter.Comparison.LIKE" namiesto prednastavenej "OpenLayers.Filter.Comparison.EQUAL_TO" // viď https://www.gisnet.jp/osk/stable/vendor/heron-1.0.6/docs/lib/Heron/jst/widgets/search/FormSearchPanel.html
+			fieldLabel: 'Chránené územie',
+			width: 300,
+			labelStyle: 'width: 120px; color:black; white-space:nowrap; font-weight:bold;',
+			style: 'font-size: 11px;',
+			clearFilterOnBlur: false,
+			allowBlank: false,
+			store: new Ext.data.JsonStore({
+			    url: '../pg_con_ps.php',
+			    fields: ['real_name', 'display_name'],
+			}),
+			minChars: 0,
+			displayField:'display_name',
+			hiddenName: 'SITETITLE_SK__like',
+			valueField: 'real_name',
+			typeAhead: false,
+			mode: 'remote',
+			forceSelection: false,
+			triggerAction: 'all',
+			emptyText:'Vyberte chránené územie...',
+			selectOnFocus:false,
+		    },
+                ],
+                hropts: { //https://heron-mc.org/lib/Heron/jst/widgets/search/FormSearchPanel.html
+                    onSearchCompleteZoom: 10,
+                    autoWildCardAttach: false,
+                    caseInsensitiveMatch: true,
+                    logicalOperator: OpenLayers.Filter.Logical.AND,
+		    layerOpts: [
+//			{ layerOn: 'Pôsobnosť ŠOP SR', layerOpacity: 0.9 },
+		    ]
+}
+            	},
+            resultPanel: {
+                xtype: 'hr_featuregridpanel',
+                id: 'hr-featuregridpanel',
+                header: false,
+                autoConfig: true,
+//                exportFormats: Heron.options.exportFormats,
+                exportFormats: ['XLS', 'CSV'],
+//                exportFormats: [],
+		displayPanels: ['Grid'],
+                gridCellRenderers: Heron.options.gridCellRenderers,
+                hropts: {
+                    zoomOnRowDoubleClick: true,
+                    zoomOnFeatureSelect: false,
+                    zoomLevelPointSelect: 8,
+                    zoomToDataExtent: false
+                }
+	    }
+//SM, 05.08.2020 <<<
+        }
+    ]
+};
+
+//SM, 27.01.2020 >>>
+Heron.examples.searchPanelConfig.hropts.push({
+	searchPanel: {
+                xtype: 'hr_formsearchpanel',
+                name: 'JPRL - cez Lesné celky (plány)',
+                header: false,
+                protocol: new OpenLayers.Protocol.WFS({
+                    version: "1.1.0",
+//                    url: "http://kn.sopsr.sk/geoserver/nlc/ows?service=wfs",
+                    url: "http://192.168.70.105:8080/geoserver/nlc/ows?service=wfs",
+                    srsName: "EPSG:3857",
+//                    featureType: "jprl_2018_with_dbf"
+                    featureType: "interactive_map_jprl_2018"
+                }),
+                items: [
+		    {
+			xtype: 'combo', // http://mapas.dgterritorio.pt/heron/docs/lib/Heron/jst/widgets/search/GeocoderCombo.html
+//			xtype: 'hr_geocodercombo',
+			queryParam: 'query', //pri 'hr_geocodercombo' je default "q", pri 'combo' je "query"
+			queryDelay: 700,
+			id: 'plan', // pod takymto id sa bude formulárová polložka odosielať
+			name: 'plan__like', // aby použilo metodu "OpenLayers.Filter.Comparison.LIKE" namiesto prednastavenej "OpenLayers.Filter.Comparison.EQUAL_TO" // viď https://www.gisnet.jp/osk/stable/vendor/heron-1.0.6/docs/lib/Heron/jst/widgets/search/FormSearchPanel.html
+			fieldLabel: 'Lesný celok (plán)',
+			width: 430,
+			labelStyle: 'width: 120px; color:black; white-space:nowrap; font-weight:bold;',
+			style: 'font-size: 11px;',
+			clearFilterOnBlur: false,
+			allowBlank: false,
+			store: new Ext.data.JsonStore({
+			    url: '../pg_con_csl_kpl.php',
+			    fields: ['plan'],
+			}),
+			minChars: 0,
+			displayField:'plan',
+//			valueField:'kpl', //https://www.sencha.com/forum/showthread.php?153542-ComboBox-valueField-is-not-submitted
+			typeAhead: false,
+			mode: 'remote',
+			forceSelection: false,
+			triggerAction: 'all',
+			emptyText:'Vyberte lesný celok...',
+			selectOnFocus:false,
+		    },
+                    {
+			//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Number.html
+			xtype: "numberfield",
+//			name: "DC__like",
+			name: "dc__eq", // https://heron-mc.org/lib/Heron/jst/widgets/search/FormSearchPanel.html
+			value: '105',
+			width: 100,
+			//padding: '20 5 3 10',
+			fieldLabel: "Číslo porastu (DC)",
+			labelAlign: 'left',
+			//labelWidth: 200,
+			labelPad: 100,
+			labelStyle: 'width: 120px; color: black; white-space: nowrap; font-weight: bold;',
+			allowBlank: false,
+			allowDecimals: false,
+			blankText: 'napr.: <b>105</b>'
+                    },
+                ],
+                hropts: { //https://heron-mc.org/lib/Heron/jst/widgets/search/FormSearchPanel.html
+                    onSearchCompleteZoom: 10,
+                    autoWildCardAttach: false,
+                    caseInsensitiveMatch: true,
+                    logicalOperator: OpenLayers.Filter.Logical.AND,
+		    layerOpts: [
+//			{ layerOn: 'Pôsobnosť ŠOP SR', layerOpacity: 0.9 },
+//			{ layerOn: 'Jednotky priestorového rozdelenia lesa', layerOpacity: 0.9 },
+		    ]
+}
+            	},
+            resultPanel: {
+                xtype: 'hr_featuregridpanel',
+                id: 'hr-featuregridpanel',
+                header: false,
+                autoConfig: true,
+                exportFormats: Heron.options.exportFormats,
+//                exportFormats: ['XLS', 'CSV'],
+//                exportFormats: [],
+		displayPanels: ['Grid'],
+                gridCellRenderers: Heron.options.gridCellRenderers,
+                hropts: {
+                    zoomOnRowDoubleClick: true,
+                    zoomOnFeatureSelect: false,
+                    zoomLevelPointSelect: 8,
+                    zoomToDataExtent: false
+                }
+	}
+});
+//SM, 27.01.2020 <<<
+
+Heron.examples.searchPanelConfig.hropts.push({
+	    searchPanel: { //view-source:https://lib.heron-mc.org/heron/1.0.8dev/examples/multisearchcenternl/Config.js
+		xtype: 'hr_formsearchpanel',
+		name: 'JPRL - cez Lesné hospodárske celky',
+		header: false,
+		protocol: new OpenLayers.Protocol.WFS({
+		    version: "1.1.0",
+//		    url: "http://gis.nlcsk.org/arcgis/services/Inspire/JPRL/MapServer/WFSServer", // chcelo by to aktuálnejšiu verziu "proxy.cgi", ktorá sa však na tento zastaralejší server nedá implementovať
+		    //url: "http://kn.sopsr.sk/geoserver/nlc/ows?service=wfs",
+		    url: "http://192.168.70.105:8080/geoserver/nlc/ows?service=wfs",
+		    srsName: "EPSG:3857",
+//		    srsName: "EPSG:4326",
+		    featureType: "jprl_from_wfs"
+//		    featureType: "WFS_:Jednotky_priestorov%C3%A9ho_rozdelenia_lesa"
+                }),
+                items: [
+/*
+                    {
+			//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Text.html
+			xtype: "textfield",
+//			name: "LHC__like",
+			name: "lhc__like", // https://heron-mc.org/lib/Heron/jst/widgets/search/FormSearchPanel.html
+			value: 'Beňuš',
+//			width: 100,
+			labelStyle: 'width: 120px; color: black; white-space: nowrap; font-weight: bold;',
+
+			fieldLabel: "LHC",
+			allowBlank: false,
+			blankText: 'Zadať názov LHC, napr.: <b>Beňuš</b>'
+			,minLength: '3'
+			,minLengthText: 'aspoň 3 textové znaky musia byť zadané'
+                    }
+*/
+/*
+		    ,{
+// ### AUTOCOMPLETE INPUT
+// inšpirácia: https://groups.google.com/forum/#!topic/geoext-viewer-devel/DcCClVvm1is
+// https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.ComboBox.html
+			xtype: 'hr_geocodercombo', // http://mapas.dgterritorio.pt/heron/docs/lib/Heron/jst/widgets/search/GeocoderCombo.html
+			id: 'lhc', // pod takymto id sa bude formulárová polložka odosielať
+			style: 'font-size: 11px;',
+			clearFilterOnBlur: false,
+			allowBlank: false,
+//			vtype: 'alpha',
+			width: 185,
+			emptyText: 'Please enter name...',
+			hideTrigger: true,
+			minChars: 1,
+			queryDelay: 300,
+			fieldLabel: 'Search - Name of XYZ',
+			labelStyle: 'font-size: 11px;',
+//			displayField: 'lhc',
+			valueField: 'lhc',
+			store: new Ext.data.Store({
+			    reader: new GeoExt.data.FeatureReader({}, [
+//                      	{name: 'name', mapping: 'FIELD_1'},
+				{name: 'name', mapping: 'lhc'},
+//				{name: 'bounds', convert: function(v, feature) {
+//				    return feature.geometry.getBounds().toArray();
+//				    }
+				}
+
+			    ]),
+			proxy: new (Ext.extend(GeoExt.data.ProtocolProxy, {
+			    doRequest: function(action, records, params, reader, callback, scope, arg)
+			    {
+				if (params.q)
+				{
+				    params.filter = new OpenLayers.Filter.Comparison({
+					type: OpenLayers.Filter.Comparison.LIKE,
+					matchCase: false,
+//					property: 'FIELD_1',
+					property: 'lhc',
+//					value: '*' + params.q + '*'
+					value: params.q + '*'
+				    });
+				    delete params.q;
+				}
+				GeoExt.data.ProtocolProxy.prototype.doRequest.apply(this, arguments);
+			    }
+			}))({
+			    protocol: new OpenLayers.Protocol.WFS({
+				version: "1.1.0",
+				url: "http://kn.sopsr.sk/geoserver/nlc/ows?service=wfs",
+//				featurePrefix: "isd-db",
+				featureType: "tbl_lhc",
+				srsName: "EPSG:3857",
+//				propertyNames: ['FIELD_1', 'lhc'],
+				propertyNames: ['lhc'],
+				maxFeatures: 20
+				,sortBy: 'lhc'
+			    })
+			    ,setParamsAsOptions: true
+			})
+		    })
+		}
+*/
+		    {
+// ### COMOBOBOX + autocomplete
+			xtype: 'combo',
+//			id: 'LHC',
+			id: 'lhc',
+			fieldLabel: 'LHC',
+//name: 'LHC__like',
+/*
+			store: new Ext.data.ArrayStore({
+			    id: 0,
+			    fields: [
+				'myId',  // numeric value is the key
+				'displayText'
+			    ],
+			    data: [[1, 'item1'], [2, 'item2']]  // data is local
+			}),
+			valueField: 'myId',
+*/
+//			hiddenName: 'gemeente',
+			enableKeyEvents: true,
+			editable: true,
+			autoSelect: true,
+			forceSelection: true,
+			typeAhead: false,
+			caseSensitive: false,
+			lazyInit: true,
+			emptyText: 'Vyberte LHC',
+			loadingText: 'dolovanie názvu LHC..',
+			minChars: 1,
+			width: 215,
+			allowBlank: false,
+			blankText: 'Zadať názov LHC, napr.: <b>Beňuš</b>',
+			editable: true,
+			selectOnFocus: true,
+			clearFilterOnBlur: true,
+			valueNotFoundText: 'nenájdené',
+//			emptyText: 'nullll',
+//			vtype: 'alpha',
+			labelStyle: 'width:120px; color:black; white-space:nowrap; font-weight:bold;',
+			mode: 'remote',
+/*
+			store: new GeoExt.data.FeatureStore({
+			     autoLoad: true,
+			     proxy: new GeoExt.data.ProtocolProxy({
+			         protocol: new OpenLayers.Protocol.WFS({
+//			             url: Heron.scratch.urls.KADEMO_OWS,
+					url: 'http://kn.sopsr.sk/geoserver/nlc/ows?service=wfs',
+			             featureType: "tbl_lhc",
+//			             geometryName: 'geom'
+			         })
+			     }),
+			     fields: [
+			         {name: 'lhc'}
+//			         {name: 'kadnaam'},
+			     ]}),
+*/
+			store: new Ext.data.JsonStore({
+			    url: '../pg_con_nlc_lhc.php',
+			    fields: ['clhc', 'lhc']
+			}),
+			 valueField: 'lhc',
+			 displayField: 'lhc',
+			 triggerAction: 'all',
+			 selectOnFocus: true,
+/*
+			 listeners: {
+			     'select': function (cb, rec) {
+			         // Sets the value into the filter of "Sectie" combo
+			         // TODO: need more elegant way of doing this, like "observer"
+			         var sectieCB = Ext.getCmp('sectie_cb');
+			         sectieCB.clearValue();
+				 sectieCB.store.proxy.protocol.filter.value = cb.value;
+			         sectieCB.store.load();
+			     },
+			     'beforequery': function (queryPlan) {
+			         var combo = queryPlan.combo;
+			         // combo.store.clearFilter(true);
+			         var searchValue = queryPlan.query;
+			         if (combo.lastQuery != searchValue) {
+			             combo.store.filter('lhc',searchValue, true, false);
+			             combo.lastQuery = searchValue;
+			             combo.onLoad();
+			             // console.log('searchValue=' + searchValue);
+			         }
+			         return false;
+			     },
+			     scope: this
+			 }
+*/
+		    }
+                    ,{
+			//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Number.html
+			xtype: "numberfield",
+//			name: "DC__like",
+//			name: "DC__eq", // https://heron-mc.org/lib/Heron/jst/widgets/search/FormSearchPanel.html
+			name: "dc__eq",
+			value: '105',
+			width: 100,
+			//padding: '20 5 3 10',
+			fieldLabel: "Číslo porastu (DC)",
+			labelAlign: 'left',
+			//labelWidth: 200,
+			labelPad: 100,
+			labelStyle: 'width: 120px; color: black; white-space: nowrap; font-weight: bold;',
+			allowBlank: false,
+			allowDecimals: false,
+			blankText: 'napr.: <b>105</b>'
+                    }
+/*
+                    ,{
+			xtype: "label",
+			id: "helplabel",
+			html: '<br/><br/><br/><u style="color: blue;">Tím Odboru správy dát a GIS</u> pre vás pripravil:<br />&nbsp;&nbsp;<b>Vyhľadávač lesných porastov</b><br/>',
+			style: {
+			    fontSize: '12px',
+			    color: '#AAAAAA'
+			}
+                    }
+*/
+                ],
+                hropts: { //https://heron-mc.org/lib/Heron/jst/widgets/search/FormSearchPanel.html
+                    onSearchCompleteZoom: 10,
+                    autoWildCardAttach: false,
+                    caseInsensitiveMatch: true,
+                    logicalOperator: OpenLayers.Filter.Logical.AND,
+		    layerOpts: [
+			{ layerOn: 'Pôsobnosť ŠOP SR', layerOpacity: 0.9 },
+//			{ layerOn: 'Jednotky priestorového rozdelenia lesa', layerOpacity: 0.9 },
+		    ]
+                }
+            }
+            ,resultPanel: {
+                xtype: 'hr_featuregridpanel',
+                id: 'hr-featuregridpanel',
+                header: false,
+                autoConfig: true,
+                exportFormats: Heron.options.exportFormats,
+		displayPanels: ['Grid'],
+                gridCellRenderers: Heron.options.gridCellRenderers,
+                hropts: {
+                    zoomOnRowDoubleClick: true,
+                    zoomOnFeatureSelect: false,
+                    zoomLevelPointSelect: 8,
+                    zoomToDataExtent: false
+                }
+            }
+
+});
+
+Heron.examples.searchPanelConfig.hropts.push({
+    searchPanel: {
+        xtype: 'hr_formsearchpanel',
+                name: 'parcely v KN-C',
+                header: false,
+                protocol: new OpenLayers.Protocol.WFS({
+		    version: "1.1.0",
+//		    url: "http://kn.sopsr.sk/geoserver/ows?service=wfs",
+		    url: "http://192.168.70.105:8080/geoserver/ows?service=wfs",
+		    srsName: "EPSG:3857",
+		    featureType: "SK_KN_C"
+                }),
+                items: [
+
+                    {
+			//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Text.html
+			xtype: "textfield",
+			name: "nazov_ku__like",
+			value: 'Revúca',
+			labelStyle: 'width: 140px; white-space: nowrap; font-weight: bold;',
+			fieldLabel: "  Katastrálne územie",
+			allowBlank: false,
+			blankText: 'Zadať názov katastrálneho územia, napr.: <b>Revúca</b>'
+			,minLength: '3'
+			,minLengthText: 'aspoň 3 textové znaky musia byť zadané'
+                    }
+
+/*
+		    {
+// ### AUTOCOMPLETE INPUT
+// inšpirácia: https://groups.google.com/forum/#!topic/geoext-viewer-devel/DcCClVvm1is
+// https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.ComboBox.html
+			xtype: 'hr_geocodercombo', // http://mapas.dgterritorio.pt/heron/docs/lib/Heron/jst/widgets/search/GeocoderCombo.html
+//			xtype: 'combo',
+			id: 'nazov_ku', // pod takymto id sa bude formulárová polložka odosielať
+			style: 'font-size: 11px;',
+			clearFilterOnBlur: false,
+			allowBlank: false,
+//			vtype: 'alpha',
+// >>> vtype >>>
+//			vtype: new Ext.form.VTypes({
+//			    AlphaNum:  function(v) {
+//				return /^[a-z0-9]$/i.test(v);
+//				return /^[a-z0-9]$/i.test(v);
+//			    },
+//			    // This is the tooltip message displayed when invalid input occurs
+//			    AlphaNumText: 'Must be an alphanumeric word',          
+//			    // This mask filter invalid keystrokes
+//			    AlphaNumMask: /[a-z0-9]/i
+//			    AlphaNumMask: /[a-z]/i
+//			}),
+// <<< vtype <<<
+			width: 185,
+			emptyText: 'Zadajte názov k.ú',
+			hideTrigger: true,
+			minChars: 1,
+			typeAhead: false,
+			queryDelay: 500,
+			fieldLabel: 'Názov k.ú.',
+			labelStyle: 'width: 140px; white-space: nowrap; font-weight: bold;',
+//			labelStyle: 'font-size: 11px;',
+//			displayField: 'utj',
+//			valueField: 'utj', 
+			store: new Ext.data.Store({
+			    reader: new GeoExt.data.FeatureReader({}, [
+//				{name: 'name', mapping: 'FIELD_1'},
+				{name: 'name', mapping: 'utj'},
+//				{name: 'bounds', convert: function(v, feature) {
+//				    return feature.geometry.getBounds().toArray();
+//				    }
+//				}
+			    ]),
+			    proxy: new (Ext.extend(GeoExt.data.ProtocolProxy, {
+				doRequest: function(action, records, params, reader, callback, scope, arg) {
+				    if (params.q)
+				    {
+					params.filter = new OpenLayers.Filter.Comparison({
+					    type: OpenLayers.Filter.Comparison.LIKE,
+					    matchCase: false,
+					    property: 'utj',
+//					    value: '*' + params.q + '*'
+					    value: params.q + '*'
+					});
+					delete params.q;
+				    }
+				    GeoExt.data.ProtocolProxy.prototype.doRequest.apply(this, arguments);
+				}
+			    }))({
+				protocol: new OpenLayers.Protocol.WFS({
+				    version: "1.1.0",
+				    url: "http://kn.sopsr.sk/geoserver/kataster/ows?service=wfs",
+//				    featurePrefix: "isd-db",
+				    featureType: "tbl_kataster",
+				    srsName: "EPSG:3857",
+//				    propertyNames: ['FIELD_1', 'lhc'],
+				    propertyNames: ['utj'],
+				    maxFeatures: 50
+				    ,sortBy: 'utj'
+				}),
+				setParamsAsOptions: true
+			    })
+			})
+
+		    }
+*/
+                    ,{
+			//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Text.html
+			xtype: "textfield",
+			name: "parcela",
+			value: '2669/1',
+			labelStyle: 'width: 140px; white-space: nowrap; font-weight: bold;',
+			fieldLabel: "  Číslo parcely KN-C",
+			allowBlank: false,
+			blankText: 'napr.: <b>2669/1</b>'
+                    },
+/*
+                    {
+			xtype: "label",
+			id: "helplabel",
+			html: '<br/><br/><br/><u style="color: blue;">Tím Odboru správy dát a GIS</u> pre vás pripravil:<br />&nbsp;&nbsp;<b>Vyhľadávač lesných porastov</b><br/>',
+			style: {
+			    fontSize: '10px',
+			    color: '#AAAAAA'
+			}
+                    }
+*/
+                ],
+		hropts: {
+		    onSearchCompleteZoom: 10,
+		    autoWildCardAttach: true,
+		    caseInsensitiveMatch: true,
+		    logicalOperator: OpenLayers.Filter.Logical.AND
+		}
+	    },
+	    resultPanel: {
+		xtype: 'hr_featuregridpanel',
+		id: 'hr-featuregridpanel',
+		header: false,
+/*
+//SM, mohol by som si aj prispôsobiť stlpce vo výslednom gride >
+		columns: [
+		    {
+			header: "Street",
+			width: 100,
+			dataIndex: "stt_naam"
+		    }
+		    ,{
+			header: "City",
+			width: 200,
+			dataIndex: "gme_naam"
+		    }
+		],
+*/
+		exportFormats: ['XLS'],
+		hropts: {
+		    zoomOnRowDoubleClick: true,
+		    zoomOnFeatureSelect: false,
+		    zoomLevelPointSelect: 9
+		}
+	    }
+});
+
+Heron.examples.searchPanelConfig.hropts.push({
+    searchPanel: {
+	xtype: 'hr_formsearchpanel',
+	name: 'parcely v KN-E',
+	header: false,
+	protocol: new OpenLayers.Protocol.WFS({
+	    version: "1.1.0",
+//	    url: "http://kn.sopsr.sk/geoserver/ows?service=wfs",
+	    url: "http://192.168.70.105:8080/geoserver/ows?service=wfs",
+	    srsName: "EPSG:3857",
+	    featureType: "SK_KN_E"
+	}),
+	items: [
+	    {
+		//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Text.html
+		xtype: "textfield",
+		name: "nazov_ku__like",
+		value: 'Revúca',
+		labelStyle: 'width: 140px; white-space: nowrap; font-weight: bold;',
+		fieldLabel: "  Katastrálne územie",
+		allowBlank: false,
+		blankText: 'Zadať názov katastrálneho územia, napr.: <b>Revúca</b>'
+		,minLength: '3'
+		,minLengthText: 'aspoň 3 textové znaky musia byť zadané'
+	    }
+	    ,{
+		//https://docs.sencha.com/extjs/6.2.0/classic/Ext.form.field.Text.html
+		xtype: "textfield",
+		name: "parcela",
+		value: '2149/1',
+		labelStyle: 'width: 140px; white-space: nowrap; font-weight: bold;',
+		fieldLabel: "  Číslo parcely KN-E",
+		allowBlank: false,
+		blankText: 'napr.: <b>2149/1</b>'
+	    }
+/*
+	    ,{
+			xtype: "label",
+			id: "helplabel",
+			html: '<br/><br/><br/><u style="color: blue;">Tím Odboru správy dát a GIS</u> pre vás pripravil:<br />&nbsp;&nbsp;<b>Vyhľadávač lesných porastov</b><br/>',
+			style: {
+			    fontSize: '10px',
+			    color: '#AAAAAA'
+			}
+	    }
+*/
+	],
+	hropts: {
+	    onSearchCompleteZoom: 10,
+	    autoWildCardAttach: true,
+	    caseInsensitiveMatch: true,
+	    logicalOperator: OpenLayers.Filter.Logical.AND
+	}
+    },
+    resultPanel: {
+	xtype: 'hr_featuregridpanel',
+	id: 'hr-featuregridpanel',
+	header: false,
+/*
+//SM, mohol by som si aj prispôsobiť stlpce vo výslednom gride >
+	columns: [
+            {
+                header: "Street",
+                width: 100,
+                dataIndex: "stt_naam"
+            },
+            {
+                header: "City",
+                width: 200,
+                dataIndex: "gme_naam"
+            }
+        ],
+*/
+	exportFormats: ['XLS'],
+        hropts: {
+            zoomOnRowDoubleClick: true,
+            zoomOnFeatureSelect: false,
+            zoomLevelPointSelect: 9
+        }
+    }
+});
+
+//SM, 13.01.2020 <<<
+
+
+
+
+Heron.options.map.toolbar = [
+        {
+        type: "namesearch",
+        options: {
+//		url: 'http://open.mapquestapi.com/nominatim/v1/search?key=zDUDQPvUUH8G0mqb3nGOq4RSwmr6w2lW&countrycodes=SK,CZ&addressdetails=1&format=json&limit=15&osm_type=N',
+//		url: 'http://open.mapquestapi.com/nominatim/v1/search?countrycodes=SK,CZ&addressdetails=1&format=json&limit=15&json_callback=renderBasicSearchNarrative',
+//url: 'http://nominatim.openstreetmap.org/search?format=json',
+//		xtype: 'hr_nominatimsearchcombo',
+//		id: "nominatimsearchcombo1",
+//            tpl: '<tpl for="."><tpl for="address"><div class="x-combo-list-item">{road} {town} {state} {postcode} {country}</div></tpl></tpl>',
+//            tpl: '<tpl for="."><tpl for="address"><div class="x-combo-list-item">{city_district} {postcode} {city} {country_code}</div></tpl></tpl>',
+//            tpl: '<tpl for="."><tpl for="address"><div class="x-combo-list-item">{display_name}</div></tpl></tpl>',
+//            tpl: '<tpl for="."><tpl for="address"><div class=i"x-combo-list-item">{city_district} {city} {state} {postcode} ({country_code})</div></tpl></tpl>',
+//            displayTpl: '<tpl for="."><tpl for="address">{road} {town} {state} {country}</tpl></tpl>'
+//            displayTpl: '<tpl for="."><tpl for="address">{road} {town} {state} {postcode} {country}</tpl></tpl>',
+//            displayTpl: '<tpl for="."><tpl for="address">{city_district} {postcode} {country_code}</tpl></tpl>',
+//            displayTpl: '<tpl for="."><tpl for="address">{city_district} {city} {state} {postcode} ({country_code})</tpl></tpl>',
+
+//inspiracia:
+//http://jsfiddle.net/nqT55/1/
+//http://wiki.openstreetmap.org/wiki/Nominatim#Parameters
+		url: 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=0&countrycodes=SK&limit=20&dedupe=1',
+//url: 'http://photon.komoot.de/api',
+		xtype: 'hr_geocodercombo',
+		id: 'hr_geocodercombo',
+		layer: new OpenLayers.Layer.Vector("Location", {
+            styleMap: new OpenLayers.Style({
+//                externalGraphic: "../../resources/images/default/anchor-access.png",
+		externalGraphic: "http://nominatim.openstreetmap.org/images/mapicons/poi_place_village.p.20.png",
+                graphicYOffset: -25,
+                graphicHeight: 25,
+                graphicTitle: "${name}"
+            })
+        }),
+		emptyText: 'Hľadaj miesto, mesto, dedinu v SK',
+		width: 420,
+		zoom: 13,
+		minChars: 3,
+		tooltip: "Hľadať ...",
+        }
+    },
+
+        {type: "-"},
+//SM, 13.01.2020 >>>
+    {
+        type: "searchcenter",
+        // Options for SearchPanel window
+        options: {
+            show: true,
+            searchWindow: {
+//                title: __('Multiple Searches'),
+                x: 1000,
+                y: undefined,
+		// to len kvoli širokému výberovému menu lesných celkov
+                width: 580,
+                height: 340,
+                items: [
+                    Heron.examples.searchPanelConfig
+                ]
+            }
+        }
+    },
+//SM, 13.01.2020 <<<
+
+//	{type: "scale", options: {
+//		thousandSeparator: ' ',
+//		}
+//	},
+        {type: "-"},
+//    {type: "baselayer"},
+//        {type: "-"},
+/*
+        {type: "featureinfo", options: {
+				max_features: 20,
+			      }
+	},
+*/
+
+	{
+	     type: "featureinfo"
+	    ,options: {
+        	popupWindow: {
+			width: 460,
+			height: 200,
+			featureInfoPanel: {
+				showTopToolbar: true,
+				displayPanels: ['Table'],
+				exportFormats: ['CSV', 'XLS'],
+				maxFeatures: 10,
+				// In case that the same layer would be requested more than once: discard the styles
+				discardStylesForDups: true
+				,gridCellRenderers: Heron.options.gridCellRenderers
+			}
+		}
+	    }
+	},
+
+        {type: "-"},
+
+	{type: "coordinatesearch", options: {
+		tooltip: __('Zadajte súradnice pre navigáciu na mape.'),
+		onSearchCompleteZoom: 10,
+		fieldLabelX: 'lon',
+		fieldLabelY: 'lat',
+		showProjection: true,
+		showHideMarkers: true,
+		removeMarkersOnClose: false,
+//		onZoomLevel: 7,
+		hropts: [
+				{
+				  projEpsg: 'EPSG:4326'
+				 ,projDesc: 'WGS 84'
+				 ,fieldLabelX: 'X'
+				 ,fieldLabelY: 'Y'
+				 ,fieldEmptyTextX: 'napr.: 20.114076'
+				 ,fieldEmptyTextY: 'napr.: 48.693340'
+				 ,fieldMinX: -180
+				 ,fieldMinY: -90
+				 ,fieldMaxX: 180
+				 ,fieldMaxY: 90
+				 ,fieldDecPrecision: 6
+				 ,iconWidth: 32
+				 ,iconHeight: 32
+				 ,localIconFile: 'redpin.png'
+//				 ,iconUrl: 'http://lib.heron-mc.org/heron/latest/resources/images/redpin.png'
+				 ,iconUrl: 'https://lib.heron-mc.org/heron/latest/resources/images/map_pin.png'
+				},
+				{
+				  projEpsg: 'EPSG:102067'
+				 ,projDesc: 'S-JTSK'
+				 ,fieldLabelX: 'X'
+				 ,fieldLabelY: 'Y'
+				 ,fieldEmptyTextX: 'napr.: -347013.497'
+				 ,fieldEmptyTextY: 'napr.: -1238035.421'
+				 ,fieldMinX: -591310
+				 ,fieldMinY: -1334780
+				 ,fieldMaxX: -165448
+				 ,fieldMaxY: -1132590
+				 ,fieldDecPrecision: 6
+				 ,iconWidth: 32
+				 ,iconHeight: 32
+				 ,localIconFile: 'redpin.png'
+				 ,iconUrl: 'https://lib.heron-mc.org/heron/latest/resources/images/map_pin.png'
+				},
+				{
+				  projEpsg: 'EPSG:28403'
+				 ,projDesc: 'S-42 3.pásmo'
+				 ,fieldLabelX: 'X'
+				 ,fieldLabelY: 'Y'
+				 ,fieldEmptyTextX: 'napr.: 3876559.636'
+				 ,fieldEmptyTextY: 'napr.: 5408298.786'
+				 ,fieldDecPrecision: 6
+				 ,iconWidth: 32
+				 ,iconHeight: 32
+				 ,localIconFile: 'redpin.png'
+				 ,iconUrl: 'https://lib.heron-mc.org/heron/latest/resources/images/map_pin.png'
+				},
+				{
+				  projEpsg: 'EPSG:28404'
+				 ,projDesc: 'S-42 4.pásmo'
+				 ,fieldLabelX: 'X'
+				 ,fieldLabelY: 'Y'
+				 ,fieldEmptyTextX: 'napr.: 4434899.981'
+				 ,fieldEmptyTextY: 'napr.: 5396032.132'
+				 ,fieldDecPrecision: 6
+				 ,iconWidth: 32
+				 ,iconHeight: 32
+				 ,localIconFile: 'redpin.png'
+				 ,iconUrl: 'https://lib.heron-mc.org/heron/latest/resources/images/map_pin.png'
+				},
+			],
+		}
+	},
+
+        {type: "-"},
+
+	// vlastný nástroj do panela nástrojov
+	// inšpirácia: https://lib.heron-mc.org/heron/1.0.8dev/examples/toolbar-item/index.html
+	{
+	    create: function (mapPanel, options) {
+		var map = mapPanel.getMap();
+		Ext.namespace("MyToolbarItems.vectorLayer");
+		MyToolbarItems.vectorLayer = new OpenLayers.Layer.Vector("MyDrawing", {displayInLayerSwitcher: false, visibility: false, hideInLegend: true});
+		map.addLayers([MyToolbarItems.vectorLayer]);
+
+        // create the popup if it doesn't exist
+
+		return new GeoExt.Action({ // https://geoext.org/v1/lib/GeoExt/widgets/Action.html  https://docs.sencha.com/extjs/3.4.0/#!/api/Ext.Action-cfg-handler
+			text: "získaj XY",
+			control: new OpenLayers.Control.DrawFeature(
+				MyToolbarItems.vectorLayer,
+				OpenLayers.Class(OpenLayers.Control, {
+					defaultHandlerOptions: {
+						'single': true,
+						'double': false,
+						'pixelTolerance': 0,
+						'stopSingle': false,
+						'stopDouble': false
+					},
+					initialize: function(options) {
+						this.handlerOptions = OpenLayers.Util.extend(
+							{}, this.defaultHandlerOptions
+						);
+						OpenLayers.Control.prototype.initialize.apply(
+							this, arguments
+						);
+						this.handler = new OpenLayers.Handler.Click(
+							this,
+							{
+								'click': this.trigger
+							},
+							this.handlerOptions
+						);
+					},
+					trigger: function(e) {
+						var lonlat_900913 = map.getLonLatFromViewPortPx(e.xy);
+						var lonlat_102067 = map.getLonLatFromViewPortPx(e.xy);
+						var lonlat_4326 = map.getLonLatFromViewPortPx(e.xy);
+						lonlat_4326.transform( map.projection,map.displayProjection);
+						lonlat_102067.transform( map.projection,new OpenLayers.Projection("EPSG:102067"));
+
+//						alert(    '\nGoogle mercator: ' + lonlat_900913.lon + ' ' + lonlat_900913.lat + '\n'
+//							+ 'S-JTSK: ' + lonlat_102067.lon + ' ' + lonlat_102067.lat + '\n'
+//							+ 'WGS84: ' + lonlat_4326.lon + ' ' + lonlat_4326.lat + '\n'
+//							+ '');
+//						prompt('Súradnica', Math.round(lonlat_4326.lon * 1000000)/1000000 + ' ' + Math.round(lonlat_4326.lat * 1000000)/1000000);
+
+						var wind = Ext.WindowMgr.getActive(); // https://docs.sencha.com/extjs/3.4.0/#!/api/Ext.WindowGroup-method-getActive
+						if(wind){
+							wind.close();
+						}
+
+					        if (!popup) { // inšpirácia: https://api.geoext.org/1.0/examples/popup-more.js
+							var popup = new GeoExt.Popup({ // https://heron-mc.org/lib/Heron/jst/override-geoext.html  https://docs.sencha.com/extjs/3.4.0/#!/api/Ext.Window
+								title: "Odkliknutá súradnica",
+								minWidth: 500,
+								maximizable: false,
+								collapsible: false,
+								map: mapPanel.map,
+								anchored: true,
+								location: lonlat_900913,
+								listeners: {
+									close: function() {
+									    // closing a popup destroys it, but our reference is truthy
+									    popup = null;
+									}
+								}
+								,bodyStyle:    'background-color:white'
+							});
+						};
+						popup.add({
+							xtype: "box", //"dataview", //"box", // https://docs.sencha.com/extjs/3.4.0/#!/api/Ext.Component
+							autoEl: {
+								//html: "You clicked on (" + loc.lon.toFixed(2) + ", " + loc.lat.toFixed(2) + ")"
+								html:     '<table style="font-size: small;" style="border: 1px dotted blue;">'
+									+ '<tr><th style="padding:0 10px 0 10px;text-align: center;"><b>Súr. systém</b></th><th style="text-align: center;"><b>X</b></th><th style="text-align: center;"><b>Y</b></th></tr>'
+									+ '<tr><td style="padding: 0 10px 0 10px;text-align: center;border: 1px dotted blue;"><b>WGS84</b></td><td style="text-align: right;border: 1px dotted blue;">' + Math.round(lonlat_4326.lon * 1000000)/1000000 + '</td><td style="text-align: right;border: 1px dotted blue;">' + Math.round(lonlat_4326.lat * 1000000)/1000000 + '</td></tr>'
+									+ '<tr><td style="padding-right: 0 10px 0 10px;text-align: center;border: 1px dotted blue;"><b>S-JTSK</b></td><td style="text-align: right;border: 1px dotted blue;">' + Math.round(lonlat_102067.lon * 1000)/1000 + '</td><td style="text-align: right;border: 1px dotted blue;">' + Math.round(lonlat_102067.lat * 1000)/1000 + '</td></tr>'
+									+ '<tr><td style="padding-right: 0 10px 0 10px;text-align: center;border: 1px dotted blue;"><b>Google mercator</b></td><td style="text-align: right;border: 1px dotted blue;">' + Math.round(lonlat_900913.lon * 1000)/1000 + '</td><td style="text-align: right;border: 1px dotted blue;">' + Math.round(lonlat_900913.lat * 1000)/1000 + '</td></tr>'
+									+ '</table>'
+							}
+						});
+						popup.doLayout();
+						popup.show();
+					}
+				})
+			),
+			xtype: 'tbbutton',
+			map: mapPanel.getMap(),
+			toggleGroup: "toolGroup", // toto je defaultný názov skupiny nástrojov (pan, zoomin, zoomout, ...) aj tento nástroj sem musím zaradiť, inak by sa nedeaktivoval po aktivácii iného nástroja
+			group: "toolGroup",
+			//checked: true,
+			// button options
+			enableToggle: true,
+			//pressed: false,
+			//allowDepress: true,
+			tooltip: "kliknutím na mapu získaj súradnicu"
+		})
+            }
+	},
+
+        {type: "-"},
+
+/*
+	{type: "any", options: {
+//		xtype: 'tbbutton',
+text:'XY',
+    listeners: {
+        click: {
+//            element: 'el', //bind to the underlying el property on the panel
+//            fn: function(){ console.log('click el'); }
+		fn: function(e){
+//var lonlat = map.getLonLatFromViewPortPx(e.xy);
+ alert('s')}
+        },}
+
+	}
+	},
+*/
+/*
+	{type: "featureinfo", options: {
+		pressed: false,
+		getfeatureControl: {
+			hover: false,
+			drillDown: false,
+			maxFeatures: 10,
+			eventListeners: {
+				getfeatureinfo: function (event) {
+				// Code here if you want to process the results
+				//alert("ah");
+				},
+				beforegetfeatureinfo: function(event) {
+					// Code here to set the content of queryableMapLayers
+					// The event object will contain xy of mouse click
+				},
+				nogetfeatureinfo: function(event) {
+					// Code here if no queryable layers are found
+				}
+			},
+		},
+		popupWindow: {
+			width: 300,
+			height: 300,
+			featureInfoPanel: {
+				autoConfig: true,
+				featureSelection: true,
+				showTopToolbar: true,
+				displayPanels: ['Table'],
+//				exportFormats: ['CSV', 'XLS', 'GMLv2', 'Shapefile', 'GeoJSON', 'WellKnownText'],
+				autoConfigMaxSniff: 10,
+				columnCapitalize: true,
+			        maxFeatures: 10,
+				discardStylesForDups: true,
+// BUĎ takto:
+				gridCellRenderers: [
+					{
+						featureType: 'sci_slovakia_2011',
+						attrName : 'SITECODE',
+						renderer :
+						{
+							fn: Heron.widgets.GridCellRenderer.browserPopupLink,
+//fn : Heron.widgets.GridCellRenderer.directLink,
+							options :
+							{
+								url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=5&kod={SITECODE}',
+								hasAddressbar: false,
+								hasScrollbars: true,
+								isResizable: true,
+								wSize: 400,
+								hSize: 800,
+								attrPreTxt: 'Detail: ',
+								target: '_new'
+							}
+						}
+					},
+
+					{
+						featureType: 'spa_slovakia_2011',
+						attrName : 'SITECODE',
+						renderer :
+						{
+							fn: Heron.widgets.GridCellRenderer.browserPopupLink,
+//fn : Heron.widgets.GridCellRenderer.directLink,
+							options :
+							{
+								url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=21&kod={SITECODE}',
+								hasAddressbar: false,
+								hasScrollbars: true,
+								isResizable: true,
+								wSize: 400,
+								hSize: 900,
+								attrPreTxt: 'Detail: ',
+								target: '_new'
+							}
+						}
+					},
+					]
+}}}},
+*/
+        {type: "pan"},
+        {type: "zoomin"},
+        {type: "zoomout"},
+        {type: "zoomvisible"},
+        {type: "-"} ,
+        {type: "zoomprevious"},
+        {type: "zoomnext"},
+        {type: "-"},
+        {type: "measurelength", options: {geodesic: true}},
+        {type: "measurearea", options: {geodesic: true}},
+	{type: "printdialog", options: {url: 'https://maps.sopsr.sk/print-servlet-1.2.1-GEORCHESTRA/pdf900913', showOutputFormats: true}},
+//	{type: "printdialog", options: {url: 'https://maps.sopsr.sk/print-servlet-2.0-SNAPSHOT/pdf900913', showOutputFormats: true}},
+	{type: "-"},
+	{type: "addbookmark"},
+/*
+	{type: "-"},
+	{type: "mapopen"},
+	{type: "mapsave", options : {
+		mime: 'text/xml',
+		fileName: 'heron_map',
+        	fileExt: '.cml'
+	}},
+*/
+
+	{type: "oleditor",
+	 options: {
+		pressed: false,
+		// Options for OLEditor
+		olEditorOptions: {
+                activeControls: [
+			'UploadFeature', 
+			'DownloadFeature',
+			'Separator',
+			'Navigation',
+			'SnappingSettings',
+			'CADTools',
+			'Separator',
+			'DeleteAllFeatures',
+			'DeleteFeature',
+			'DragFeature',
+			'SelectFeature',
+			'Separator',
+			'DrawHole',
+			'ModifyFeature',
+			'Separator'
+		],
+		featureTypes: ['text', 'regular', 'polygon', 'path', 'point'],
+                language: 'en',
+                DownloadFeature: {
+                	url: Heron.globals.serviceUrl,
+			formats: [
+				{name: 'Well-Known-Text (WKT) (WGS84)', fileExt: '.wkt', mimeType: 'text/plain', formatter: 'OpenLayers.Format.WKT'},
+				{name: 'Well-Known-Text (WKT, S-JTSK)', fileExt: '.wkt', mimeType: 'text/plain', formatter: 'OpenLayers.Format.WKT', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+//				{name: 'Geographic Markup Language - v2 (GML2)', fileExt: '.gml', mimeType: 'text/xml', formatter: new OpenLayers.Format.GML.v2({featureType: 'oledit', featureNS: 'http://geops.de'})},
+				{name: 'GeoJSON (WGS84)', fileExt: '.geojson', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON'},
+				{name: 'GeoJSON (S-JTSK)', fileExt: '.geojson', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+				{name: 'GPS Exchange Format (GPX) (WGS84)', fileExt: '.gpx', mimeType: 'text/xml', formatter: 'OpenLayers.Format.GPX', fileProjection: new OpenLayers.Projection('EPSG:4326')},
+//                      	{name: 'GPS Exchange Format (GPX) (S-JTSK)', fileExt: '.gpx', mimeType: 'text/xml', formatter: 'OpenLayers.Format.GPX', fileProjection: new OpenLayers.Projection('EPSG:5514')},
+				{name: 'Keyhole Markup Language (KML)', fileExt: '.kml', mimeType: 'text/xml', formatter: 'OpenLayers.Format.KML', fileProjection: new OpenLayers.Projection('EPSG:4326')},
+//				{name: 'ESRI Shapefile (WGS84)', fileExt: '.zip', mimeType: 'application/zip', formatter: 'OpenLayers.Format.GeoJSON', targetFormat: 'ESRI Shapefile', fileProjection: new OpenLayers.Projection('EPSG:4326')},
+//				{name: 'ESRI Shapefile (S-JTSK(oficiálny kľúč GKÚ pre SR))', fileExt: '.zip', mimeType: 'application/zip', formatter: 'OpenLayers.Format.GeoJSON', targetFormat: 'ESRI Shapefile', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+			],
+			// For custom projections use Proj4.js
+			fileProjection: new OpenLayers.Projection('EPSG:4326')
+		},
+
+		UploadFeature: {
+			url: Heron.globals.serviceUrl,
+			formats: [
+				{name: 'Well-Known-Text (WKT) (WGS84)', fileExt: '.wkt', mimeType: 'text/plain', formatter: 'OpenLayers.Format.WKT'},
+				{name: 'Well-Known-Text (WKT) (S-JTSK)', fileExt: '.wkt', mimeType: 'text/plain', formatter: 'OpenLayers.Format.WKT', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+//				{name: 'Geographic Markup Language - v2 (GML2)', fileExt: '.gml', mimeType: 'text/xml', formatter: 'OpenLayers.Format.GML'},
+//				{name: 'Geographic Markup Language - v3 (GML3)', fileExt: '.gml', mimeType: 'text/xml', formatter: 'OpenLayers.Format.GML.v3'},
+				{name: 'GeoJSON (WGS84)', fileExt: '.geojson', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:4326')},
+				{name: 'GeoJSON (S-JTSK)', fileExt: '.geojson', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+				{name: 'GPS Exchange Format (GPX) (WGS84)', fileExt: '.gpx', mimeType: 'text/xml', formatter: 'OpenLayers.Format.GPX'},
+				{name: 'GPS Exchange Format (GPX) (S-JTSK)', fileExt: '.gpx', mimeType: 'text/xml', formatter: 'OpenLayers.Format.GPX', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+				{name: 'Keyhole Markup Language (KML)', fileExt: '.kml', mimeType: 'text/xml', formatter: 'OpenLayers.Format.KML'},
+//				{name: 'NEFUNKCNE, zastaraly GDAL: CSV (with X,Y) (WGS84)', fileExt: '.csv', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:4326')},
+				// <-- struktura: prvy riadok: "X,Y", 2.riadok: "suradnica,suradnica", ..., neuploaduje, napriek tomu, ze je podla vzoru view-source:http://lib.heron-mc.org/heron/latest/examples/editorbasics/Config.js
+//				{name: 'NEFUNKCNE, zastaraly GDAL: CSV (with X,Y) (S-JTSK)', fileExt: '.csv', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+				{name: 'ESRI Shapefile (zip, WGS84)', fileExt: '.zip', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON'},
+				{name: 'ESRI Shapefile (zip, S-JTSK(oficiálny kľúč GKÚ pre SR))', fileExt: '.zip', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067')},
+//				{name: 'ESRI Shapefile (zip, S-JTSK(kľúč 2013 Bárta pre SR))', fileExt: '.zip', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067_2')},
+//				{name: 'ESRI Shapefile (zip, S-JTSK(kľúč 2013 Bárta pre obe zeme ČR a SR))', fileExt: '.zip', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067_3')},
+//				{name: 'ESRI Shapefile (zip, S-JTSK(oficiálny kľúč ČÚZK pre ČR))', fileExt: '.zip', mimeType: 'text/plain', formatter: 'OpenLayers.Format.GeoJSON', fileProjection: new OpenLayers.Projection('EPSG:102067_4')}
+			],
+			// For custom projections use Proj4.js
+			fileProjection: new OpenLayers.Projection('EPSG:4326')
+		}
+	}
+        }
+},
+
+];
+
+Heron.options.map.statusbar = [
+//    {type: "any", options:{xtype: 'tbtext', text: 'Podklad'}},
+//    {type: "baselayer"},
+//    {type: "-"} ,
+//    {type: "any", options:{xtype: 'tbtext', text: 'Mierka'}},
+    {type: "scale"},
+    {type: "-"} ,
+//    {type: "epsgpanel"},
+    {type: "-"} ,
+//    {type: "->"} ,
+    {type: "any", options:{xtype: 'tbtext', text: 'Lokalizácia'}},
+    {type: "xcoord"},
+    {type: "ycoord"},
+    {type: "-"} ,
+    {type:"measurepanel"}
+];
+
+Ext.namespace("Heron.options.map.settings");
+Heron.options.map.settings = {
+//        projection: new OpenLayers.Projection("EPSG:3857"),
+        projection:"EPSG:900913",
+//	projection: new OpenLayers.Projection("EPSG:4326"),
+        displayProjection: new OpenLayers.Projection("EPSG:4326"),
+        units: 'm',
+//       units: 'dd',
+//geodetic: true,
+//	numZoomLevels: 16,
+	maxResolution: 156543.0339,
+//scales : [110936068.185464,55468034.0927321,27734017.0463661,13867008.523183,6933504.26159152,3466752.13079576,1733376.06539788,866688.03269894,433344.01634947,216672.008174735,108336.004087367,54168.0020436837,27084.0010218419,13542.0005109209,6771.00025546046,3385.50012773023],
+//	maxResolution: 'auto',
+        maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
+//        maxExtent: new OpenLayers.Bounds(16.947418, 47.645264, 22.536908, 49.715254),
+        center: '2181862.01954816,6240993.46345889',
+//	center: '21,48',
+        xy_precision: 6,
+        zoom: 9,
+        theme: null,
+    permalinks: {
+        /** The prefix to be used for parameters, e.g. map_x, default is 'map' */
+        paramPrefix: 'map',
+        /** Encodes values of permalink parameters ? default false*/
+        encodeType: false,
+        /** Use Layer names i.s.o. OpenLayers-generated Layer Id's in Permalinks */
+        prettyLayerNames: true
+    },
+controls:[
+//new OpenLayers.Control.ExportMap()
+//SM, 03.03.2017 >
+	new OpenLayers.Control.OverviewMap({
+		autoActivate: true,
+		maximized: true,
+		layers: [
+			//new OpenLayers.Layer.OSM(), // -> tato je predvolene, .. ALE taha na protokole http, a nie https
+			new OpenLayers.Layer.OSM(
+                		'OpenStreetMap'
+                ,		[
+					"https://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+					"https://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
+					"https://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
+				]
+			)
+		]
+
+}),
+//new OpenLayers.Control.Permalink(),
+	new OpenLayers.Control.Attribution() // toto musi byt, ak chcem pouzit hodnotu attribution nastavenu v definicii vrstiev
+//,	new OpenLayers.Control.MousePosition()
+]
+};
+
+/*
+Ext.namespace("Heron.options.layertree");
+Ext.namespace("Heron.options.map");
+Ext.namespace("Heron.scratch");
+Ext.namespace("Heron.layout");
+*/
+
+
+
+var treeDefault = [
+        {
+                nodeType: "gx_baselayercontainer",
+                expanded: true,
+		text: "My base layers"
+        },
+        {
+                nodeType: "gx_overlaylayercontainer",
+		draggable: false,
+                // render the nodes inside this container with a radio button,
+                // and assign them the group "foo".
+                loader: {
+			baseAttrs: {
+//			        radioGroup: "foo",
+//			        uiProvider: "layerNodeUI",
+					uiProvider: "use_radio",
+			}
+                }
+
+        }
+];
+
+var treeTheme = [
+        {
+//                text:'Základné mapy', expanded: true, draggable: true, children:
+                text:__('BaseMaps'),expanded: true, draggable: true, children:
+			[
+
+//{nodeType: "gx_layer", layer: "MAPY.CZ_letecka", qtip: "pre interné použitie", text: "<span style=\"font-weight: bold;\">MAPY.CZ_letecka</span>"},
+				{nodeType: "gx_layer", layer: "OpenStreetMap"},
+				{nodeType: "gx_layer", layer: "OpenTopoMap"},
+				{nodeType: "gx_layer", layer: "Tieňovaný reliéf"},
+				{nodeType: "gx_layer", layer: "Digitálny model reliéfu"},
+				{nodeType: "gx_layer", layer: "Ortofotomozaika"},
+				{nodeType: "gx_layer", layer: "Ortofotomozaika_freemap"},
+//				{nodeType: "gx_layer", layer: "Ortofotomozaika (cez ŠOP)"},
+
+			        {nodeType: "gx_layer", layer: "ZBGIS"},
+			        {nodeType: "gx_layer", layer: "Topografické mapy RETM (TM50, TM25)" },
+			        {nodeType: "gx_layer", layer: "Základné mapy SR (ZM1000000 - ZM10000)" },
+			        {nodeType: "gx_layer", layer: "Turistický atlas 1:50 000" },
+			        {nodeType: "gx_layer", layer: "Bez podkladovej mapy"},
+
+//			]
+//	},
+				{
+					text:'Historické mapy', expanded: false, draggable: true, children:
+					[
+					        {nodeType: "gx_layer", layer: "Špeciálna mapa 1:75 000" },
+//					        {nodeType: "gx_layer", layer: "SMO5" },
+					        {nodeType: "gx_layer", layer: "TM10 1957-1971" },
+					        {nodeType: "gx_layer", layer: "TM25 1952-1957" },
+					        {nodeType: "gx_layer", layer: "TM5 1955-1961" },
+					        {nodeType: "gx_layer", layer: "Vojenská mapa 1764-1787" },
+					        {nodeType: "gx_layer", layer: "Vojenská mapa 1810-1869" },
+					        {nodeType: "gx_layer", layer: "Vojenská mapa 1875-1884" },
+//					        {nodeType: "gx_layer", layer: "Vojenská mapa 1897 (V.Tatry)" },
+					        {nodeType: "gx_layer", layer: "Vojenská mapa 1920-1934" },
+//					        {nodeType: "gx_layer", layer: "Vojenská mapa 1931 (V.Tatry)" },
+                		        ]
+			        },
+			]
+	},
+        {text:__('Base Layers'), expanded: true, draggable: false, children:
+	    [
+		{nodeType: "gx_layer", layer: "Pôsobnosť ŠOP SR" },
+		{nodeType: "gx_layer", layer: "Pôsobnosť ZTMH" },
+		{nodeType: "gx_layer", layer: "Pôsobnosť SIŽP - Ochrana prírody" },
+		{nodeType: "gx_layer", layer: "Geomorfologické jednotky" },
+		{nodeType: "gx_layer", layer: "Biogeografické regióny" },
+//		{text:"<b style=\"color: green;\">Ochrana prírody</b>", expanded: true, draggable: false, qtip: "&copy; Štátna ochrana prírody SR", children:
+		{text:"<b style=\"color: green;\">Ochrana prírody</b>", expanded: true, draggable: false, qtip: "Štátna ochrana prírody SR", children:
+		    [
+			{nodeType: "gx_layer", layer: "Chránené stromy", text: "<span style=\"color: green;\">Chránené stromy SR</span>", qtip: "&copy; ŠOP SR" },
+			{text:"Chránené stromy (podklad pre revíziu)", expanded: false, draggable: false, qtip: "Štátna ochrana prírody SR", children:
+			    [
+				{nodeType: "gx_layer", layer: "Chránené stromy v KSK (podklad pre revíziu chránených stromov)", text: "<span>v Košickom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v KSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v NSK (podklad pre revíziu chránených stromov)", text: "<span>v Nitrianskom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v NSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v BSK (podklad pre revíziu chránených stromov)", text: "<span>v Bratislavskom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v BSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v TTSK (podklad pre revíziu chránených stromov)", text: "<span>v Trnavskom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v TTSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v PSK (podklad pre revíziu chránených stromov)", text: "<span>v Prešovskom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v PSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v TNSK (podklad pre revíziu chránených stromov)", text: "<span>v Trenčianskom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v TNSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v BBSK (podklad pre revíziu chránených stromov)", text: "<span>v Banskobystrickom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v BBSK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v ZASK (podklad pre revíziu chránených stromov)", text: "<span>v Žilinskom kraji</span>", qtip: "&copy; ŠOP SR" },
+				{nodeType: "gx_layer", layer: "Chránené stromy v ZASK (OP) (podklad pre revíziu chránených stromov)", text: "<span style=\"margin-left: 7px;\">+ ochranné pásmo</span>", qtip: "&copy; ŠOP SR" },
+			    ]
+			},
+//			{nodeType: "hr_multilayer", layers: "Chránené stromy v Košickom kraji (podklad pre revíziu chránených stromov), Chránené stromy (OP) v Košickom kraji (podklad pre revíziu chránených stromov)", text: "Chránené stromy v Košickom kraji (podklad pre revíziu chránených stromov)" },
+			{nodeType: "gx_layer", layer: "Chránené vtáčie územia", text: "<span style=\"color: green;\" title=\"Chránené vtáčie územia - CHVÚ\">Chránené vtáčie územia</span>", qtip: "&copy; ŠOP SR" },
+//			{nodeType: "gx_layer", layer: "Chránené vtáčie územia", text: "<a style=\"color: green;\" href=\"https://www.sopsr.sk/natura/index1.php?p=4&lang=sk&sec=1\" target=\"_blank\">Chránené vtáčie územia</a>", qtip: "Chránené vtáčie územia - CHVÚ" },
+			{nodeType: "gx_layer", layer: "Územia európskeho významu", text: "<span style=\"color: green;\" title=\"Územia európskeho významu - ÚEV\">Územia európskeho významu</span>", qtip: "&copy; ŠOP SR" },
+// 			{nodeType: "gx_layer", layer: "návrh C+ etapa ÚEV 1. fáza", text: "<span style=\"margin-left: 10px;\">návrh C+ etapa ÚEV 1. fáza</span>" },
+// 			{nodeType: "gx_layer", layer: "návrh C+ etapa ÚEV 2. fáza", text: "<span style=\"margin-left: 10px;\">návrh C+ etapa ÚEV 2. fáza</span>" },
+// 			{nodeType: "gx_layer", layer: "C+ etapa ÚEV - návrh", text: "<span style=\"margin-left: 10px;\">C+ etapa ÚEV - návrh</span>" },
+//			{nodeType: "gx_layer", layer: "Územia európskeho významu - C etapa", text: "<span style=\"color: green; background-color: yellow;\" title=\"Územia eur. významu navrhnuté na doplnenie - C etapa (pracovná verzia)\">Územia európskeho významu - C etapa</span>", qtip: "&copy; ŠOP SR" },
+//			{nodeType: "gx_layer", layer: "chránené územia (VCHÚ, MCHÚ)" },
+			{nodeType: "gx_layer", layer: "Veľkoplošné chránené územia", text: "<span style=\"color: green;\">Veľkoplošné chránené územia SR</span>", qtip: "&copy; ŠOP SR"  },
+			{nodeType: "gx_layer", layer: "Maloplošné chránené územia", qtip: "&copy; ŠOP SR", text: "<table style=\"display: inline-block; vertical-align: bottom; color: green; font-size:x-small;\"><tr><td>Maloplošné chránené územia SR</td></tr><!--tr><td style=\"font-size: xx-small; text-align: center;\">(01.12.2017)</td></tr--></table>" },
+			{nodeType: "gx_layer", layer: "Stupne ochrany", qtip: "&copy; ŠOP SR", text: "<table style=\"display: inline-block; vertical-align: bottom; color: green; font-size:x-small;\"><tr><td>Stupne ochrany</td></tr><!--tr><td style=\"font-size: xx-small; text-align: center;\">(01.12.2017)</td></tr--></table>" },
+//SM, 23.01.2020 >>>
+			//{nodeType: "gx_layer", layer: "MCHÚ - PR Pralesy", text: "<span style=\"color: red;\"><b>Návrh</b></span> PR Pralesy SR", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+//VLSM 28.4.2023
+                	{text:'<b style=\"color: red;\">Konsolidované UEV</b>', expanded: false, draggable: false, children:
+	                    [
+			         {nodeType: "gx_layer", layer: "Konsolidované UEV" }
+	                    ]
+	                },
+              /*  	{text:'<b style=\"color: red;\">Navrhované zmeny</b>', expanded: false, draggable: false, children:
+	                    [
+			         {nodeType: "gx_layer", layer: "Navrhované rozšírenie UEV" },
+			         {nodeType: "gx_layer", layer: "Navrhované zmeny stupňa ochrany UEV" }
+	                    ]
+	                },
+             */
+//VLSM 16.2.2023
+                	{text:'<b style=\"color: red;\">Prvky RUSES</b>', expanded: false, draggable: false, children:
+	                    [
+			         {nodeType: "gx_layer", layer: "Genofondové lokality - CHKO Kysuce" },
+			         {nodeType: "gx_layer", layer: "Biocentrá - CHKO Kysuce" },
+			         {nodeType: "gx_layer", layer: "Biokoridory - CHKO Kysuce" },
+	                    ]
+	                },
+//SM, 23.01.2020 <<<
+                	{text:'<b style=\"color: red;\">Migračné bariéry</b>', expanded: false, draggable: false, children:
+	                    [
+			         {nodeType: "gx_layer", layer: "Migračné biotopy" },
+//			         {nodeType: "gx_layer", layer: "Migračné obmedzenia a migračné koridory" },
+			         {nodeType: "gx_layer", layer: "Migračné obmedzenia" },
+			         {nodeType: "gx_layer", layer: "Migračné koridory" },
+	                    ]
+	                },
+		        {nodeType: "gx_layer", layer: "Ekosystémy" },
+			{text: "<b style=\"color: green;\">Biotopy hlucháňa</b>", expanded: false, draggable: false, qtip: "", children:
+			    [
+				{nodeType: "gx_layer", layer: "Hlucháň - NP Muránska planina", qtip: "&copy; ŠOP SR (source: Správa NP Muránska planina)" },
+			    ]
+			},
+
+			{text: "<b style=\"color: green;\">Zonácia</b>", expanded: true, draggable: false, qtip: "", children:
+			    [
+				{nodeType: "gx_layer", layer: "Zonácia (PIENAP)", qtip: "&copy; ŠOP SR (source: S-PIENAP)" },
+				{nodeType: "gx_layer", layer: "Zonácia (NP Slovenský raj)", qtip: "&copy; ŠOP SR (source: S-NP Slovenský raj)" },
+				{nodeType: "gx_layer", layer: "Zonácia (CHKO Horná Orava)", qtip: "&copy; ŠOP SR (source: S-CHKO Horná Orava)" },
+				{nodeType: "gx_layer", layer: "Zonácia (NP Muránska planina)", qtip: "&copy; ŠOP SR (source: S-CHKO Horná Orava)" },
+				{nodeType: "gx_layer", layer: "Zonácia (NP Veľká Fatra)", qtip: "&copy; ŠOP SR (source: NP Veľká Fatra)" }
+			    ]
+			},
+			{text: "<b style=\"color: green;\">Ekologicko-funkčné priestory</b>", expanded: false, draggable: false, qtip: "", children:
+			    [
+				{nodeType: "gx_layer", layer: "EFP: CHVÚ Horná Orava", text: "CHVÚ Horná Orava", qtip: "&copy; ŠOP SR (source: S-CHKO Horná Orava" },
+//SM, 18.01.2021 >>>
+				{nodeType: "gx_layer", layer: "EFP: CHKO Malé Karpaty", text: "CHKO Malé Karpaty", qtip: "&copy; ŠOP SR (source: S-CHKO Malé Karpaty" },
+//SM, 18.01.2021 <<<
+			    ]
+			},
+
+			{text: "<b style=\"color: blue;\">KIMS</b>", expanded: true, draggable: false, qtip: "Pracovné vrstvy", children:
+			    [
+					{nodeType: "gx_layer", layer: "Trvalé monitorovacie lokality", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "Trvalé monitorovacie lokality - botanické", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "Trvalé monitorovacie lokality - biotopové", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "Trvalé monitorovacie lokality - zoologické", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+			    ],
+			},
+
+			{text: "<b style=\"color: red;\">Dočasné</b>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+			    [
+//SM, 23.11.2020 >>>
+				//{text: "<b style=\"color: red; background-color: yellow; letter-spacing: 0px;\">NOVINKA</b> - <div style=\"display: inline; color: red; border: 1px outset blue; padding: 2px 2px 0px 2px; letter-spacing: 2px;\">NÁHODNÉ ŤAŽBY</div>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+				{text: "<b  style=\"color: red;\">NÁHODNÉ ŤAŽBY</b>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+			    	    [
+					{nodeType: "gx_layer", layer: "NP Muránska planina - náhodné ťažby", text: "v NP Muránska planina", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+				    ]
+				},
+//SM, 23.11.2020 <<<					
+				{text: "<b style=\"color: red;\">CHKO Latorica</b>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+			    	    [
+					{nodeType: "gx_layer", layer: "MCHÚ - CHKO Latorica", text: "MCHÚ", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+				    ]
+				},
+				{text: "<b style=\"color: red;\">CHKO Záhorie</b>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+			    	    [
+//					{nodeType: "gx_layer", layer: "MCHÚ - CHKO Záhorie", text: "MCHÚ", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "MCHÚ - CHKO Záhorie (stupne ochr.)", text: "MCHÚ - stupne ochrany", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+				    ]
+				},
+				{text: "<b style=\"color: red;\">CHKO Biele karpaty</b>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+			    	    [
+					{nodeType: "gx_layer", layer: "CHA Tematinske vrchy - zony", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+				    ]
+				},
+				{text: "<b style=\"color: red;\">NP Muránska planina</b>", expanded: false, draggable: false, qtip: "Pracovné vrstvy", children:
+			    	    [
+					{nodeType: "gx_layer", layer: "NP Muránska planina - hranica", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					//{nodeType: "gx_layer", layer: "NP Muránska planina - zóny", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "NP Muránska planina - EFP", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "NP Muránska planina - významné lokality", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+					{nodeType: "gx_layer", layer: "NP Muránska planina - záujmové lokality", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+				    ]
+				},
+			    ]
+			},
+
+
+			{text:'Územia medzinárodného významu', expanded: true, draggable: false, children:
+			    [
+				{nodeType: "gx_layer", layer: "Ramsarské lokality" },
+				{nodeType: "gx_layer", layer: "Lokality svetového dedičstva UNESCO" },
+				{nodeType: "gx_layer", layer: "Biosférické rezervácie" },
+				{nodeType: "gx_layer", layer: "Európsky diplom pre chránené územia" },
+
+			    ]
+			},
+/*
+			{nodeType: "hr_multilayer", layers: "CHVU,OROG", text: "CHVU a OROG" },
+*/
+		    ]
+		},
+//SM, 18.01.2021 >>>
+/* docasne zrusene rybarske reviry
+  		{text:'<b style=\"color: red; background-color: yellow; letter-spacing: 0px;\">NOVINKA</b> - <div style=\"display: inline; color: red; border: 1px outset blue; padding: 2px 2px 0px 2px; letter-spacing: 2px;\">RÔZNE</div>', expanded: false, draggable: false, children:
+		    [
+			{nodeType: "gx_layer", layer: "Rybárske revíry" , qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>"},
+		    ]
+		},
+*/
+//SM, 18.01.2021 <<<
+		{text:'Občianske združenie PRALES', expanded: false, draggable: false, qtip: "&copy;&nbsp;OZ Prales", children:
+		    [
+			{nodeType: "gx_layer", layer: "Pralesy" },
+			{nodeType: "gx_layer", layer: "Pralesy - zvyšky" },
+		    ]
+		},
+		{text:'Národné lesnícke centrum', expanded: false, draggable: false, qtip: "&copy;&nbsp;NLC Zvolen", children:
+		    [
+			{nodeType: "gx_layer", layer: "Lesné oblasti" },
+			{nodeType: "gx_layer", layer: "Lesné hospodárske celky" },
+		        {nodeType: "gx_layer", layer: "Poľovné revíry" },
+		        {nodeType: "gx_layer", layer: "Trvalé monitorovacie plochy" },
+		        {nodeType: "gx_layer", layer: "Trvalé výskumné plochy" },
+		        {nodeType: "gx_layer", layer: "Vodné toky" },
+		        {nodeType: "gx_layer", layer: "Lesné cesty" },
+		        {nodeType: "gx_layer", layer: "Lesné pôdne typy" },
+		        {nodeType: "gx_layer", layer: "Lesné typy" },
+		        {nodeType: "gx_layer", layer: "Jednotky priestorového rozdelenia lesa" },
+		        {nodeType: "gx_layer", layer: "Drevinové zloženie" },
+		        {nodeType: "gx_layer", layer: "JPRL - 2017 (od NLC pre ŠOP)", text: "<b style=\"color:red;\">JPRL - 2017 (od NLC pre ŠOP)</b>", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+		        {nodeType: "gx_layer", layer: "JPRL - 2018 (od NLC pre ŠOP)", text: "<b style=\"color:red;\">JPRL - 2018 (od NLC pre ŠOP)</b>", qtip: "<b style=\"color: red; font-size: 12pt;\">vrstva viditeľná len z pracoviska ŠOP</b>" },
+//		        {nodeType: "gx_layer", layer: "Porastová mapa", qtip: "LVU-NLC" },
+//{nodeType: "gx_layer", layer: "MIG"},
+						]
+			        },
+		{text:'NPPC - Výskumný ústav pôdoznalectva a ochrany pôdy', expanded: false, draggable: false, qtip: "&copy;&nbsp;", children:
+		    [
+			{nodeType: "gx_layer", layer: "LPIS 2019" },
+		    ]
+		},
+		{text:'Úrad geodézie, kartografie a katastra SR', expanded: false, draggable: false, qtip: "&copy;&nbsp;ÚGKK SR", children:
+		    [
+			{nodeType: "gx_layer", layer: "C parcely (spracované ŠOPSR)" },
+			{nodeType: "gx_layer", layer: "E parcely (spracované ŠOPSR)" },
+			{nodeType: "gx_layer", layer: "Parcely registra C" },
+			{nodeType: "gx_layer", layer: "Parcely registra E" },
+			{nodeType: "gx_layer", layer: "Obce" },
+			{nodeType: "gx_layer", layer: "Katastrálne územia" },
+			{nodeType: "gx_layer", layer: "Okresy" },
+			{nodeType: "gx_layer", layer: "Kraje" },
+		    ]
+		},
+
+		{text:'Slovenský vodohospodársky podnik', expanded: false, draggable: false, qtip: "&copy;&nbsp;SVP", children:
+		    [
+		        {nodeType: "gx_layer", layer: "SVP - Vodné toky"},
+		    ]
+		},
+		{text:'FREEMAP.sk', expanded: false, draggable: false, qtip: "&copy;&nbsp;FREEMAP", children:
+		    [
+		        {nodeType: "gx_layer", layer: "Turistické chodníky (freemap)" },
+		        {nodeType: "gx_layer", layer: "Cyklotrasy (freemap)" }
+		    ]
+		},
+/*
+		{text:'HIKING', expanded: false, draggable: false, children:
+		     [
+			{nodeType: "gx_layer", layer: "Turistické chodníky (hiking)" },
+			{nodeType: "gx_layer", layer: "Cykloznačky (waymarkedtrails.org)" }
+		     ]
+		},
+*/
+		{text:'Gridy', expanded: true, draggable: false, children:
+		    [
+			{nodeType: "gx_layer", layer: "GRID: ETRS 100km" },
+			{nodeType: "gx_layer", layer: "GRID: ETRS 10km" },
+			{nodeType: "gx_layer", layer: "GRID: ETRS 1km" },
+			{text:'Gridy - iné', expanded: false, draggable: false, children:
+			    [
+				{nodeType: "gx_layer", layer: "GRID: DFS" },
+				{nodeType: "gx_layer", layer: "GRID: 50x50 km" },
+				{nodeType: "gx_layer", layer: "GRID: 50000" },
+				{nodeType: "gx_layer", layer: "GRID: 25000" },
+				{nodeType: "gx_layer", layer: "GRID: 10000" },
+				{nodeType: "gx_layer", layer: "GRID: 5000" },
+				{nodeType: "gx_layer", layer: "GRID: KM-sieť" },
+				{nodeType: "gx_layer", layer: "GRID: KM-sieť: 3.,4. pásmo" },
+			    ]
+			},
+		    ]
+		},
+
+		{text:'Editor', expanded: false, draggable: false, children:
+		    [
+//			{nodeType: "gx_layer", layer: "My Upload" },
+			{nodeType: "gx_layer", layer: "Editor", text: "Moje vytvorené geometrie" },
+		    ]
+		},
+	    ]
+        }
+];
+
+// Replace default layer browser DefaultConfig.js
+// Pass our theme tree config as an option
+Ext.namespace("Heron.options.layertree");
+Heron.options.layertree.tree = treeTheme;
+
+Ext.namespace("Heron.options.info");
+
+Heron.options.info.html =
+                '<div class="hr-html-panel-body">' +
+			'<!--b>S-JTSK:</b>' +
+			'<p style="margin: 0 0 0 10;"><a target="_blank" href="http://grass.fsv.cvut.cz/gwiki/S-JTSK#EPSG:5514.2FESRI:102067">EPSG:102067</a></p>' +
+			'<p style="margin: 0 0 0 10;"><a target="_blank" href="http://grass.fsv.cvut.cz/gwiki/S-JTSK#Transforma.C4.8Dn.C3.AD_kl.C3.AD.C4.8De_a_software">Transformačné kľúče</a></p>' +
+'<hr-->' +
+'<!--b>Changelog:</b-->' +
+'<ul style="margin: 0 0 0 0;">' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>28.04.2022</b>' +
+	'<br />UPDATE: "C parcely (od SKGEODESY pre ŠOP" (01.10.2021 -> 01.04.2022)' +
+	'<br />UPDATE: "E parcely (od SKGEODESY pre ŠOP" (01.10.2021 -> 01.04.2022)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>17.01.2022</b>' +
+          '<br /><u style="color:green; font-weight:bold;">UPDATE</u>: "Návrh etapy \"C+\" ÚEV"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>04.11.2021</b>' +
+                '<br /><u style="color:green; font-weight:bold;">NEW</u>: vrstva "Pôsobnosť SIŽP - Ochrana prírody"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>18.10.2021</b>' +
+	'<br />UPDATE: "C parcely (od SKGEODESY pre ŠOP" (26.02.2021 -> 01.10.2021)' +
+	'<br />UPDATE: "E parcely (od SKGEODESY pre ŠOP" (26.02.2021 -> 01.10.2021)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>10.06.2020</b>' + 
+		'<br />DELETE: vrstva "Návrh PR Oborínsky luh"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>09.02.2020</b>' +
+	'<br />UPDATE: "C parcely (od SKGEODESY pre ŠOP" (02.10.2020 -> 26.02.2021)' +
+	'<br />UPDATE: "E parcely (od SKGEODESY pre ŠOP" (02.10.2020 -> 26.02.2021)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>18.01.2021</b>' +
+                '<br />NEW: vrstva "EFP: CHKO Malé Karpaty"' +
+                '<br />NEW: priečinok "RÔZNE"' +
+                '<br />NEW: vrstva "Rybárske revíry"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>16.10.2020</b>' +
+          '<br /><u style="color:green; font-weight:bold;">UPDATE</u>: "Návrh etapy \"C+\" ÚEV 2. fáza"' +
+          '<br /><u style="color:green; font-weight:bold;">UPDATE</u>: "Návrh etapy \"C+\" ÚEV 1. fáza"' +
+  '</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>13.10.2020</b>' +
+                '<br />NEW: priečinok "Slovenský vodohospodársky podnik"' +
+                '<br />NEW: vrstva "SVP - Vodné toky"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>09.10.2020</b>' +
+	'<br />UPDATE: "C parcely (od SKGEODESY pre ŠOP" (26.06.2020 -> 02.10.2020)' +
+	'<br />UPDATE: "E parcely (od SKGEODESY pre ŠOP" (26.06.2020 -> 02.10.2020)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>02.10.2020</b>' + 
+		'<br />NEW: vrstva "Návrh PR Oborínsky luh"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>28.09.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v ZASK (Žilinskom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>23.09.2020</b>' +
+	'<br />UPDATE: "C parcely (od SKGEODESY pre ŠOP" (31.12.2019 -> 26.06.2020)' +
+	'<br />UPDATE: "E parcely (od SKGEODESY pre ŠOP" (31.12.2019 -> 26.06.2020)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>07.08.2020</b>' +
+	'<br /><u style="color:green; font-weight:bold;">NEW</u>: "Atribútový vyhľadávač"' +
+	'<br />&nbsp;&nbsp;&nbsp;chránených území' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>16.07.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v BBSK (Banskobystrickom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>06.07.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v TNSK (Trenčianskom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>19.06.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v PSK (Prešovskom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>15.06.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v TTSK (Trnavskom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>11.06.2020</b>' + 
+		'<br />NEW: Klikateľný atribút "SITEID" vo vrstvách:' +
+		'<br /><i>Územia európskeho významu</i>' +
+		'<br /><i>Chránené vtáčie územia</i>' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>09.06.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v BSK (Bratislavskom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>02.06.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v NSK (Nitrianskom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>13.05.2020</b>' + 
+		'<br />NEW: vrstva "Chránené stromy v KSK (Košickom samosprávnom kraji)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>05.05.2020</b>' +
+          '<br /><u style="color:green; font-weight:bold;">NEW</u>: "funkcionalita \"získaj XY\""' +
+  '</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>17.04.2020</b>' +
+          '<br /><u style="color:green; font-weight:bold;">NEW</u>: "Návrh etapy \"C+\" ÚEV"' +
+  '</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>16.04.2020</b>' +
+          '<br /><u style="color:green; font-weight:bold;">NEW</u>: "Topografické mapy RETM (TM50, TM25)"' +
+  '</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>16.04.2020</b>' +
+          '<br /><u style="color:green; font-weight:bold;">NEW</u>: "Základné mapy SR (ZM1000000 - ZM10000)"' +
+  '</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+          '<b>16.04.2020</b>' +
+          '<br /><u style="color:green; font-weight:bold;">NEW</u>: "ZBGIS"' +
+  '</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>28.01.2020</b>' +
+	'<br /><u style="color:green; font-weight:bold;">NEW</u>: "JPRL - 2018 (od NLC pre ŠOP)"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>27.01.2020</b>' +
+	'<br /><u style="color:green; font-weight:bold;">NEW</u>: "Atribútový vyhľadávač"' +
+	'<br />&nbsp;&nbsp;&nbsp;JPRL (cez lesné celky)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>14.01.2020</b>' +
+	'<br /><u style="color:green; font-weight:bold;">NEW</u>: "Atribútový vyhľadávač"' +
+	'<br />&nbsp;&nbsp;&nbsp;JPRL (cez LHC)' +
+	'<br />&nbsp;&nbsp;&nbsp;parcely KN-C' +
+	'<br />&nbsp;&nbsp;&nbsp;parcely KN-E' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>09.01.2020</b>' +
+	'<br />UPDATE: "C parcely (od SKGEODESY pre ŠOP" (28.09.2019 -> 31.12.2019)' +
+	'<br />UPDATE: "E parcely (od SKGEODESY pre ŠOP" (28.09.2019 -> 31.12.2019)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>14.11.2019</b>' +
+	'<br />NEDOSTUPNÉ: <a href="https://gis.nlcsk.org/arcgis/rest/services/" target="_new">WMS od NLC</a>' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>04.07.2018</b>' +
+	'<br />UPDATE: "Maloplošné chránené územia" (jan. 2018 -> júl 2018)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>30.01.2018</b>' +
+		'<br />NEW: vrstva "Hlucháň - NP Muránska planina"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>22.01.2018</b>' +
+		'<br />NEW: vrstva "Zonácia (PIENAP)"' +
+'</li>' + 
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>09.01.2018</b>' +
+	'<br />UPDATE: "Maloplošné chránené územia" (dec. 2017 -> jan. 2018)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>12.12.2017</b>' +
+	'<br />UPDATE: "RAMSAR lokality" (nov. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>12.12.2017</b>' +
+	'<br />UPDATE: "Maloplošné chránené územia" (okt. 2017 -> dec. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>12.12.2017</b>' +
+	'<br />UPDATE: "Veľkoplošné chránené územia" (sep. 2016 -> dec. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>21.11.2017</b>' +
+	'<br />UPDATE: "Územia európskeho významu - C etapa"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>10.09.2017</b>' +
+	'<br />UPDATE: "Maloplošné chránené územia" (aug. 2017 -> okt. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>14.09.2017</b>' +
+	'<br />UPDATE: "Veľkoplošné chránené územia" (apr. 2016 -> sep. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>11.09.2017</b>' +
+	'<br />UPDATE: "Územia európskeho významu - C etapa"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>25.08.2017</b>' +
+	'<br />UPDATE: "Maloplošné chránené územia" (feb. 2017 -> aug. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>06.03.2017</b>' +
+		'<br />NEW: vrstva "Gridy" -> "GRID: 50x50 km"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+        '<b>03.03.2017</b>' +
+'<br />NEW: vrstva "Základné mapy" -> "Digitálny model reliéfu"' +
+'<br />NEW: vrstva "Základné mapy" -> "Tieňovaný reliéf"' +
+'<br />NEW: nahľadová mapka (OverviewMap) v rohu mapy"' +
+'<br />NEW: zobrazovanie copyright-u podľa aktívnej vrstvy' +
+	'<br />UPDATE: "Maloplošné chránené územia" (jan. 2016 -> feb. 2017)' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>21.02.2017</b>' +
+		'<br />NEW: vrstva "Zonácia (CHKO Horná Orava)"' +
+'</li>' + 
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>18.02.2017</b>' +
+		'<br />NEW: vrstva "Porastová mapa" (NLCSK.org)' +
+'</li>' + 
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>08.02.2017</b>' +
+		'<br />NEW: priečinok "GLOBALFORESTWATCH.org" s vrstvami' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>05.11.2016</b>' +
+		'<br />NEW: vrstva "Biogeografické regióny"' +
+'</li>' + 
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>03.11.2016</b>' +
+		'<br />NEW: vrstva "Územia európskeho významu - C etapa"' +
+'</li>' + 
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>27.04.2016</b>' +
+		'<br />NEW: priečinok "Dočasné" (viditeľný len v ŽPNET-e)' +
+'</li>' + 
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' + 
+	'<b>19.04.2016</b>' + 
+		'<br />NEW: vrstva "Európsky diplom pre chr. územia"' +
+		'<br />NEW: vrstva "Chránené stromy"' +
+		'<br />UPDATE: "Chránené vtáčie územia"' +
+		'<br />UPDATE: "Maloplošné chránené územia"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>12.04.2016</b>' +
+		'<br />NEW: priečinok <i>"SKGEODESY.sk"</i> s vrstvami' +
+		'<br />UPDATE: "Maloplošné chránené územia"' +
+'</li>' +
+'<li style="padding-left: 1.28em; text-indent: -1.28em;">' +
+	'<b>11.04.2016</b>' +
+		'<br />NEW: podpriečinok <i>"Základné vrstvy" -> "Ochrana prírody" -> Územia medzinárodného významu</i>' +
+'</li>' +
+'</ul>' +
+                '</div>';
+
+Ext.namespace("Heron.options.bookmarks");
+Heron.options.bookmarks =
+        [
+	];
+
+
+//Ext.namespace("Heron.layout");
+Heron.layout = {
+	xtype: 'panel',
+//	title: 'Nová mapa',
+	id: 'hr-container-main',
+	layout: 'border',
+	items: [
+		{
+			xtype: 'panel',
+
+			id: 'hr-menu-left-container',
+			layout: 'accordion',
+			region : "west",
+			width: 300,
+			collapsible: true,
+			split: true,
+			border: false,
+			items: [
+
+				{
+					xtype: 'hr_layertreepanel',
+					flex:4,
+					contextMenu: [
+						{
+							xtype: 'hr_layernodemenulayerinfo'
+						},
+						{
+							xtype: 'hr_layernodemenuzoomextent'
+						},
+						{
+							xtype: 'hr_layernodemenuopacityslider'
+						}
+					],
+					hropts : Heron.options.layertree,
+collapsed: false
+				},
+				{
+					xtype: 'hr_htmlpanel',
+					id: 'hr-info-west',
+					html: Heron.options.info.html,
+					preventBodyReset: true,
+//					title: 'Informácie'
+					title: 'ČO NOVÉHO (u nás doma)',
+					autoScroll: true,
+					collapsed: false
+				},
+				{
+					xtype: 'hr_bookmarkspanel',
+					id: 'hr-bookmarks',
+					hropts: Heron.options.bookmarks
+				},
+/*
+				{
+					xtype: 'hr_contextbrowserpanel',
+					id: 'hr-contextbrowser',
+title: 'Zalozky',
+//					hropts: Heron.options.contextbrowser 
+				}
+*/
+			]
+		},
+		{
+			xtype: 'panel',
+//			title: 'Mapový prehliadač <a href="https://www.sopsr.sk/" target="_blank">Štátnej ochrany prírody SR</a><br /><a href="https://sk.wikipedia.org/wiki/Open_source" target="_blank">Open source</a> mapový framework: <a href="http://heron-mc.org/" target="_blank">Heron Mapping Client (MC)</a> šírený pod licenciou <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU GPL v3</a>',
+			title: '<table>' + 
+				  '<tr>' + 
+				    '<td style="font-size: small;">' +
+					'Mapový prehliadač <a href="https://www.sopsr.sk/" target="_blank">Štátnej ochrany prírody SR</a> pre vás prevádzkuje <u style="color: blue;">Tím Odboru správy dát a GIS</u>' +
+					'<br />' +
+					'<div style="margin-top:5px;"><a href="https://sk.wikipedia.org/wiki/Open_source" target="_blank">Open source</a> mapový framework: <a href="http://heron-mc.org/" target="_blank">Heron Mapping Client (MC)</a> šírený pod licenciou <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU GPL v3</a></div>' +
+				    '</td>' +
+//				  '</tr><tr>' +
+				    '<td align="center" width="25%" style="vertical-align: bottom;">' +
+//				    '<td style="text-align: center; vertical-align: middle;">' +
+					'<b style="text-transform: uppercase; color: red;">mapa nie je použiteľná<br />na právne úkony</b>' +
+				    '</td>' +
+				  '</tr>' +
+				'</table>',
+			id: 'hr-map-and-info-container',
+			layout: 'border',
+			region: 'center',
+			width: '100%',
+			collapsible: true,
+			split	: true,
+			border: false,
+			items: [
+				{
+				 xtype: 'hr_mappanel',
+				 id: 'hr-map',
+				 region: 'center',
+				 collapsible : false,
+				 border: false,
+/*
+                		 hropts: {
+						settings: Heron.options.map.settings,
+						layers: Heron.options.map.layers,
+						toolbar: Heron.options.map.toolbar
+				     }
+*/
+				 hropts: Heron.options.map
+				},
+/*
+				{
+					xtype: 'hr_featureinfopanel',
+					id: 'hr-feature-info',
+					region: "south",
+					border: true,
+					collapsible: true,
+					collapsed: true,
+					height: 180,
+					split: true,
+					maxFeatures: 10,
+					exportFormats: ['CSV', 'XLS', 'WellKnownText', 'GMLv2', 'GeoJSON'],
+showGeometries: true,
+featureSelection: true,
+			                gridCellRenderers: [
+					{
+//						featureType: 'sci_slovakia_2011',
+						featureType: 'skuev',
+						attrName : 'SITEID',
+						renderer :
+						{
+							fn: Heron.widgets.GridCellRenderer.browserPopupLink,
+//fn : Heron.widgets.GridCellRenderer.directLink,
+							options :
+							{
+//								url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=5&kod={SITECODE}',
+								url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=5&kod={KOD}',
+								hasAddressbar: false,
+								hasScrollbars: true,
+								isResizable: true,
+								wSize: 400,
+								hSize: 800,
+								attrPreTxt: 'Detail: ',
+								target: '_new'
+							}
+						}
+					},
+
+					{
+//						featureType: 'spa_slovakia_2011',
+						featureType: 'chvu',
+						attrName : 'SITECODE',
+						renderer :
+						{
+							fn: Heron.widgets.GridCellRenderer.browserPopupLink,
+//fn : Heron.widgets.GridCellRenderer.directLink,
+							options :
+							{
+								url: 'https://www.sopsr.sk/natura/index1.php?p=4&sec=21&kod={SITECODE}',
+								hasAddressbar: false,
+								hasScrollbars: true,
+								isResizable: true,
+								wSize: 400,
+								hSize: 900,
+								attrPreTxt: 'Detail: ',
+								target: '_new'
+							}
+						}
+					},
+					]
+				}
+*/
+			]
+		    },
+		{
+			xtype: 'panel',
+
+			id: 'hr-menu-right-container',
+//			layout: 'accordion',
+			layout: 'vbox',
+			layoutConfig: {
+				align : 'stretch',
+				pack  : 'start'
+			},
+			region : "east",
+			width: 340,
+			collapsible: true,
+			split	: true,
+			border: true,
+			items: [
+/*
+				{
+					xtype: 'hr_activelayerspanel',
+					height: 240,
+					flex: 3,
+					hropts: {
+						// Defines the custom component added under the standard layer node.
+						component : {
+							xtype: "gx_opacityslider",
+							showTitle: false,
+							plugins: new GeoExt.LayerOpacitySliderTip(),
+							width: 160,
+							inverse: false,
+							aggressive: false,
+							style: {
+								marginLeft: '18px'
+							}
+						}
+					}
+				},
+*/
+				{
+					xtype:'hr_activethemespanel',
+//					title: 'Aktívne vrstvy',
+					height:450,
+					collapsible: true,
+					flex:3,
+					contextMenu: [
+						{
+							xtype: 'hr_layernodemenulayerinfo'
+						},
+						{
+							xtype: 'hr_layernodemenuzoomextent'
+						},
+						{
+							xtype: 'hr_layernodemenuopacityslider'
+						}
+					],
+					hropts:{
+						// Defines the custom components added with the standard layer node.
+						showOpacity: true, // true - layer opacity icon / function
+						showTools: false, // true - layer tools icon / function (not jet completed)
+						showRemove: false        // true - layer remove icon / function
+					}
+				},
+				{
+					xtype: 'hr_layerlegendpanel',
+					id: 'hr-layerlegend-panel',
+					height:500,
+					collapsible: true,
+					defaults: {
+						useScaleParameter : false,
+						baseParams: {
+							// Override default image/gif in WMS GetLegendGraphic
+							FORMAT: 'image/png'
+						}
+					},
+					hropts: {
+						// Preload Legends on initial startup
+						// Will fire WMS GetLegendGraphic's for WMS Legends
+						// Otherwise Legends will be loaded only when Layer
+						// becomes visible. Default: false
+						prefetchLegends: false
+					}
+				},
+
+			]
+		}
+
+
+	]
+            };
+
+    </script>
+</head>
+<body>
+</body>
+</html>
