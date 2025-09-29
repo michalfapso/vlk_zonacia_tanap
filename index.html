@@ -1770,15 +1770,15 @@ hluchan_biotopy_slovensko: new OpenLayers.Layer.Vector("Biotopy hlucháňa - SLO
     protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Biotopy_SLOVENSKO-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
     strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
 }),
-hluchan_funckne_lokality: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Funkčné lokality (preklep)", {
+hluchan_funckne_lokality: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Funkčné lokality", {
     protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Funckne_lokality-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
     strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
 }),
-hluchan_funkcne_biotopy_lower: new OpenLayers.Layer.Vector("Biotopy hlucháňa - funkčné biotopy", {
+hluchan_funkcne_biotopy_lower: new OpenLayers.Layer.Vector("Biotopy hlucháňa - funkčné biotopy 1", {
     protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/funkcne_biotopy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
     strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
 }),
-hluchan_funkcne_biotopy_upper: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Funkčné biotopy", {
+hluchan_funkcne_biotopy_upper: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Funkčné biotopy 2", {
     protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Funkcne_biotopy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
     strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
 }),
@@ -4378,9 +4378,9 @@ var treeTheme = [
 				{nodeType: "gx_layer", layer: "Hlucháň - NP Muránska planina", qtip: "&copy; ŠOP SR (source: Správa NP Muránska planina)" },
 				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Levočské vrchy" },
 				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - SLOVENSKO" },
-				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Funkčné lokality (preklep)" },
-				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - funkčné biotopy" },
-				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Funkčné biotopy" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Funkčné lokality" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - funkčné biotopy 1" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Funkčné biotopy 2" },
 				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Klenovský vepor" },
 				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Orava Kysuce" },
 				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Raj Volovské vrchy" },
