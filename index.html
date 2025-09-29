@@ -406,6 +406,71 @@ efpStyle.addRules(efpRules);
 var efpStyleMap = new OpenLayers.StyleMap({ "default": efpStyle });
 // --- Koniec kódu pre vrstvu EFP ---
 
+// --- Začiatok kódu pre vrstvy Biotopy hlucháňa ---
+
+// 1. Definícia štýlov
+
+// Spoločný štýl pre väčšinu vrstiev
+var hluchan_style_default = new OpenLayers.Style({
+    'fillColor': '#8B4513', // SaddleBrown
+    'strokeColor': '#000000',
+    'fillOpacity': 0.6,
+    'strokeWidth': 1,
+    // 'label': "${Name}", // Zobrazí hodnotu z poľa "Name"
+    'fontColor': "#333333",
+    'fontSize': "10px",
+    'fontFamily': "Arial, sans-serif",
+    'fontWeight': "bold",
+    'labelOutlineColor': "white",
+    'labelOutlineWidth': 2
+}, {
+    context: {
+        Name: function(feature) {
+            // Zobrazí label, len ak existuje atribút "Name" a nie je prázdny
+            return feature.attributes.Name ? feature.attributes.Name : "";
+        }
+    }
+});
+
+// Špeciálny štýl pre "potenciálne" biotopy
+var hluchan_style_special = new OpenLayers.Style({
+    'fillColor': '#FFD700', // Gold
+    'strokeColor': '#000000',
+    'fillOpacity': 0.6,
+    'strokeWidth': 1,
+    // 'label': "${Name}",
+    'fontColor': "#333333",
+    'fontSize': "10px",
+    'fontFamily': "Arial, sans-serif",
+    'fontWeight': "bold",
+    'labelOutlineColor': "white",
+    'labelOutlineWidth': 2
+}, {
+    context: {
+        Name: function(feature) {
+            return feature.attributes.Name ? feature.attributes.Name : "";
+        }
+    }
+});
+
+var hluchanStyleMapDefault = new OpenLayers.StyleMap({
+    "default": hluchan_style_default,
+    "select": { // Štýl pre hover
+        fillColor: "#FFFF00",
+        strokeColor: "#FF0000"
+    }
+});
+
+var hluchanStyleMapSpecial = new OpenLayers.StyleMap({
+    "default": hluchan_style_special,
+    "select": {
+        fillColor: "#FFFF00",
+        strokeColor: "#FF0000"
+    }
+});
+
+// --- Koniec kódu pre vrstvy Biotopy hlucháňa ---
+
 Heron.scratch.layermap = {
 
 /*
@@ -1695,6 +1760,66 @@ chranene_stromy_zask_revizia: new OpenLayers.Layer.Vector(
 	),
 //SM, 30.01.2018 <<<
 
+// START of new layers
+
+hluchan_biotopy_levocske: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Levočské vrchy", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/biotopy_Levocske_vrchy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_biotopy_slovensko: new OpenLayers.Layer.Vector("Biotopy hlucháňa - SLOVENSKO", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Biotopy_SLOVENSKO-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_funckne_lokality: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Funkčné lokality (preklep)", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Funckne_lokality-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_funkcne_biotopy_lower: new OpenLayers.Layer.Vector("Biotopy hlucháňa - funkčné biotopy", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/funkcne_biotopy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_funkcne_biotopy_upper: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Funkčné biotopy", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Funkcne_biotopy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_klenovsky_vepor: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Klenovský vepor", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Klenovsky_vepor-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_orava_kysuce: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Orava Kysuce", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Orava_Kysuce-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_potencialne_bez_evid: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Potenciálne bez evid. výskytu", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Potencialne_biotopy_bez_evidovaneho_vyskytu-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapSpecial, isBaseLayer: false, visibility: false
+}),
+hluchan_potencialne_bez_potvrd: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Potenciálne bez potvrd. výskytu", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/potencialne_biotopy_bez_potvrdeneho_vyskytu-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapSpecial, isBaseLayer: false, visibility: false
+}),
+hluchan_raj_volovske: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Raj Volovské vrchy", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Raj_volovske_vrchy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_rozsirenie_polana: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Rozšírenie Poľana 2002", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/rozsirenie_hluchana_polana_2002-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_strazovske_vrchy: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Strážovské vrchy", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Strazovske_vrchy-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_svrcnik: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Svrčník", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Svrcnik.kmz-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+hluchan_vysoke_tatry: new OpenLayers.Layer.Vector("Biotopy hlucháňa - Vysoké Tatry", {
+    protocol: new OpenLayers.Protocol.HTTP({ url: "Biotopy_hluchan_PZ_2018_2022/Vysoke_Tatry-polygon.geojson", format: new OpenLayers.Format.GeoJSON({ 'internalProjection': new OpenLayers.Projection("EPSG:3857"), 'externalProjection': new OpenLayers.Projection("EPSG:3857") }) }),
+    strategies: [new OpenLayers.Strategy.Fixed()], styleMap: hluchanStyleMapDefault, isBaseLayer: false, visibility: false
+}),
+// END of new layers
+
 	europsky_diplom: new OpenLayers.Layer.WMS(
 		"Európsky diplom pre chránené územia",
 		'https://maps.sopsr.sk/geoserver/ows?',
@@ -2769,6 +2894,20 @@ Heron.options.map.layers = [
 	Heron.scratch.layermap.kml_grid_50,
 
 	Heron.scratch.layermap.biotop_hluchan_npmp_2010,
+	Heron.scratch.layermap.hluchan_biotopy_levocske,
+	Heron.scratch.layermap.hluchan_biotopy_slovensko,
+	Heron.scratch.layermap.hluchan_funckne_lokality,
+	Heron.scratch.layermap.hluchan_funkcne_biotopy_lower,
+	Heron.scratch.layermap.hluchan_funkcne_biotopy_upper,
+	Heron.scratch.layermap.hluchan_klenovsky_vepor,
+	Heron.scratch.layermap.hluchan_orava_kysuce,
+	Heron.scratch.layermap.hluchan_potencialne_bez_evid,
+	Heron.scratch.layermap.hluchan_potencialne_bez_potvrd,
+	Heron.scratch.layermap.hluchan_raj_volovske,
+	Heron.scratch.layermap.hluchan_rozsirenie_polana,
+	Heron.scratch.layermap.hluchan_strazovske_vrchy,
+	Heron.scratch.layermap.hluchan_svrcnik,
+	Heron.scratch.layermap.hluchan_vysoke_tatry,
 
 //SM, 18.01.2021 >>>
 	Heron.scratch.layermap.rozne__rybarske_reviry,
@@ -4237,6 +4376,20 @@ var treeTheme = [
 			{text: "<b style=\"color: green;\">Biotopy hlucháňa</b>", expanded: false, draggable: false, qtip: "", children:
 			    [
 				{nodeType: "gx_layer", layer: "Hlucháň - NP Muránska planina", qtip: "&copy; ŠOP SR (source: Správa NP Muránska planina)" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Levočské vrchy" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - SLOVENSKO" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Funkčné lokality (preklep)" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - funkčné biotopy" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Funkčné biotopy" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Klenovský vepor" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Orava Kysuce" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Raj Volovské vrchy" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Rozšírenie Poľana 2002" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Strážovské vrchy" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Svrčník" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Vysoké Tatry" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Potenciálne bez evid. výskytu" },
+				{nodeType: "gx_layer", layer: "Biotopy hlucháňa - Potenciálne bez potvrd. výskytu" },
 			    ]
 			},
 
