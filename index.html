@@ -362,6 +362,90 @@ var opStyle = new OpenLayers.Style({
 var opStyleMap = new OpenLayers.StyleMap({ "default": opStyle });
 // --- Koniec kódu pre vrstvu OP NP Nízke Tatry ---
  
+
+// --- Začiatok kódu pre vrstvu Poloniny ---
+
+// 1. Definujeme si štýly pre jednotlivé zóny a legendu
+// Kľúč (napr. "A") sa musí presne zhodovať s hodnotou v poli "ZONA" v GeoJSON súbore.
+// Môžeš si pridať ďalšie zóny alebo zmeniť farby podľa potreby.
+var poloninyZoneStyles = {
+    "A": {
+        fillColor: "#006400", // Tmavozelená
+        strokeColor: "#000000",
+        title: "Zóna A"
+    },
+    "B": {
+        fillColor: "#6B8E23", // Olivovo zelená
+        strokeColor: "#000000",
+        title: "Zóna B"
+    },
+    "C": {
+        fillColor: "#ADFF2F", // Žltozelená
+        strokeColor: "#000000",
+        title: "Zóna C"
+    },
+    "D": {
+        fillColor: "#FFA500", // Oranžová
+        strokeColor: "#000000",
+        title: "Zóna D"
+    },
+    "OP": {
+        fillColor: "#D2B48C", // Hnedastá (Tan)
+        strokeColor: "#000000",
+        title: "Ochranné pásmo"
+    },
+    
+    // Špeciálny štýl pre polygóny, ktoré by náhodou nemali zadanú zónu
+    "default": {
+        fillColor: "#808080", // Sivá
+        strokeColor: "#000000",
+        title: "Nezaradené"
+    }
+};
+
+// 2. Vytvoríme hlavný štýl a pridáme do neho pravidlá
+var poloninyStyle = new OpenLayers.Style(
+    // Základný (predvolený) štýl, použije sa, ak žiadne pravidlo nezodpovedá
+    {
+        fillColor: poloninyZoneStyles.default.fillColor,
+        strokeColor: poloninyZoneStyles.default.strokeColor,
+        fillOpacity: 0.5,
+        strokeWidth: 1
+    }
+);
+
+// 3. Vytvoríme pravidlá pre každú zónu
+var poloninyRules = [];
+// Prejdeme cez všetky definované štýly okrem 'default'
+for (var zoneKey in poloninyZoneStyles) {
+    if (zoneKey !== "default") {
+        var rule = new OpenLayers.Rule({
+            // Názov pre legendu
+            title: poloninyZoneStyles[zoneKey].title,
+            // Podmienka - filter
+            filter: new OpenLayers.Filter.Comparison({
+                type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                property: "Zona", // <-- DÔLEŽITÉ: Názov poľa z tvojich dát!
+                value: zoneKey
+            }),
+            // Vzhľad, ak je podmienka splnená
+            symbolizer: {
+                fillColor: poloninyZoneStyles[zoneKey].fillColor,
+                strokeColor: poloninyZoneStyles[zoneKey].strokeColor,
+                fillOpacity: 0.5,
+                strokeWidth: 1
+            }
+        });
+        poloninyRules.push(rule);
+    }
+}
+poloninyStyle.addRules(poloninyRules);
+
+// 4. Vytvoríme StyleMap, ktorá použije náš nový štýl s pravidlami
+var poloninyStyleMap = new OpenLayers.StyleMap({ "default": poloninyStyle });
+// --- Koniec kódu pre vrstvu Poloniny ---
+
+
 // --- Začiatok kódu pre vrstvu EFP ---
 var efpStyles = {
     "EFP-1-1": { fillColor: "#FF4500", title: "EFP-1-1" }, // Oranžovo-červená
@@ -725,6 +809,31 @@ zonacia_NAPANT_EFP: new OpenLayers.Layer.Vector("Zonácia (NAPANT EFP)", {
     visibility: false
 }),
 
+zonacia_poloniny: new OpenLayers.Layer.Vector("Zonácia (NP Poloniny)", {
+    protocol: new OpenLayers.Protocol.HTTP({
+        // Ak máš súbor lokálne vedľa HTML súboru:
+        url: "zonacia_NP_Poloniny_EPSG3857.geojson",
+        
+        format: new OpenLayers.Format.GeoJSON({
+            // OpenLayers sa pokúsi automaticky pretransformovať súradnice
+            // z EPSG:4326 (GeoJSON) do EPSG:3857 (mapa)
+            'internalProjection': new OpenLayers.Projection("EPSG:3857"),
+            'externalProjection': new OpenLayers.Projection("EPSG:3857")
+        })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    // Štýl, aby vrstva nebola neviditeľná
+    styleMap: poloninyStyleMap,
+    // Priehľadnosť celej vrstvy
+    opacity: 0.6,
+    // Vrstva nie je podkladová
+    isBaseLayer: false,
+    // Zobraziť v legende
+    hideInLegend: false,
+    // Viditeľnosť po načítaní (môžeš zmeniť na true, ak ju chceš mať hneď zapnutú)
+    visibility: false
+}),
+
 //VLSM 28.4.2023
 //VLSM 28.2.2023
 /*navrhovane_rozsirenie_UEV: new OpenLayers.Layer.WMS(
@@ -1014,6 +1123,28 @@ migracne_bariery_rastre_migracne_koridory: new OpenLayers.Layer.WMS(
 		{layers: "np_velka_fatra_zony", format: "image/png", transparent: true},
 		{iisBaseLayer: false,   visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'}
 	),
+	// zonacia_poloniny: new OpenLayers.Layer.WMS(
+	// 	"Zonácia (NP Poloniny)",
+	// 	// Note: We removed '/rest' and added '/WMSServer'
+	// 	'https://maps.sopsr.sk/server/services/NP_Poloniny_zon%C3%A1cia_MIL1/MapServer/WMSServer?',
+	// 	{ layers: "0", format: "image/png", transparent: true, version: "1.3.0"},
+	// 	{ iisBaseLayer: false, visibility: false, hideInLegend: false, singleTile: true, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>' }
+	// ),
+	// zonacia_poloniny: new OpenLayers.Layer.ArcGIS93Rest(
+	// 	"Zonácia (NP Poloniny)",
+	// 	'https://maps.sopsr.sk/server/rest/services/NP_Poloniny_zon%C3%A1cia_MIL1/MapServer/export',
+	// 	{
+	// 		layers: "show:0", // specific syntax for ArcGIS REST
+	// 		transparent: true,
+	// 		format: "png32"   // png32 supports transparency better
+	// 	},
+	// 	{
+	// 		isBaseLayer: false,
+	// 		visibility: true,
+	// 		attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>'
+	// 	}
+	// ),
+
 	sop_efp_hornaorava: new OpenLayers.Layer.WMS(
 		"EFP: CHVÚ Horná Orava",
 		'https://maps.sopsr.sk/geoserver/ows?',
@@ -2906,6 +3037,7 @@ Heron.options.map.layers = [
         Heron.scratch.layermap.sop_efp_hornaorava,
 	Heron.scratch.layermap.zonacia_murplanina,
 	Heron.scratch.layermap.zonacia_velkafatra,
+	Heron.scratch.layermap.zonacia_poloniny,
 //SM, 18.01.2021 >>>
         Heron.scratch.layermap.sop_efp_malekarpaty,
 //SM, 18.01.2021 <<<
@@ -4422,6 +4554,7 @@ var treeTheme = [
 				{nodeType: "gx_layer", layer: "Zonácia (NAPANT)", qtip: "&copy; ŠOP SR (source: NAPANT)" },
 				{nodeType: "gx_layer", layer: "Zonácia (NAPANT OP)", qtip: "&copy; ŠOP SR (source: NAPANT)" },
 				{nodeType: "gx_layer", layer: "Zonácia (NAPANT EFP)", qtip: "&copy; ŠOP SR (source: NAPANT)" },
+				{nodeType: "gx_layer", layer: "Zonácia (NP Poloniny)", qtip: "&copy; ŠOP SR (source: NP Poloniny)" },
 			    ]
 			},
 			{text: "<b style=\"color: green;\">Ekologicko-funkčné priestory</b>", expanded: false, draggable: false, qtip: "", children:
