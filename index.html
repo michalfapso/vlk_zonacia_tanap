@@ -165,7 +165,7 @@
 		Ext.namespace("Heron.options");
 		Ext.namespace("Heron.scratch");
 		OpenLayers.Util.onImageLoadErrorColor = "transparent";
-		OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
+		OpenLayers.ProxyHost = "https://maps.sopsr.sk/cgi-bin/proxy.cgi?url=";
 		//Ext.BLANK_IMAGE_URL = 'http://lib.heron-mc.org/ext/3.4.1.1/resources/images/default/s.gif';
 		Ext.BLANK_IMAGE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/extjs/3.4.1-1/resources/images/default/s.gif';
 
@@ -173,8 +173,8 @@
 		// make OL compute scale according to WMS spec
 		OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 		//Heron.globals.serviceUrl  = '/cgi-bin/heron.cgi.20131017';
-		Heron.globals.serviceUrl = '/cgi-bin/heron.cgi.20140526';
-		//Heron.globals.serviceUrl  = '/cgi-bin/heron.cgi';
+		Heron.globals.serviceUrl = 'https://maps.sopsr.sk/cgi-bin/heron.cgi.20140526';
+		//Heron.globals.serviceUrl  = 'https://maps.sopsr.sk/cgi-bin/heron.cgi';
 		var default_wms_properties = { isBaseLayer: false, visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", opacity: 0.3, };
 
 		//OpenLayers.Util.getElement("graphic").innerHTML = 'pokus';
