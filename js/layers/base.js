@@ -106,4 +106,186 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
         ),
     */
 
+    geoportal_retm: new OpenLayers.Layer.WMS(
+        'Topografické mapy RETM (TM50, TM25)',
+        'https://zbgisws.skgeodesy.sk/retm_wms/service.svc/get',
+        {
+            layers: ''
+                + '1' //TM25
+                + ',5' //TM50
+            , format: 'image/png'
+            , transparent: true
+            , version: '1.3.0'
+            , crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: true
+            , visibility: false
+            , noLegend: true
+            , featureInfoFormat: 'application/vnd.ogc_wms.xml'
+            , projection: new OpenLayers.Projection('EPSG:3857')
+            , attribution: '<span>&copy; Úrad geodézie, kartografie a katastra SR (GKÚ Bratislava; r. 2017; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)</span>'
+            //		    ,maxScale:1000
+            , minScale: 2500000
+        }
+    ),
+
+    geoportal_zmsr: new OpenLayers.Layer.WMS(
+        'Základné mapy SR (ZM1000000 - ZM10000)',
+        'https://zbgisws.skgeodesy.sk/zmsr_wms/service.svc/get',
+        {
+            layers: ''
+                + '1' //ZM10
+                + ',5' //ZM25
+                + ',9' //ZM50
+                + ',13' //ZM100
+                + ',17' //ZM200
+                + ',21' //ZM500
+                + ',25' //ZM1mil
+            , format: 'image/png'
+            , transparent: true
+            , version: '1.3.0'
+            , crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: true
+            , visibility: false
+            , noLegend: true
+            , featureInfoFormat: 'application/vnd.ogc_wms.xml'
+            , projection: new OpenLayers.Projection('EPSG:3857')
+            , attribution: '<span>&copy; Úrad geodézie, kartografie a katastra SR (GKÚ Bratislava; r. 2017; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)</span>'
+            //		    ,maxScale:1000
+            , minScale: 2500000
+        }
+    ),
+
+    tur_atlas_50: new OpenLayers.Layer.WMS(
+        'Turistický atlas 1:50 000',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "6", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 2000000
+        }
+    ),
+
+    hist_sm75: new OpenLayers.Layer.WMS(
+        'Špeciálna mapa 1:75 000',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "14", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+    /*
+        hist_smo5: new OpenLayers.Layer.WMS(
+            'SMO5',
+            'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+            {layers: "SMO5", format: "image/png", transparent: true, srs: "EPSG:4326"},
+            {isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+                maxScale:1000,
+                minScale:200000
+            }
+        ),
+    */
+    hist_tm10_1957: new OpenLayers.Layer.WMS(
+        'TM10 1957-1971',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "16", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+
+    hist_tm25_1952: new OpenLayers.Layer.WMS(
+        'TM25 1952-1957',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "17", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+
+    hist_tm5_1955: new OpenLayers.Layer.WMS(
+        'TM5 1955-1961',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "15", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+
+    voj_1764: new OpenLayers.Layer.WMS(
+        'Vojenská mapa 1764-1787',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "8", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+
+    voj_1810: new OpenLayers.Layer.WMS(
+        'Vojenská mapa 1810-1869',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "9", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+
+    voj_1875: new OpenLayers.Layer.WMS(
+        'Vojenská mapa 1875-1884',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "10", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+    /*
+        voj_1897: new OpenLayers.Layer.WMS(
+            'Vojenská mapa 1897 (V.Tatry)',
+            'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+            {layers: "12", format: "image/png", transparent: true, srs: "EPSG:4326"},
+            {isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+                maxScale:1000,
+                minScale:200000
+            }
+        ),
+    */
+    voj_1920: new OpenLayers.Layer.WMS(
+        'Vojenská mapa 1920-1934',
+        'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+        { layers: "11", format: "image/png", transparent: true, srs: "EPSG:4326" },
+        {
+            isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+            maxScale: 1000,
+            minScale: 200000
+        }
+    ),
+    /*
+        voj_1931: new OpenLayers.Layer.WMS(
+            'Vojenská mapa 1931 (V.Tatry)',
+            'https://arc.sazp.sk/arcgis/services/ng/rastre/MapServer/WMSServer?',
+            {layers: "13", format: "image/png", transparent: true, srs: "EPSG:4326"},
+            {isBaseLayer: true, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: new OpenLayers.Projection("EPSG:3857"),
+                maxScale:1000,
+                minScale:200000
+            }
+        ),
+    */
 });
