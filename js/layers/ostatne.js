@@ -533,4 +533,312 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
             }
         }
     ),
+
+    kims_tml: new OpenLayers.Layer.WMS(
+        'Trvalé monitorovacie lokality',
+        //		'http://192.168.70.105:6081/arcgis/services/TML_Base_TML/MapServer/WMSServer?',
+        'https://arcgis-kims.sopsr.sk/arcgis/services/TML_Base_TML/MapServer/WMSServer?',
+        //		'https://gis.sopsr.sk/wms',
+        { layers: "0", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:102067' },
+        //		{layers: "TML", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:102067'},
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity: 0.6 }
+        //		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity:0.6 }
+    ),
+
+    kims_tml_bot: new OpenLayers.Layer.WMS(
+        'Trvalé monitorovacie lokality - botanické',
+        'https://www.sopsr.sk/geoserver/sopsr/wms',
+        { layers: "sopsr:tml_botanical", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:5514' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity: 0.6 }),
+    kims_tml_hab: new OpenLayers.Layer.WMS(
+        'Trvalé monitorovacie lokality - biotopové',
+        'https://www.sopsr.sk/geoserver/sopsr/wms',
+        { layers: "sopsr:tml_habitat", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:5514' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity: 0.6 }),
+    kims_tml_zoo: new OpenLayers.Layer.WMS(
+        'Trvalé monitorovacie lokality - zoologické',
+        'https://www.sopsr.sk/geoserver/sopsr/wms',
+        { layers: "sopsr:tml_zoological", format: "image/png", transparent: true, version: '1.3.0', srs: 'EPSG:5514' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>', opacity: 0.6 }),
+    nlc_sop_jprl_2017: new OpenLayers.Layer.WMS(
+        'JPRL - 2017 (od NLC pre ŠOP)',
+        'https://gis.sopsr.sk/wms',
+        { layers: "nlc_jprl_2017", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale: 0, minScale: 150000, attribution: '<span>&copy; <a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen, 2017</a></span>' }
+    ),
+
+    nlc_sop_jprl_2018: new OpenLayers.Layer.WMS(
+        'JPRL - 2018 (od NLC pre ŠOP)',
+        'https://gis.sopsr.sk/wms',
+        { layers: "nlc_jprl_2018", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale: 0, minScale: 150000, attribution: '<span>&copy; <a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen, 2018 (aktuálne k 31.12.2018)</a></span>' }
+    ),
+    /*
+    //	lvu_nlcsk_porastova: new OpenLayers.Layer.ArcGISCache(
+        lvu_nlcsk_porastova: new OpenLayers.Layer.WMS(
+            'Porastová mapa',
+            'http://192.168.125.90:8080/service',
+            {layers: "PorastovaMapa", format: "image/png", transparent: true},
+            {isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:102067', maxScale:0, minScale:2000000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+        ),
+    */
+    nlc_lhc: new OpenLayers.Layer.WMS(
+        'Lesné hospodárske celky',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LHC/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        'https://www.nlcsk.org/arcgis/services/InspireWMS/lhc_wms/MapServer/WMSServer?',
+        { layers: "AM.ForestManagementArea", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 5000000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_lo: new OpenLayers.Layer.WMS(
+        'Lesné oblasti',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LesneOblasti/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        'https://www.nlcsk.org/arcgis/services/Inspire/LesneOblasti/MapServer/WMSServer?',
+        { layers: "LC.LandCoverSurfaces", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 2000000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_tmp: new OpenLayers.Layer.WMS(
+        'Trvalé monitorovacie plochy',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/TMP/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/TMP/MapServer/WMSServer?',
+        { layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_tvp: new OpenLayers.Layer.WMS(
+        'Trvalé výskumné plochy',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/TVP/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/TVP/MapServer/WMSServer?',
+        { layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_tokysr: new OpenLayers.Layer.WMS(
+        'Vodné toky',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/TokySR/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/TokySR/MapServer/WMSServer?',
+        { layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 500000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_podnetypy: new OpenLayers.Layer.WMS(
+        'Lesné pôdne typy',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/PodneTypy/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/PodneTypy/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        { layers: "SO.SoilBody", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 70000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_lestypy: new OpenLayers.Layer.WMS(
+        'Lesné typy',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LesneTypy/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/LesneTypy/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        { layers: "LC.LandCoverSurfaces", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 70000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_lescesty: new OpenLayers.Layer.WMS(
+        'Lesné cesty',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/LesneCesty/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/LesneCesty/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        { layers: "0,1,2", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 500000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_jprl: new OpenLayers.Layer.WMS(
+        'Jednotky priestorového rozdelenia lesa',
+        //		'https://gis.sopsr.sk/wms',
+        'https://www.nlcsk.org/arcgis/services/InspireWMS/jprl_wms/MapServer/WMSServer?',
+        {
+            //		    layers: 'nlc_jprl'
+            //SM, 19.02.2021 >>>
+            //		    layers: "JPRL"
+            /*                    layers: ''
+                                    + '1'
+                                    + ',2'
+                                    + ',3'
+                                    + ',4'
+                                    + ',5'
+                                    + ',6'
+                                    + ',7'
+                                    + ',8'
+                                    + ',9'
+                                    + ',10'
+            //SM, 19.02.2021 <<<
+            */
+            layers: 'LU.ExistingLandUse'
+            , format: "image/png"
+            , transparent: true
+            , version: '1.3.0'
+            , crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: false
+            , visibility: false
+            , featureInfoFormat: "application/vnd.ogc.wms_xml"
+            , projection: 'EPSG:3857' // projection: 'EPSG:102067'
+            , maxScale: 0
+            , minScale: 50000
+            , attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>'
+        }
+    ),
+
+    nlc_drevzlozenie: new OpenLayers.Layer.WMS(
+        'Drevinové zloženie',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/DrevinoveZlozenie/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:102067'},
+        'https://www.nlcsk.org/arcgis/services/Inspire/DrevinoveZlozenie/MapServer/WMSServer?',
+        { layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:102067' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 100000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    nlc_polreviry: new OpenLayers.Layer.WMS(
+        'Poľovné revíry',
+        //		'http://gis.nlcsk.org/ArcGIS/services/Inspire/PolovneReviry/MapServer/WMSServer?',
+        'https://www.nlcsk.org/arcgis/services/Inspire/PolovneReviry/MapServer/WMSServer?',
+        //		{layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        { layers: "LU.ExistingLandUse", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 250000, attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.nlcsk.sk">NLC Zvolen</a></span>' }
+    ),
+
+    sop_lpis: new OpenLayers.Layer.WMS(
+        'LPIS 2019',
+        'https://gis.sopsr.sk/wms',
+        { layers: "lpis", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale: 0, minScale: 600000, attribution: '<span>&copy; ???, 2019</span>' }
+    ),
+
+    sop_kataster_c: new OpenLayers.Layer.WMS(
+        'C parcely (spracované ŠOPSR)',
+        'https://gis.sopsr.sk/wms',
+        {
+            layers: "kataster_SK_KN_C", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale: 0, minScale: 50000, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a>,29.9.2023</span>'
+        }
+    ),
+
+    sop_kataster_e: new OpenLayers.Layer.WMS(
+        'E parcely (spracované ŠOPSR)',
+        'https://gis.sopsr.sk/wms',
+        {
+            layers: "kataster_SK_KN_E", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.gml", projection: 'EPSG:5514', maxScale: 0, minScale: 50000, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a>,29.9.2023</span>'
+        }
+    ),
+
+    geoportal_eskn_parcely_c: new OpenLayers.Layer.WMS(
+        'Parcely registra C',
+        'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+        //		'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_orto/MapServer/WMSServer?',
+        //		'http://144.91.81.168:8090/service?',
+        {
+            layers: "5"
+            //			layers: "Parcely_C"
+            , format: "image/png"
+            , transparent: true
+            , version: '1.3.0'
+            , crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: false
+            , visibility: false
+            , featureInfoFormat: "application/vnd.ogc.wms_xml"
+            //			,featureInfoFormat: "application/vnd.esri.wms_featureinfo_xml"
+            //			,featureInfoFormat: "application/vnd.ogc.gml"
+            , projection: 'EPSG:3857'
+            , maxScale: 0
+            , minScale: 10000
+            , attribution: '<span>&copy; <a href="https://www.geoportal.sk/sk/sluzby/mapove-sluzby/wms/wms-eskn.html" target="_blank">Úrad geodézie, kartografie a katastra SR</a> (GKÚ Bratislava; r. 2015; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)'
+        }
+    ),
+
+    geoportal_eskn_parcely_e: new OpenLayers.Layer.WMS(
+        'Parcely registra E',
+        'https://kataster.skgeodesy.sk/eskn/services/NR/uo_wms_norm/MapServer/WMSServer?',
+        //		'https://kataster.skgeodesy.sk/eskn/services/NR/uo_wms_orto/MapServer/WMSServer?',
+        //		'http://144.91.81.168:8090/service?',
+        {
+            layers: "0"
+            //			layers: "Parcely_E"
+            , format: "image/png"
+            , transparent: true
+            , version: '1.3.0'
+            , crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: false
+            , visibility: false
+            //,featureInfoFormat: "application/vnd.ogc.wms_xml"
+            , featureInfoFormat: "application/vnd.esri.wms_featureinfo_xml"
+            , projection: 'EPSG:3857'
+            , maxScale: 0
+            , minScale: 10000
+            , attribution: '<span>&copy; <a href="https://www.geoportal.sk/sk/sluzby/mapove-sluzby/wms/wms-eskn.html" target="_blank">Úrad geodézie, kartografie a katastra SR</a> (GKÚ Bratislava; r. 2015; <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/legalcode.cs">CC-BY 4.0</a>)'
+        }
+    ),
+
+    geoportal_eskn_obec: new OpenLayers.Layer.WMS(
+        'Obce',
+        'https://zbgisws.skgeodesy.sk/zbgis_administrativne_hranice_wms_featureinfo/service.svc/get',
+        { layers: "0", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 150000, attribution: '<span>ZB<i>GIS</i>&reg; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+    ),
+
+    geoportal_eskn_parcely_ku: new OpenLayers.Layer.WMS(
+        'Katastrálne územia',
+        'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+        { layers: "13", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 100000, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+    ),
+
+    geoportal_eskn_parcely_okres: new OpenLayers.Layer.WMS(
+        'Okresy',
+        'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+        { layers: "14", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857' },
+        { isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.ogc.wms_xml", projection: 'EPSG:3857', maxScale: 0, minScale: 0, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+    ),
+
+    geoportal_eskn_parcely_kraj: new OpenLayers.Layer.WMS(
+        'Kraje',
+        'https://kataster.skgeodesy.sk/eskn/services/NR/kn_wms_norm/MapServer/WMSServer?',
+        { layers: "15", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857', info_format: 'application/vnd.ogc.wms_xml' },
+        //		{layers: "10", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857'},
+        { isBaseLayer: false, visibility: false, projection: 'EPSG:3857', maxScale: 0, minScale: 0, attribution: '<span>Informačný systém katastra nehnuteľností &copy; <a target="_blank" href="http://www.skgeodesy.sk">Úrad geodézie, kartografie a katastra Slovenskej republiky</a></span>' }
+        //		{layers: "15", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:3857', info_format: 'text/xml'},
+        //		{layers: "15", format: "image/png", transparent: true, version: '1.3.0', crs: 'EPSG:102067'},
+        //		{isBaseLayer: false, visibility: false, featureInfoFormat: "application/vnd.esri.wms_featureinfo_xml", projection: 'EPSG:3857', maxScale:0, minScale:0 }
+    ),
+
+    //SM, 18.01.2021 >>>
+    rozne__rybarske_reviry: new OpenLayers.Layer.WMS(
+        "Rybárske revíry",
+        "https://www.sopsr.sk/geoserver/intranet/ows",
+        {
+            layers: "intranet:rybarske_reviry"
+            , format: "image/png"
+            , transparent: true
+            , version: '1.3.0'
+            , crs: 'EPSG:3857'
+        },
+        {
+            isBaseLayer: false
+            , visibility: false
+            , featureInfoFormat: 'application/vnd.ogc.gml'
+            , projection: 'EPSG:3857'
+            , maxScale: 0
+            , minScale: 0
+            , attribution: '<span>Zdroj neznámy.</span>'
+        }
+    ),
+    //SM, 18.01.2021 <<<
 });
