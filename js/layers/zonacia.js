@@ -1,3 +1,5 @@
+
+
 OpenLayers.Util.extend(Heron.scratch.layermap, {
 
     zonacia_TANAP: new OpenLayers.Layer.Vector("Zonácia (TANAP)", {
@@ -67,7 +69,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
         }),
         strategies: [new OpenLayers.Strategy.Fixed()],
         // Štýl, aby vrstva nebola neviditeľná
-        styleMap: opStyleMap,
+        styleMap: napantOpStyleMap,
         // Priehľadnosť celej vrstvy
         opacity: 0.6,
         // Vrstva nie je podkladová
@@ -92,7 +94,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
         }),
         strategies: [new OpenLayers.Strategy.Fixed()],
         // Štýl, aby vrstva nebola neviditeľná
-        styleMap: efpStyleMap,
+        styleMap: napantEfpStyleMap,
         // Priehľadnosť celej vrstvy
         opacity: 0.6,
         // Vrstva nie je podkladová

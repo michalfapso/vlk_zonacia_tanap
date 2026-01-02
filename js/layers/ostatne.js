@@ -841,4 +841,19 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
         }
     ),
     //SM, 18.01.2021 <<<
+
+    sop_efp_hornaorava: new OpenLayers.Layer.WMS(
+        "EFP: CHVÚ Horná Orava",
+        'https://maps.sopsr.sk/geoserver/ows?',
+        { layers: "EFP_SKCHVU008", format: "image/png", transparent: true },
+        { isBaseLayer: false, visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>' }
+    ),
+    //SM, 18.01.2021 >>>
+    sop_efp_malekarpaty: new OpenLayers.Layer.WMS(
+        "EFP: CHKO Malé Karpaty",
+        'https://www.sopsr.sk/geoserver/public/ows?',
+        { layers: "public:EFP_CHKO_MaleKarpaty", format: "image/png", transparent: true },
+        { isBaseLayer: false, visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.gml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.sopsr.sk">ŠOP SR</a></span>' }
+    ),
+    //SM, 18.01.2021 <<<
 });
