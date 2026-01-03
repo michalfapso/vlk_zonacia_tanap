@@ -8,52 +8,24 @@ function getQueryParam(param) {
 var externalUrl = getQueryParam('ext_url');
 var externalName = getQueryParam('ext_name') || "Externá Vrstva";
 var externalCrs = getQueryParam('ext_crs') || 'EPSG:3857';
+var externalStyleUrl = getQueryParam('ext_style_url');
+
 if (externalUrl) {
     var common = Heron.scratch.LayerCommon;
-    var isArcGIS = externalUrl.indexOf('/MapServer') !== -1 || externalUrl.indexOf('/FeatureServer') !== -1;
-    console.log('isArcGIS', isArcGIS);
-    if (isArcGIS) {
-        // Use native ArcGIS REST support (OpenLayers 2 uses ArcGIS93Rest)
-        var arcgisUrl = externalUrl;
-        if (arcgisUrl.indexOf('/export') === -1) {
-            arcgisUrl += arcgisUrl.indexOf('?') === -1 ? '/export' : '';
-        }
 
-        Heron.scratch.layermap.externalLayer = new OpenLayers.Layer.ArcGIS93Rest(
-            externalName,
-            arcgisUrl,
-            {
-                layers: "show:0", // Default to first layer
-                transparent: true
-            },
-            {
-                isBaseLayer: false,
-                visibility: true,
-                attribution: '<span>Externý ArcGIS zdroj</span>'
-            }
-        );
+    var applyLayer = function (styleContent) {
+        var styleMap = common.getStyleMap(styleContent);
+        var isArcGIS = externalUrl.indexOf('/MapServer') !== -1 || externalUrl.indexOf('/FeatureServer') !== -1;
 
-        common.addLayerToMapAndTree(
-            Heron.scratch.layermap.externalLayer,
-            externalName,
-            "Imported from external ArcGIS URL: " + externalUrl
-        );
-    } else {
-        var myGeoJSONFormat = common.getFormat(externalUrl, externalCrs);
-        if (myGeoJSONFormat) {
-            var styleMap = common.getStyleMap({
-                fillColor: "#ff0000",
-                strokeColor: "#ff0000",
-                fillOpacity: 0.4,
-                strokeWidth: 2,
-                pointRadius: 6
-            });
-
-            // Create the layer object
+        if (isArcGIS) {
+            Heron.scratch.layermap.externalLayer = common.createArcGISVectorLayer(externalUrl, externalName, styleMap);
+        } else {
+            var format = common.getFormat(externalUrl, externalCrs);
             Heron.scratch.layermap.externalLayer = new OpenLayers.Layer.Vector(externalName, {
                 protocol: new OpenLayers.Protocol.HTTP({
                     url: externalUrl,
-                    format: myGeoJSONFormat
+                    format: format,
+                    headers: {}
                 }),
                 strategies: [new OpenLayers.Strategy.Fixed()],
                 styleMap: styleMap,
@@ -62,13 +34,7 @@ if (externalUrl) {
                 visibility: true
             });
 
-            common.addLayerToMapAndTree(
-                Heron.scratch.layermap.externalLayer,
-                externalName,
-                "Imported from external URL: " + externalUrl
-            );
-
-            // Zoom to data when loaded
+            // Zoom to data when loaded for non-BBOX layers
             Heron.scratch.layermap.externalLayer.events.register("loadend", Heron.scratch.layermap.externalLayer, function () {
                 var map = Heron.App.getMap();
                 if (map) {
@@ -77,5 +43,22 @@ if (externalUrl) {
             });
         }
 
+        common.addLayerToMapAndTree(
+            Heron.scratch.layermap.externalLayer,
+            externalName,
+            "Imported from external URL: " + externalUrl
+        );
+    };
+
+    if (externalStyleUrl) {
+        fetch(externalStyleUrl)
+            .then(function (r) { return r.json(); })
+            .then(function (style) { applyLayer(style); })
+            .catch(function (e) {
+                console.error("Error loading style:", e);
+                applyLayer(null);
+            });
+    } else {
+        applyLayer(null);
     }
 }

@@ -49,7 +49,30 @@ Proj4js.defs["EPSG:3857"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0
 Ext.namespace("Heron.options");
 Ext.namespace("Heron.scratch");
 OpenLayers.Util.onImageLoadErrorColor = "transparent";
-OpenLayers.ProxyHost = "https://maps.sopsr.sk/cgi-bin/proxy.cgi?url=";
+// OpenLayers.ProxyHost = "https://maps.sopsr.sk/cgi-bin/proxy.cgi?url=";
+
+// Disable X-Requested-With header which causes CORS issues with some ArcGIS servers
+// We do this aggressively by overriding setRequestHeader to ensure no library (OL, ExtJS, etc.) can add it
+(function () {
+    var originalSetHeader = XMLHttpRequest.prototype.setRequestHeader;
+    XMLHttpRequest.prototype.setRequestHeader = function (header, value) {
+        if (header && header.toLowerCase() === 'x-requested-with') {
+            return;
+        }
+        originalSetHeader.apply(this, arguments);
+    };
+})();
+
+if (OpenLayers.Request.DEFAULT_CONFIG) {
+    OpenLayers.Request.DEFAULT_CONFIG.headers = OpenLayers.Request.DEFAULT_CONFIG.headers || {};
+    delete OpenLayers.Request.DEFAULT_CONFIG.headers["X-Requested-With"];
+}
+// Also for ExtJS
+if (window.Ext && Ext.Ajax) {
+    Ext.Ajax.defaultHeaders = Ext.Ajax.defaultHeaders || {};
+    delete Ext.Ajax.defaultHeaders['X-Requested-With'];
+}
+
 //Ext.BLANK_IMAGE_URL = 'http://lib.heron-mc.org/ext/3.4.1.1/resources/images/default/s.gif';
 Ext.BLANK_IMAGE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/extjs/3.4.1-1/resources/images/default/s.gif';
 
