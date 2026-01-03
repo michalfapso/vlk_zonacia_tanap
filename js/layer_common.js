@@ -8,7 +8,7 @@ Heron.scratch.LayerCommon = {
         var format;
         var ext = fileName ? fileName.split('.').pop().toLowerCase() : 'geojson';
 
-        if (ext === 'json' || ext === 'geojson' || fileName.indexOf('/query') !== -1) {
+        if (ext === 'json' || ext === 'geojson' || (fileName && fileName.indexOf('/query') !== -1)) {
             format = new OpenLayers.Format.GeoJSON();
         } else if (ext === 'kml') {
             format = new OpenLayers.Format.KML({
@@ -35,17 +35,18 @@ Heron.scratch.LayerCommon = {
         var styleMap;
         var genericStyle = {
             fillColor: "#ff0000",
-            strokeColor: "#ff0000",
+            strokeColor: "#ffffff",
             fillOpacity: 0.5,
-            strokeWidth: 2,
-            pointRadius: 6
+            strokeOpacity: 1,
+            strokeWidth: 1,
+            pointRadius: 3 // Smaller points for better density
         };
 
         if (styleContent) {
             try {
                 var styleObj = typeof styleContent === 'string' ? JSON.parse(styleContent) : styleContent;
 
-                // Check if it has rules
+                // Support Rules
                 if (styleObj.rules) {
                     var rules = [];
                     for (var i = 0; i < styleObj.rules.length; i++) {
@@ -67,7 +68,6 @@ Heron.scratch.LayerCommon = {
                     var style = new OpenLayers.Style(styleObj.defaultStyle || genericStyle, { rules: rules });
                     styleMap = new OpenLayers.StyleMap({ "default": style });
                 } else {
-                    // Simple style
                     var style = new OpenLayers.Style(styleObj);
                     styleMap = new OpenLayers.StyleMap({ "default": style });
                 }
@@ -84,7 +84,7 @@ Heron.scratch.LayerCommon = {
     },
 
     /**
-     * Factory for ArcGIS Vector layers.
+     * Factory for ArcGIS Vector layers with pagination support.
      */
     createArcGISVectorLayer: function (url, name, styleMap) {
         var queryUrl = url;
@@ -92,33 +92,76 @@ Heron.scratch.LayerCommon = {
             queryUrl = queryUrl.replace(/\/$/, '') + '/0/query';
         }
 
-        var format = this.getFormat(queryUrl);
-        // Use HTTP protocol but ensure NO extra headers (like X-Requested-With) are sent
-        // to stay within the "Simple Request" or "Allowed Headers" of the ArcGIS CORS config.
+        var common = this;
         var layer = new OpenLayers.Layer.Vector(name, {
-            protocol: new OpenLayers.Protocol.HTTP({
-                url: queryUrl,
-                params: {
-                    f: 'geojson',
-                    outFields: '*',
-                    where: '1=1',
-                    geometryType: 'esriGeometryEnvelope',
-                    spatialRel: 'esriSpatialRelIntersects',
-                    inSR: 3857,
-                    outSR: 4326
-                },
-                format: format,
-                headers: {} // Explicitly empty headers to avoid CORS preflight "not allowed" errors
-            }),
-            strategies: [new OpenLayers.Strategy.BBOX()],
             styleMap: styleMap || this.getStyleMap(),
             opacity: 0.8,
             isBaseLayer: false,
-            visibility: true
+            visibility: true,
+            strategies: []
         });
 
-        // Add custom property for feature info support if needed by identify tools
+        // Add custom property for feature info support
         layer.metadata = { queryable: true };
+
+        var allFeatures = [];
+        var common = this;
+
+        // Custom pagination fetch
+        var fetchFeatures = function (offset) {
+            var params = {
+                f: 'geojson',
+                outFields: '*',
+                where: '1=1',
+                outSR: 4326,
+                resultOffset: offset,
+                resultRecordCount: 1000
+            };
+
+            console.log("Fetching ArcGIS features for offset " + offset + " (POST)...");
+
+            fetch(queryUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: OpenLayers.Util.getParameterString(params)
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data && data.features && data.features.length > 0) {
+                        console.log("Received " + data.features.length + " features for offset " + offset);
+                        var format = common.getFormat(queryUrl);
+                        var features = format.read(data);
+
+                        allFeatures = allFeatures.concat(features);
+
+                        // If we got a full page, there's likely more
+                        if (data.features.length === 1000) {
+                            fetchFeatures(offset + 1000);
+                        } else {
+                            console.log("Finished fetching. Total features: " + allFeatures.length);
+                            layer.addFeatures(allFeatures);
+                            if (layer.map) {
+                                layer.redraw();
+                            }
+                        }
+                    } else {
+                        console.log("No more features. Total features: " + allFeatures.length);
+                        if (allFeatures.length > 0) {
+                            layer.addFeatures(allFeatures);
+                        }
+                    }
+                })
+                .catch(function (e) {
+                    console.error("ArcGIS fetch error:", e);
+                    if (allFeatures.length > 0) {
+                        layer.addFeatures(allFeatures);
+                    }
+                });
+        };
+
+        fetchFeatures(0);
 
         return layer;
     },
@@ -132,8 +175,10 @@ Heron.scratch.LayerCommon = {
             map.addLayer(layer);
             if (layer.features && layer.features.length > 0) {
                 map.zoomToExtent(layer.getDataExtent());
-            } else if (layer.strategies) {
-                // For BBOX strategy, we might need to zoom somewhere or just wait for it to load
+            } else if (layer instanceof OpenLayers.Layer.Vector) {
+                // Hero GIS identify tools often look for 'queryable' metadata
+                layer.metadata = layer.metadata || {};
+                layer.metadata.queryable = true;
             }
         } else {
             if (!Heron.options.map.layers) {
