@@ -1048,6 +1048,20 @@ Heron.options.map.toolbar = [
 
     { type: "-" },
 
+    {
+        create: function (mapPanel, options) {
+            return new Ext.Button({
+                text: "Pridať vrstvu",
+                tooltip: "Načítať lokálnu vrstvu (GeoJSON, KML, GPX)",
+                handler: function () {
+                    Heron.scratch.LocalLayerLoader.showDialog();
+                }
+            });
+        }
+    },
+
+    { type: "-" },
+
     /*
         {type: "any", options: {
     //		xtype: 'tbbutton',
@@ -1606,6 +1620,7 @@ Heron.layout = {
 
                 {
                     xtype: 'hr_layertreepanel',
+                    id: 'hr-layer-tree',
                     flex: 4,
                     contextMenu: [
                         {
