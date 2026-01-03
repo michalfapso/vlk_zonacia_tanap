@@ -369,13 +369,6 @@ var treeTheme = [
     }
 ];
 
-if (externalUrl) {
-    console.log('externalLayerNode:', externalLayerNode);
-    // treeTheme[0].children.splice(0, 0, externalLayerNode);
-    treeTheme.splice(0, 0, externalLayerNode);
-    // treeTheme[0].children.push(externalLayerNode);
-}
-
 // Replace default layer browser DefaultConfig.js
 // Pass our theme tree config as an option
 Ext.namespace("Heron.options.layertree");

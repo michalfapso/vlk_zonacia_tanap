@@ -9,90 +9,73 @@ var externalUrl = getQueryParam('ext_url');
 var externalName = getQueryParam('ext_name') || "Externá Vrstva";
 var externalCrs = getQueryParam('ext_crs') || 'EPSG:3857';
 if (externalUrl) {
+    var common = Heron.scratch.LayerCommon;
+    var isArcGIS = externalUrl.indexOf('/MapServer') !== -1 || externalUrl.indexOf('/FeatureServer') !== -1;
+    console.log('isArcGIS', isArcGIS);
+    if (isArcGIS) {
+        // Use native ArcGIS REST support (OpenLayers 2 uses ArcGIS93Rest)
+        var arcgisUrl = externalUrl;
+        if (arcgisUrl.indexOf('/export') === -1) {
+            arcgisUrl += arcgisUrl.indexOf('?') === -1 ? '/export' : '';
+        }
 
-    // Define a generic style for external layers (or reuse your existing one)
-    var externalStyle = new OpenLayers.Style({
-        fillColor: "#ff0000",
-        strokeColor: "#ff0000",
-        fillOpacity: 0.4,
-        strokeWidth: 2,
-        pointRadius: 6
-    });
-    var externalStyleMap = new OpenLayers.StyleMap({ "default": externalStyle });
-
-
-    // Define Format (Reusable for both Protocol and Fetch)
-    var myGeoJSONFormat = new OpenLayers.Format.GeoJSON({
-        internalProjection: new OpenLayers.Projection("EPSG:3857"),
-        externalProjection: new OpenLayers.Projection(externalCrs)
-    });
-
-    // Create the layer object
-    Heron.scratch.layermap.externalLayer = new OpenLayers.Layer.Vector(externalName, {
-        protocol: new OpenLayers.Protocol.HTTP({
-            url: externalUrl,
-            format: myGeoJSONFormat
-        }),
-        strategies: [], // By leaving strategies empty, the layer sits waiting for data.
-        styleMap: externalStyleMap,
-        opacity: 0.8,
-        isBaseLayer: false,
-        visibility: true // Usually you want external layers visible immediately
-    });
-
-    // 4. Add the layer to Heron's configuration
-    // (Ensure this runs before Heron initializes the map)
-
-    // Add to the list of Layers
-    // Note: You usually append this to your existing array definition
-    Heron.options.map.layers.push(Heron.scratch.layermap.externalLayer);
-
-
-    // "fetch" is a modern standard that does NOT send X-Requested-With, 
-    // so GitHub Pages will accept it immediately.
-    fetch(externalUrl)
-        .then(function (response) {
-            if (!response.ok) {
-                throw new Error("HTTP Error " + response.status);
+        Heron.scratch.layermap.externalLayer = new OpenLayers.Layer.ArcGIS93Rest(
+            externalName,
+            arcgisUrl,
+            {
+                layers: "show:0", // Default to first layer
+                transparent: true
+            },
+            {
+                isBaseLayer: false,
+                visibility: true,
+                attribution: '<span>Externý ArcGIS zdroj</span>'
             }
-            return response.json();
-        })
-        .then(function (data) {
-            // Parse the data into OpenLayers features
-            var features = myGeoJSONFormat.read(data);
-            console.log('external features 1:', features);
-            // Add them to the map
-            if (features && features.length > 0) {
-                Heron.scratch.layermap.externalLayer.addFeatures(features);
-                console.log('external features 2:', features);
-                // Optional: Zoom to the data
-                // Heron.options.map.zoomToExtent(Heron.scratch.layermap.externalLayer.getDataExtent());
-                Heron.App.getMap().zoomToExtent(Heron.scratch.layermap.externalLayer.getDataExtent());
-            }
-        })
-        .catch(function (error) {
-            console.error("Error loading external GeoJSON:", error);
-            alert("Nepodarilo sa načítať externú vrstvu: " + error.message);
-        });
+        );
 
+        common.addLayerToMapAndTree(
+            Heron.scratch.layermap.externalLayer,
+            externalName,
+            "Imported from external ArcGIS URL: " + externalUrl
+        );
+    } else {
+        var myGeoJSONFormat = common.getFormat(externalUrl, externalCrs);
+        if (myGeoJSONFormat) {
+            var styleMap = common.getStyleMap({
+                fillColor: "#ff0000",
+                strokeColor: "#ff0000",
+                fillOpacity: 0.4,
+                strokeWidth: 2,
+                pointRadius: 6
+            });
 
-    // 5. Add to the Legend / Tree Panel
-    // You need to find where 'children' array for your tree is defined in your code
-    // and push this config object into it.
+            // Create the layer object
+            Heron.scratch.layermap.externalLayer = new OpenLayers.Layer.Vector(externalName, {
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: externalUrl,
+                    format: myGeoJSONFormat
+                }),
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                styleMap: styleMap,
+                opacity: 0.8,
+                isBaseLayer: false,
+                visibility: true
+            });
 
-    // Example: Assuming you have a variable or structure for your tree nodes:
-    var externalLayerNode = {
-        nodeType: "gx_layer",
-        layer: externalName,
-        qtip: "Imported from external URL",
-        text: "Externá vrstva: " + externalName,
-        checked: true
-    };
+            common.addLayerToMapAndTree(
+                Heron.scratch.layermap.externalLayer,
+                externalName,
+                "Imported from external URL: " + externalUrl
+            );
 
-    // You will have to manually locate your tree config in your huge JS file
-    // and push this object. If your tree config is static, you might do:
-    // treeConfig[0].children.push(externalLayerNode);
-    // Heron.options.map.layers.push(Heron.scratch.layermap.externalLayer);
+            // Zoom to data when loaded
+            Heron.scratch.layermap.externalLayer.events.register("loadend", Heron.scratch.layermap.externalLayer, function () {
+                var map = Heron.App.getMap();
+                if (map) {
+                    map.zoomToExtent(this.getDataExtent());
+                }
+            });
+        }
 
-    // Heron.options.layertree.tree.push(externalLayerNode);
+    }
 }
