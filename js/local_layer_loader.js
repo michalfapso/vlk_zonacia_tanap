@@ -1,3 +1,5 @@
+Ext.namespace("Heron.scratch");
+
 Heron.scratch.LocalLayerLoader = {
     showDialog: function () {
         var me = this;
@@ -24,19 +26,25 @@ Heron.scratch.LocalLayerLoader = {
                             listeners: {
                                 change: function (rg, checked) {
                                     var isFile = checked.inputValue === 'file';
-                                    Ext.getCmp('layer-file-field').setVisible(isFile);
+                                    Ext.getCmp('layer-file-container').setVisible(isFile);
                                     Ext.getCmp('layer-url-field').setVisible(!isFile);
                                     dialog.doLayout();
                                 }
                             }
                         },
                         {
-                            xtype: 'fileuploadfield',
-                            id: 'layer-file-field',
-                            emptyText: 'Vybrať GeoJSON, KML alebo GPX...',
+                            xtype: 'box',
+                            id: 'layer-file-container',
                             fieldLabel: 'Súbor',
-                            buttonText: 'Prehliadať...',
-                            anchor: '100%'
+                            autoEl: {
+                                tag: 'div',
+                                children: [{
+                                    tag: 'input',
+                                    type: 'file',
+                                    id: 'local-layer-data-file',
+                                    style: 'width: 100%'
+                                }]
+                            }
                         },
                         {
                             xtype: 'textfield',
@@ -56,27 +64,33 @@ Heron.scratch.LocalLayerLoader = {
                             xtype: 'radiogroup',
                             hideLabel: true,
                             items: [
-                                { boxLabel: 'Bypass', name: 'styleType', inputValue: 'none', checked: true },
+                                { boxLabel: 'Predvolený', name: 'styleType', inputValue: 'none', checked: true },
                                 { boxLabel: 'Súbor', name: 'styleType', inputValue: 'file' },
                                 { boxLabel: 'URL', name: 'styleType', inputValue: 'url' }
                             ],
                             listeners: {
                                 change: function (rg, checked) {
                                     var val = checked.inputValue;
-                                    Ext.getCmp('style-file-field').setVisible(val === 'file');
+                                    Ext.getCmp('style-file-container').setVisible(val === 'file');
                                     Ext.getCmp('style-url-field').setVisible(val === 'url');
                                     dialog.doLayout();
                                 }
                             }
                         },
                         {
-                            xtype: 'fileuploadfield',
-                            id: 'style-file-field',
-                            emptyText: 'Vybrať JSON štýl...',
+                            xtype: 'box',
+                            id: 'style-file-container',
                             fieldLabel: 'Súbor',
-                            buttonText: 'Prehliadať...',
-                            anchor: '100%',
-                            hidden: true
+                            hidden: true,
+                            autoEl: {
+                                tag: 'div',
+                                children: [{
+                                    tag: 'input',
+                                    type: 'file',
+                                    id: 'local-layer-style-file',
+                                    style: 'width: 100%'
+                                }]
+                            }
                         },
                         {
                             xtype: 'textfield',
@@ -138,24 +152,24 @@ Heron.scratch.LocalLayerLoader = {
 
         // Handle Data
         if (dataType === 'file') {
-            var file = Ext.getCmp('layer-file-field').fileInputEl.dom.files[0];
+            var file = document.getElementById('local-layer-data-file').files[0];
             if (!file) {
                 alert('Prosím vyberte súbor.');
                 return;
             }
-            dataPromise = Promise.resolve(file);
+            dataPromise = Promise.resolve({ type: 'file', value: file });
         } else {
             var url = Ext.getCmp('layer-url-field').getValue();
             if (!url) {
                 alert('Prosím zadajte URL.');
                 return;
             }
-            dataPromise = Promise.resolve(url);
+            dataPromise = Promise.resolve({ type: 'url', value: url });
         }
 
         // Handle Style
         if (styleType === 'file') {
-            var sFile = Ext.getCmp('style-file-field').fileInputEl.dom.files[0];
+            var sFile = document.getElementById('local-layer-style-file').files[0];
             if (sFile) {
                 stylePromise = new Promise(function (resolve) {
                     var reader = new FileReader();
@@ -177,28 +191,28 @@ Heron.scratch.LocalLayerLoader = {
         }
 
         Promise.all([dataPromise, stylePromise]).then(function (results) {
-            var dataInput = results[0];
+            var dataResult = results[0];
             var styleContent = results[1];
-            me.createLayer(dataInput, styleContent, name, projection);
+            me.createLayer(dataResult, styleContent, name, projection);
             dialog.close();
         });
     },
 
-    createLayer: function (dataInput, styleContent, name, projection) {
+    createLayer: function (dataResult, styleContent, name, projection) {
         var common = Heron.scratch.LayerCommon;
         var styleMap = common.getStyleMap(styleContent);
         var layer;
 
-        if (typeof dataInput === 'string') {
-            // URL source
-            var isArcGIS = dataInput.indexOf('/MapServer') !== -1 || dataInput.indexOf('/FeatureServer') !== -1;
+        if (dataResult.type === 'url') {
+            var url = dataResult.value;
+            var isArcGIS = url.indexOf('/MapServer') !== -1 || url.indexOf('/FeatureServer') !== -1;
             if (isArcGIS) {
-                layer = common.createArcGISVectorLayer(dataInput, name, styleMap);
+                layer = common.createArcGISVectorLayer(url, name, styleMap);
             } else {
-                var format = common.getFormat(dataInput, projection);
+                var format = common.getFormat(url, projection);
                 layer = new OpenLayers.Layer.Vector(name, {
                     protocol: new OpenLayers.Protocol.HTTP({
-                        url: dataInput,
+                        url: url,
                         format: format,
                         headers: {} // Avoid X-Requested-With
                     }),
@@ -216,11 +230,17 @@ Heron.scratch.LocalLayerLoader = {
             }
         } else {
             // File source
+            var file = dataResult.value;
             var reader = new FileReader();
             reader.onload = function (e) {
                 var content = e.target.result;
-                var format = common.getFormat(dataInput.name, projection);
+                var format = common.getFormat(file.name, projection);
                 var features = format.read(content);
+
+                if (!features || features.length === 0) {
+                    alert('Nepodarilo sa načítať žiadne prvky zo súboru.');
+                    return;
+                }
 
                 layer = new OpenLayers.Layer.Vector(name, {
                     styleMap: styleMap,
@@ -229,14 +249,14 @@ Heron.scratch.LocalLayerLoader = {
                     visibility: true
                 });
                 layer.addFeatures(features);
-                common.addLayerToMapAndTree(layer, name, "Loaded from local file: " + dataInput.name);
+                common.addLayerToMapAndTree(layer, name, "Loaded from local file: " + file.name);
             };
-            reader.readAsText(dataInput);
+            reader.readAsText(file);
             return; // Exit as the rest is in onload
         }
 
         if (layer) {
-            common.addLayerToMapAndTree(layer, name, "Loaded from input");
+            common.addLayerToMapAndTree(layer, name, "Loaded from URL: " + dataResult.value);
         }
     }
 };
