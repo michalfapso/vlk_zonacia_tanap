@@ -1,4 +1,4 @@
-Heron.options.map.layers.push(...[
+layers = [
 
     Heron.scratch.layermap.osm,
     Heron.scratch.layermap.opentopomap,
@@ -198,4 +198,9 @@ Heron.options.map.layers.push(...[
     //SM, 18.01.2021 >>>
     Heron.scratch.layermap.rozne__rybarske_reviry,
     //SM, 18.01.2021 <<<
-]);
+];
+if (Heron.options.map.layers) {
+    Heron.options.map.layers.push(...layers);
+} else {
+    Heron.options.map.layers = layers;
+}
