@@ -34,24 +34,24 @@ cergovStyle.addRules([new OpenLayers.Rule({
 })]); // VT4
 var cergovVekStyleMap = new OpenLayers.StyleMap({"default": cergovStyle});
 
-// --- VT5–6: semi-transparentná fialová ---
+// --- VT5–6: fialová zvislá riedka šrafáž ---
 var cergovVT56StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "#C084FC", fillOpacity: 0.5, strokeColor: "#7C3AED", strokeWidth: 0.5
+  fillColor: "url(#pattern_vt5_6)", fillOpacity: 1, strokeColor: "#6A0DAD", strokeWidth: 0.5
 })});
 
-// --- VT7: tmavšia fialová ---
+// --- VT7: fialová zvislá hustá šrafáž ---
 var cergovVT7StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "#7C3AED", fillOpacity: 0.55, strokeColor: "#4C1D95", strokeWidth: 0.5
+  fillColor: "url(#pattern_vt7)", fillOpacity: 1, strokeColor: "#6A0DAD", strokeWidth: 0.5
 })});
 
-// --- Ochranné lesy: červená ---
+// --- Ochranné lesy: červená šikmá šrafáž (45°) ---
 var cergovOchrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "#FCA5A5", fillOpacity: 0.5, strokeColor: "#DC2626", strokeWidth: 0.8
+  fillColor: "url(#pattern_ochranne)", fillOpacity: 1, strokeColor: "#CC0000", strokeWidth: 0.8
 })});
 
-// --- Chránené územia: zelená ---
+// --- Chránené územia: zelená šikmá šrafáž (135°, opačný smer) ---
 var cergovChrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "#22C55E", fillOpacity: 0.5, strokeColor: "#15803D", strokeWidth: 1.5
+  fillColor: "url(#pattern_chranene)", fillOpacity: 1, strokeColor: "#006600", strokeWidth: 1.5
 })});
 
 // --- Vodné toky: modrá čiara ---

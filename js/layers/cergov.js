@@ -14,7 +14,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_vt5_6: new OpenLayers.Layer.Vector("PP Čergov — VT5-6 (81-120r)", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/jprl_vt5_6.geojson",
+      url: "cergov/jprl_vt5_6_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"),
         externalProjection: new OpenLayers.Projection("EPSG:3857"),
@@ -27,7 +27,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_vt7: new OpenLayers.Layer.Vector("PP Čergov — VT7 (120+r)", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/jprl_vt7.geojson",
+      url: "cergov/jprl_vt7_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"),
         externalProjection: new OpenLayers.Projection("EPSG:3857"),
@@ -40,7 +40,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_ochranne_lesy: new OpenLayers.Layer.Vector("PP Čergov — Ochranné lesy", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/jprl_ochranne.geojson",
+      url: "cergov/jprl_ochranne_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"),
         externalProjection: new OpenLayers.Projection("EPSG:3857"),
@@ -53,7 +53,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_chranene: new OpenLayers.Layer.Vector("PP Čergov — Chránené územia", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/chranene_uzemia_cergov.geojson?v=3",
+      url: "cergov/chranene_uzemia_cergov_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:900913"),
         externalProjection: new OpenLayers.Projection("EPSG:4326"),
