@@ -130,13 +130,40 @@
 	<script type="text/javascript" src="js/external_layer_parser.js"></script>
 	<script type="text/javascript" src="js/local_layer_loader.js"></script>
 
+    <script src="js/layers/cergov_style.js?v=7"></script>
+    <script src="js/layers/cergov.js?v=7"></script>
+
 	<script type="text/javascript" src="js/config/heron_layers.js"></script>
 	<script type="text/javascript" src="js/config/heron_layertree.js"></script>
-	<script type="text/javascript" src="js/config/heron_config.js"></script>
-
-</head>
+	<script type="text/javascript" src="js/config/heron_config.js"></script></head>
 
 <body>
+<!-- CERGOV_SVG_DEFS_START -->
+<svg width='0' height='0' style='position:absolute'>
+<defs>
+  <!-- Fialové zvislé čiary, riedke (VT5-6) -->
+  <pattern id="pattern_vt5_6" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+    <line x1="4" y1="0" x2="4" y2="8" stroke="#6A0DAD" stroke-width="1.5"/>
+  </pattern>
+  <!-- Fialové zvislé čiary, husté (VT7) -->
+  <pattern id="pattern_vt7" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+    <line x1="2" y1="0" x2="2" y2="4" stroke="#6A0DAD" stroke-width="2"/>
+  </pattern>
+  <!-- Červené šikmé čiary 45° (ochranné lesy) -->
+  <pattern id="pattern_ochranne" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="4" y1="-4" x2="4" y2="12" stroke="#CC0000" stroke-width="1.5"/>
+  </pattern>
+  <!-- Zelené šikmé čiary 135° (chránené územia) -->
+  <pattern id="pattern_chranene" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+    <line x1="4" y1="-4" x2="4" y2="12" stroke="#006600" stroke-width="1.5"/>
+  </pattern>
+  <!-- Zelené kruhy — hrubé bodky (VLK vlastníctvo) -->
+  <pattern id="pattern_vlk" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+    <circle cx="5" cy="5" r="2.5" fill="#006600"/>
+  </pattern>
+</defs>
+</svg>
+<!-- CERGOV_SVG_DEFS_END -->
 </body>
 
 </html>

@@ -366,7 +366,20 @@ var treeTheme = [
                         ]
                 },
             ]
-    }
+    },
+
+// CERGOV_TREE_START
+    {
+        text: "Prírodný park Čergov", expanded: true, draggable: true, children: [
+                {nodeType: "gx_layer", layer: "PP Čergov — Vekové triedy VT1-4"},
+                {nodeType: "gx_layer", layer: "PP Čergov — VT5-6 (81-120r)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — VT7 (120+r)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Ochranné lesy"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Chránené územia"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Vodné toky"}
+        ]
+    },
+// CERGOV_TREE_END
 ];
 
 // Replace default layer browser DefaultConfig.js

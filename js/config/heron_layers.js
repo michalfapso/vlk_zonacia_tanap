@@ -198,6 +198,15 @@ layers = [
     //SM, 18.01.2021 >>>
     Heron.scratch.layermap.rozne__rybarske_reviry,
     //SM, 18.01.2021 <<<
+
+// CERGOV_LAYERS_START
+    Heron.scratch.layermap.cergov_vek_fill,
+    Heron.scratch.layermap.cergov_vt5_6,
+    Heron.scratch.layermap.cergov_vt7,
+    Heron.scratch.layermap.cergov_ochranne_lesy,
+    Heron.scratch.layermap.cergov_chranene,
+    Heron.scratch.layermap.cergov_voda,
+// CERGOV_LAYERS_END
 ];
 if (Heron.options.map.layers) {
     Heron.options.map.layers.push(...layers);
