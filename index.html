@@ -133,6 +133,8 @@
     <script src="js/layers/cergov_style.js?v=8"></script>
     <script src="js/layers/cergov.js?v=8"></script>
 
+	    <script src="js/layers/cergov_style.js"></script>
+	    <script src="js/layers/cergov.js"></script>
 	<script type="text/javascript" src="js/config/heron_layers.js"></script>
 	<script type="text/javascript" src="js/config/heron_layertree.js"></script>
 	<script type="text/javascript" src="js/config/heron_config.js"></script></head>
@@ -153,13 +155,30 @@
   <pattern id="pattern_ochranne" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
     <line x1="4" y1="-4" x2="4" y2="12" stroke="#CC0000" stroke-width="1.5"/>
   </pattern>
-  <!-- Zelené šikmé čiary 135° (chránené územia) -->
+  <!-- Zelené šikmé čiary 135° (chránené územia SOP kombinované) -->
   <pattern id="pattern_chranene" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
     <line x1="4" y1="-4" x2="4" y2="12" stroke="#006600" stroke-width="1.5"/>
   </pattern>
   <!-- Zelené kruhy — hrubé bodky (VLK vlastníctvo) -->
   <pattern id="pattern_vlk" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
     <circle cx="5" cy="5" r="2.5" fill="#006600"/>
+  </pattern>
+  <!-- SOP T2: svetlé modro-zelené vodorovné čiary (CHKO) -->
+  <pattern id="pattern_sop2" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="4" x2="8" y2="4" stroke="#2980B9" stroke-width="1.2"/>
+  </pattern>
+  <!-- SOP T3: žlto-oranžové čiary 45° (PR, CHA, PP) -->
+  <pattern id="pattern_sop3" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="4" y1="-4" x2="4" y2="12" stroke="#E67E00" stroke-width="1.5"/>
+  </pattern>
+  <!-- SOP T4: oranžové krížové šrafovanie (NPR, NPP) -->
+  <pattern id="pattern_sop4" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+    <line x1="4" y1="0" x2="4" y2="8" stroke="#E05000" stroke-width="1.5"/>
+    <line x1="0" y1="4" x2="8" y2="4" stroke="#E05000" stroke-width="1.5"/>
+  </pattern>
+  <!-- SOP T5: husté tmavočervené čiary (NP, PPR) -->
+  <pattern id="pattern_sop5" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="2" y1="-2" x2="2" y2="6" stroke="#C0392B" stroke-width="2"/>
   </pattern>
 </defs>
 </svg>

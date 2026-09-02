@@ -1,6 +1,6 @@
 // Čergov — štýly pre všetky vrstvy
 
-// --- Vekové triedy VT1–4: farebná výplň podľa veku ---
+// --- Vekové triedy VT1–4: farebná výplň ---
 var cergovStyle = new OpenLayers.Style(
   {fillColor: "#cccccc", fillOpacity: 0.5, strokeColor: "#888", strokeWidth: 0.5}
 );
@@ -58,3 +58,44 @@ var cergovChrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style
 var cergovVodaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   strokeColor: "#0066CC", strokeWidth: 1.5, fillOpacity: 0
 })});
+
+// --- Hranica CHVÚ: oranžová hrubá čiara, bez výplne ---
+var cergovChvuHranicaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  strokeColor: "#E67E00", strokeWidth: 3, fillOpacity: 0, strokeDashstyle: "solid"
+})});
+
+// --- Hranica ÚEV: modrá hrubá čiara, bez výplne ---
+var cergovUevHranicaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  strokeColor: "#1A5276", strokeWidth: 3, fillOpacity: 0, strokeDashstyle: "dash"
+})});
+
+// --- SOP T2: modré vodorovné čiary (CHKO) ---
+var cergovSop2StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_sop2)", fillOpacity: 1, strokeColor: "#2980B9", strokeWidth: 0.5
+})});
+
+// --- SOP T3: oranžové šikmé čiary (PR, PP, CHA) ---
+var cergovSop3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_sop3)", fillOpacity: 1, strokeColor: "#E67E00", strokeWidth: 0.5
+})});
+
+// --- SOP T4: oranžové krížové šrafovanie (NPR, NPP) ---
+var cergovSop4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_sop4)", fillOpacity: 1, strokeColor: "#E05000", strokeWidth: 0.8
+})});
+
+// --- SOP T5: tmavočervené husté šrafovanie (NP, PPR) ---
+var cergovSop5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_sop5)", fillOpacity: 1, strokeColor: "#C0392B", strokeWidth: 0.8
+})});
+
+// --- MCHU rezervácie s názvami ---
+var cergovMchuStyle = new OpenLayers.Style({
+  fillColor: "#27AE60", fillOpacity: 0.25,
+  strokeColor: "#1A7A40", strokeWidth: 1.5,
+  label: "${SITETITLE_SK}",
+  fontColor: "#0B3D1E", fontSize: "11px", fontFamily: "Arial, sans-serif",
+  fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+});
+var cergovMchuStyleMap = new OpenLayers.StyleMap({"default": cergovMchuStyle});
+

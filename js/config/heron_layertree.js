@@ -371,11 +371,18 @@ var treeTheme = [
 // CERGOV_TREE_START
     {
         text: "Prírodný park Čergov", expanded: true, draggable: true, children: [
+                {nodeType: "gx_layer", layer: "PP Čergov — Hranica CHVÚ"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Hranica ÚEV"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Rezervácie (MCHU)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Chránené územia (SOP≥2)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — SOP 2 (CHKO)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — SOP 3 (PR, PP, CHA)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — SOP 4 (NPR, NPP)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — SOP 5 (NP, PPR)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Vekové triedy VT1-4"},
                 {nodeType: "gx_layer", layer: "PP Čergov — VT5-6 (81-120r)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — VT7 (120+r)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Ochranné lesy"},
-                {nodeType: "gx_layer", layer: "PP Čergov — Chránené územia"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Vodné toky"}
         ]
     },
