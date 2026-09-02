@@ -131,6 +131,17 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovOchrStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
+  cergov_salamandria: new OpenLayers.Layer.Vector("PP Čergov — Navrhovaná PR Salamandria", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/salamandria_hranica.geojson",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326")
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovSalamStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: true
+  }),
   cergov_voda: new OpenLayers.Layer.Vector("PP Čergov — Vodné toky", {
     protocol: new OpenLayers.Protocol.HTTP({
       url: "cergov/vod_toky_cergov.geojson",

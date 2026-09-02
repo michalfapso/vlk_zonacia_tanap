@@ -212,6 +212,7 @@ layers = [
     Heron.scratch.layermap.cergov_vt5_6,
     Heron.scratch.layermap.cergov_vt7,
     Heron.scratch.layermap.cergov_ochranne_lesy,
+    Heron.scratch.layermap.cergov_salamandria,
     Heron.scratch.layermap.cergov_voda,
 // CERGOV_LAYERS_END
 ];

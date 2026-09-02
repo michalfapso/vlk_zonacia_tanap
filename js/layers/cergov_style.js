@@ -99,3 +99,13 @@ var cergovMchuStyle = new OpenLayers.Style({
 });
 var cergovMchuStyleMap = new OpenLayers.StyleMap({"default": cergovMchuStyle});
 
+// --- Salamandria navrhovaná rezervácia: fialový okraj + popis ---
+var cergovSalamStyle = new OpenLayers.Style({
+  fillColor: "#27AE60", fillOpacity: 0.25,
+  strokeColor: "#1A7A40", strokeWidth: 1.5,
+  label: "${SITETITLE_SK}",
+  fontColor: "#0B3D1E", fontSize: "11px", fontFamily: "Arial, sans-serif",
+  fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+});
+var cergovSalamStyleMap = new OpenLayers.StyleMap({"default": cergovSalamStyle});
+

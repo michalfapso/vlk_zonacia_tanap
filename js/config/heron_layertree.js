@@ -374,6 +374,7 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PP Čergov — Hranica CHVÚ"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Hranica ÚEV"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Rezervácie (MCHU)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Navrhovaná PR Salamandria"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Chránené územia (SOP≥2)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — SOP 2 (CHKO)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — SOP 3 (PR, PP, CHA)"},
