@@ -373,6 +373,7 @@ var treeTheme = [
         text: "Prírodný park Čergov", expanded: true, draggable: true, children: [
                 {nodeType: "gx_layer", layer: "PP Čergov — Hranica CHVÚ"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Hranica ÚEV"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Lesné celky (LC)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Rezervácie (MCHU)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Navrhovaná PR Salamandria"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Chránené územia (SOP≥2)"},

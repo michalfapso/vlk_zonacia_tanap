@@ -21,6 +21,17 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovUevHranicaStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: true
   }),
+  cergov_lesne_celky: new OpenLayers.Layer.Vector("PP Čergov — Lesné celky (LC)", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/lesne_celky_cergov.geojson",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovLesneCelkyStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
   cergov_mchu: new OpenLayers.Layer.Vector("PP Čergov — Rezervácie (MCHU)", {
     protocol: new OpenLayers.Protocol.HTTP({
       url: "cergov/mchu_cergov.geojson",
@@ -30,6 +41,17 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     }),
     strategies: [new OpenLayers.Strategy.Fixed()],
     styleMap: cergovMchuStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: true
+  }),
+  cergov_salamandria: new OpenLayers.Layer.Vector("PP Čergov — Navrhovaná PR Salamandria", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/salamandria_hranica.geojson",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326")
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovSalamStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: true
   }),
   cergov_chranene: new OpenLayers.Layer.Vector("PP Čergov — Chránené územia (SOP≥2)", {
@@ -130,17 +152,6 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     strategies: [new OpenLayers.Strategy.Fixed()],
     styleMap: cergovOchrStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
-  }),
-  cergov_salamandria: new OpenLayers.Layer.Vector("PP Čergov — Navrhovaná PR Salamandria", {
-    protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/salamandria_hranica.geojson",
-      format: new OpenLayers.Format.GeoJSON({
-        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326")
-      })
-    }),
-    strategies: [new OpenLayers.Strategy.Fixed()],
-    styleMap: cergovSalamStyleMap,
-    isBaseLayer: false, hideInLegend: false, visibility: true
   }),
   cergov_voda: new OpenLayers.Layer.Vector("PP Čergov — Vodné toky", {
     protocol: new OpenLayers.Protocol.HTTP({

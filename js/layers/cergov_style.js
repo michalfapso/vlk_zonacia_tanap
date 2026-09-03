@@ -99,7 +99,7 @@ var cergovMchuStyle = new OpenLayers.Style({
 });
 var cergovMchuStyleMap = new OpenLayers.StyleMap({"default": cergovMchuStyle});
 
-// --- Salamandria navrhovaná rezervácia: fialový okraj + popis ---
+// --- Salamandria navrhovaná rezervácia: štýl ako MCHU ---
 var cergovSalamStyle = new OpenLayers.Style({
   fillColor: "#27AE60", fillOpacity: 0.25,
   strokeColor: "#1A7A40", strokeWidth: 1.5,
@@ -109,3 +109,10 @@ var cergovSalamStyle = new OpenLayers.Style({
 });
 var cergovSalamStyleMap = new OpenLayers.StyleMap({"default": cergovSalamStyle});
 
+// --- Hranica lesných celkov (LC): hnedá bodkovaná čiara s popiskom ---
+var cergovLesneCelkyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  strokeColor: "#8B5A2B", strokeWidth: 2.5, fillOpacity: 0, strokeDashstyle: "dashdot",
+  label: "${LC}",
+  fontColor: "#5A3A1B", fontSize: "10px", fontFamily: "Arial, sans-serif",
+  fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+})});

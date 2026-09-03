@@ -202,7 +202,9 @@ layers = [
 // CERGOV_LAYERS_START
     Heron.scratch.layermap.cergov_chvu_hranica,
     Heron.scratch.layermap.cergov_uev_hranica,
+    Heron.scratch.layermap.cergov_lesne_celky,
     Heron.scratch.layermap.cergov_mchu,
+    Heron.scratch.layermap.cergov_salamandria,
     Heron.scratch.layermap.cergov_chranene,
     Heron.scratch.layermap.cergov_sop2,
     Heron.scratch.layermap.cergov_sop3,
@@ -212,7 +214,6 @@ layers = [
     Heron.scratch.layermap.cergov_vt5_6,
     Heron.scratch.layermap.cergov_vt7,
     Heron.scratch.layermap.cergov_ochranne_lesy,
-    Heron.scratch.layermap.cergov_salamandria,
     Heron.scratch.layermap.cergov_voda,
 // CERGOV_LAYERS_END
 ];
