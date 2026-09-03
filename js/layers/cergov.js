@@ -153,6 +153,17 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovOchrStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
+  cergov_lesy_sr: new OpenLayers.Layer.Vector("PP Čergov — Lesy SR (obhospodarovateľ)", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/jprl_lesy_sr_lc_hertnik_d.geojson",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovLesySrStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
   cergov_voda: new OpenLayers.Layer.Vector("PP Čergov — Vodné toky", {
     protocol: new OpenLayers.Protocol.HTTP({
       url: "cergov/vod_toky_cergov.geojson",

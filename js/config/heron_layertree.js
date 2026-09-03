@@ -385,6 +385,7 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PP Čergov — VT5-6 (81-120r)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — VT7 (120+r)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Ochranné lesy"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Lesy SR (obhospodarovateľ)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Vodné toky"}
         ]
     },

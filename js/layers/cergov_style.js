@@ -54,6 +54,11 @@ var cergovChrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style
   fillColor: "url(#pattern_chranene)", fillOpacity: 1, strokeColor: "#006600", strokeWidth: 1.5
 })});
 
+// --- Lesy SR (obhospodarovateľ, odhad cez legacy vrstvu): modrá bodkovaná ---
+var cergovLesySrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_lesysr)", fillOpacity: 1, strokeColor: "#1F4E79", strokeWidth: 1.0
+})});
+
 // --- Vodné toky: modrá čiara ---
 var cergovVodaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   strokeColor: "#0066CC", strokeWidth: 1.5, fillOpacity: 0
