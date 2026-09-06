@@ -216,6 +216,9 @@ layers = [
     Heron.scratch.layermap.cergov_ochranne_lesy,
     Heron.scratch.layermap.cergov_lesy_sr,
     Heron.scratch.layermap.cergov_voda,
+    Heron.scratch.layermap.cergov_navrh3,
+    Heron.scratch.layermap.cergov_navrh4,
+    Heron.scratch.layermap.cergov_navrh5,
 // CERGOV_LAYERS_END
 ];
 if (Heron.options.map.layers) {

@@ -386,7 +386,10 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PP Čergov — VT7 (120+r)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Ochranné lesy"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Lesy SR (obhospodarovateľ)"},
-                {nodeType: "gx_layer", layer: "PP Čergov — Vodné toky"}
+                {nodeType: "gx_layer", layer: "PP Čergov — Vodné toky"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 3 (LC Hertník)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 4 (LC Hertník)"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 5 (LC Hertník)"}
         ]
     },
 // CERGOV_TREE_END

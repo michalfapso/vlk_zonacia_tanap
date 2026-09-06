@@ -94,6 +94,21 @@ var cergovSop5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Styl
   fillColor: "url(#pattern_sop5)", fillOpacity: 1, strokeColor: "#C0392B", strokeWidth: 0.8
 })});
 
+// --- Návrh zonácie (LC Hertník) T3: tenké tyrkysové šikmé čiary ---
+var cergovNavrh3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh3)", fillOpacity: 1, strokeColor: "#17A2B8", strokeWidth: 0.5
+})});
+
+// --- Návrh zonácie (LC Hertník) T4: tyrkysové krížové šrafovanie ---
+var cergovNavrh4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh4)", fillOpacity: 1, strokeColor: "#0F6674", strokeWidth: 0.8
+})});
+
+// --- Návrh zonácie (LC Hertník) T5: husté tmavotyrkysové čiary ---
+var cergovNavrh5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh5)", fillOpacity: 1, strokeColor: "#053742", strokeWidth: 0.8
+})});
+
 // --- MCHU rezervácie s názvami ---
 var cergovMchuStyle = new OpenLayers.Style({
   fillColor: "#27AE60", fillOpacity: 0.25,
