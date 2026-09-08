@@ -155,7 +155,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_lesy_sr: new OpenLayers.Layer.Vector("PP Čergov — Lesy SR (obhospodarovateľ)", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/jprl_lesy_sr_lc_hertnik_d.geojson",
+      url: "cergov/jprl_lesy_sr_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
