@@ -220,6 +220,13 @@ layers = [
     Heron.scratch.layermap.cergov_navrh4,
     Heron.scratch.layermap.cergov_navrh5,
 // CERGOV_LAYERS_END
+
+// PSOL_BRATISLAVA_LAYERS_START
+    Heron.scratch.layermap.psol_bratislava_statne_lesy,
+    Heron.scratch.layermap.psol_bratislava_mestske_lesy,
+    Heron.scratch.layermap.psol_bratislava_ostatni,
+    Heron.scratch.layermap.psol_bratislava_tazba,
+// PSOL_BRATISLAVA_LAYERS_END
 ];
 if (Heron.options.map.layers) {
     Heron.options.map.layers.push(...layers);

@@ -393,6 +393,17 @@ var treeTheme = [
         ]
     },
 // CERGOV_TREE_END
+
+// PSOL_BRATISLAVA_TREE_START
+    {
+        text: "PSoL Bratislava 2026-2035", expanded: true, draggable: true, children: [
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — Štátne lesy (LESY SR, š.p.)"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — Mestské lesy Bratislava"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — Ostatné subjekty"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy)"}
+        ]
+    }
+// PSOL_BRATISLAVA_TREE_END
 ];
 
 // Replace default layer browser DefaultConfig.js
