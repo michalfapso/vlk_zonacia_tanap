@@ -226,6 +226,7 @@ layers = [
     Heron.scratch.layermap.psol_bratislava_mestske_lesy,
     Heron.scratch.layermap.psol_bratislava_ostatni,
     Heron.scratch.layermap.psol_bratislava_tazba,
+    Heron.scratch.layermap.psol_bratislava_tazba_povodna_chybna,
 // PSOL_BRATISLAVA_LAYERS_END
 ];
 if (Heron.options.map.layers) {

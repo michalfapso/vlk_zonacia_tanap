@@ -400,6 +400,7 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Štátne lesy (LESY SR, š.p.)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Mestské lesy Bratislava"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Ostatné subjekty"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy, PÔVODNÁ CHYBNÁ vrstva)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy)"}
         ]
     }
