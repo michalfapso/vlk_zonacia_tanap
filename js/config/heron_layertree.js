@@ -403,8 +403,16 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy, PÔVODNÁ CHYBNÁ vrstva)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy)"}
         ]
-    }
+    },
 // PSOL_BRATISLAVA_TREE_END
+
+// PSOL_STARINA_TREE_START
+    {
+        text: "PSoL LHC Starina", expanded: true, draggable: true, children: [
+                {nodeType: "gx_layer", layer: "PSoL LHC Starina — Plánovaná ťažba (štátne lesy)"}
+        ]
+    }
+// PSOL_STARINA_TREE_END
 ];
 
 // Replace default layer browser DefaultConfig.js
