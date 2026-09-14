@@ -19,3 +19,8 @@ var psolBratislavaOstatniStyleMap = new OpenLayers.StyleMap({"default": new Open
 var psolBratislavaTazbaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "#E05A00", fillOpacity: 0.55, strokeColor: "#8A2E00", strokeWidth: 1.2
 })});
+
+// --- Bezzásahové referenčné plochy do 31.12.2025: modrá výplň, výrazný obrys ---
+var psolBratislavaBezzasahoveStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "#1450A0", fillOpacity: 0.45, strokeColor: "#0A2E60", strokeWidth: 1.4
+})});

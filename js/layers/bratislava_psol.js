@@ -57,4 +57,15 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: psolBratislavaTazbaStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
+  psol_bratislava_bezzasahove_do_2025_12_31: new OpenLayers.Layer.Vector("PSoL Bratislava — Bezzásahové referenčné plochy do 31.12.2025 (štátne lesy)", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "bratislava_psol/bezzasahove_do_2025-12-31.geojson",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: psolBratislavaBezzasahoveStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
 });

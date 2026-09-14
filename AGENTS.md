@@ -13,8 +13,8 @@ A static GIS web application for visualising Slovak nature-protection layers, ad
 This is the most common task. Three files always change together:
 
 1. **Define the layer** in the appropriate `js/layers/*.js` file by adding a key to `Heron.scratch.layermap`.
-2. **Register it in the tree** in `js/config/heron_layertree.js` — reference the layer by its **exact display name string** (must match the first argument in the `new OpenLayers.Layer.*()` call).
-3. `js/config/heron_layers.js` automatically collects all keys from `Heron.scratch.layermap` — no changes needed there unless you add a new layers file.
+2. **Add it to the map** in `js/config/heron_layers.js` — this is a manually maintained list of `Heron.scratch.layermap.<key>` entries pushed into `Heron.options.map.layers`, NOT an automatic collector. A layer left out of this list still exists in `layermap` but is never added to the map, so referencing it by name in the tree (step 3) makes GeoExt bind the tree node's `layer` property to something that isn't a real `OpenLayers.Layer` — causing errors like `this.node.layer.getVisibility is not a function` at render time. Always add the new key here (there's a `// XXX_LAYERS_START/END` block per feature group to append to).
+3. **Register it in the tree** in `js/config/heron_layertree.js` — reference the layer by its **exact display name string** (must match the first argument in the `new OpenLayers.Layer.*()` call).
 
 For a new layers file, add a `<script src="...">` tag in `index.html` **before** `heron_layers.js`.
 
