@@ -54,6 +54,11 @@ var cergovChrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style
   fillColor: "url(#pattern_chranene)", fillOpacity: 1, strokeColor: "#006600", strokeWidth: 1.5
 })});
 
+// --- VLK vlastníctvo: zelená bodkovaná (hrubé bodky) ---
+var cergovVLKStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_vlk)", fillOpacity: 1, strokeColor: "#14532D", strokeWidth: 1.0
+})});
+
 // --- Lesy SR (obhospodarovateľ, odhad cez legacy vrstvu): modrá bodkovaná ---
 var cergovLesySrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_lesysr)", fillOpacity: 1, strokeColor: "#1F4E79", strokeWidth: 1.0
@@ -94,17 +99,17 @@ var cergovSop5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Styl
   fillColor: "url(#pattern_sop5)", fillOpacity: 1, strokeColor: "#C0392B", strokeWidth: 0.8
 })});
 
-// --- Návrh zonácie (LC Hertník) T3: tenké tyrkysové šikmé čiary ---
+// --- Návrh zonácie T3: tenké tyrkysové šikmé čiary ---
 var cergovNavrh3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_navrh3)", fillOpacity: 1, strokeColor: "#17A2B8", strokeWidth: 0.5
 })});
 
-// --- Návrh zonácie (LC Hertník) T4: tyrkysové krížové šrafovanie ---
+// --- Návrh zonácie T4: tyrkysové krížové šrafovanie ---
 var cergovNavrh4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_navrh4)", fillOpacity: 1, strokeColor: "#0F6674", strokeWidth: 0.8
 })});
 
-// --- Návrh zonácie (LC Hertník) T5: husté tmavotyrkysové čiary ---
+// --- Návrh zonácie T5: husté tmavotyrkysové čiary ---
 var cergovNavrh5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_navrh5)", fillOpacity: 1, strokeColor: "#053742", strokeWidth: 0.8
 })});

@@ -175,9 +175,9 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovVodaStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
-  cergov_navrh3: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 3 (LC Hertník)", {
+  cergov_navrh3: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 3", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t3_lc_hertnik_d.geojson",
+      url: "cergov/navrh_zonacie_t3_cergov_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -186,9 +186,9 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovNavrh3StyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
-  cergov_navrh4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 4 (LC Hertník)", {
+  cergov_navrh4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 4", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t4_lc_hertnik_d.geojson",
+      url: "cergov/navrh_zonacie_t4_cergov_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -197,9 +197,9 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovNavrh4StyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
-  cergov_navrh5: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 5 (LC Hertník)", {
+  cergov_navrh5: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 5", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t5_lc_hertnik_d.geojson",
+      url: "cergov/navrh_zonacie_t5_cergov_d.geojson",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
