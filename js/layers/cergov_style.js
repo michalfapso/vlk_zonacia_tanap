@@ -99,6 +99,50 @@ var cergovSop5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Styl
   fillColor: "url(#pattern_sop5)", fillOpacity: 1, strokeColor: "#C0392B", strokeWidth: 0.8
 })});
 
+// --- Návrh zonácie T2: riedke fialové bodky (bezlesie) ---
+var cergovNavrh2StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh2)", fillOpacity: 1, strokeColor: "#8E24AA", strokeWidth: 0.8
+})});
+
+// --- Čísla JPRL: tenký obrys s číslom (priblížené) ---
+// Mierka cez pravidlo, nie maxResolution vrstvy: vrstva mimo rozsahu by bola
+// v strome vrstiev zašedená a nedala by sa zapnúť. Mimo pravidla sa nekreslí.
+// Popisy sú body (scripts/13) s 'zl' = zoom, od ktorého sa neprekrývajú.
+function cergovZoom(feature) {
+  var map = feature.layer && feature.layer.map;
+  return map ? Math.round(Math.log(156543.03392804097 / map.getResolution()) / Math.LN2) : -1;
+}
+var cergovJprlCislaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({}, {rules: [
+  new OpenLayers.Rule({
+    maxScaleDenominator: OpenLayers.Util.getScaleFromResolution(6, "m"),
+    symbolizer: {
+      display: "${disp}", pointRadius: 0,
+      strokeColor: "#4D4D4D", strokeWidth: 0.7, fillOpacity: 0,
+      label: "${l}",
+      fontColor: "#222222", fontSize: "10px", fontFamily: "Arial, sans-serif",
+      labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+    }
+  })
+], context: {
+  disp: function(feature) { return cergovZoom(feature) >= feature.attributes.zl ? "" : "none"; }
+}})});
+
+// --- Čísla JPRL, oddialené: vopred vypočítané zhluky dielcov (scripts/13) ---
+// Polygón = zjednotené hranice dielcov zhluku, bod = popis s rozsahom čísel po LC.
+// Každý prvok platí pre zoomy z..zmax; zoom sa počíta z rozlíšenia (EPSG:3857).
+var cergovJprlZhlukyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  display: "${disp}",
+  strokeColor: "#4D4D4D", strokeWidth: 1, fillOpacity: 0, pointRadius: 0,
+  label: "${r}",
+  fontColor: "#222222", fontSize: "10px", fontFamily: "Arial, sans-serif",
+  labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+}, {context: {
+  disp: function(feature) {
+    var a = feature.attributes, z = cergovZoom(feature);
+    return (z >= a.z && z <= a.zmax) ? "" : "none";
+  }
+}})});
+
 // --- Návrh zonácie T3: tenké tyrkysové šikmé čiary ---
 var cergovNavrh3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_navrh3)", fillOpacity: 1, strokeColor: "#17A2B8", strokeWidth: 0.5

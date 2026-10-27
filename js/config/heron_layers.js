@@ -216,9 +216,12 @@ layers = [
     Heron.scratch.layermap.cergov_ochranne_lesy,
     Heron.scratch.layermap.cergov_lesy_sr,
     Heron.scratch.layermap.cergov_voda,
+    Heron.scratch.layermap.cergov_navrh2,
     Heron.scratch.layermap.cergov_navrh3,
     Heron.scratch.layermap.cergov_navrh4,
     Heron.scratch.layermap.cergov_navrh5,
+    Heron.scratch.layermap.cergov_jprl_zhluky,
+    Heron.scratch.layermap.cergov_jprl_cisla,
 // CERGOV_LAYERS_END
 
 // PSOL_BRATISLAVA_LAYERS_START

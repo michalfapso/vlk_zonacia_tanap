@@ -387,9 +387,11 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PP Čergov — Ochranné lesy"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Lesy SR (obhospodarovateľ)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Vodné toky"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 2 (bezlesie)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 3"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 4"},
-                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 5"}
+                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 5"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Čísla JPRL"}
         ]
     },
 // CERGOV_TREE_END
