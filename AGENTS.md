@@ -109,3 +109,7 @@ ogr2ogr -f GeoJSON output.geojson input.shp -t_srs EPSG:3857
 ## Cache busting
 
 Append `?v=N` to `<script src="...">` URLs in `index.html` when deploying updated layer files.
+
+## Hľadanie vo vrstvách
+
+Pole hľadania miest v toolbare (`heron_config.js`, xtype `hr_vectorgeocodercombo` = Heron `hr_geocodercombo` rozšírený v `js/vector_search.js`) popri Nominatime hľadá aj vo vektorových vrstvách; v zozname je sekcia "Vo vrstvách" (klik priblíži na nájdené prvky) nad sekciou miest z OSM. Prehľadávajú sa len zapnuté vrstvy, automaticky podľa hodnôt atribútov; voliteľne `searchText: function(feature)` (vlastný text, zobrazí sa aj ako popis zvýraznenia) a `searchLoad: function(callback)` (načítanie prvkov na požiadanie); `searchable: false` vrstvu vylúči. Príklad: JPRL v `js/layers/cergov.js` (generuje `scripts/lib/svg_patterns.py` v Čergov pipeline).

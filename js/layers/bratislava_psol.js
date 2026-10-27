@@ -44,7 +44,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     }),
     strategies: [new OpenLayers.Strategy.Fixed()],
     styleMap: psolBratislavaTazbaStyleMap,
-    isBaseLayer: false, hideInLegend: false, visibility: true
+    isBaseLayer: false, hideInLegend: false, visibility: false
   }),
   psol_bratislava_tazba_povodna_chybna: new OpenLayers.Layer.Vector("PSoL Bratislava — Plánovaná ťažba (štátne lesy, PÔVODNÁ CHYBNÁ vrstva)", {
     protocol: new OpenLayers.Protocol.HTTP({

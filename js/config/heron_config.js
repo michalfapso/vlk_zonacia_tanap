@@ -787,7 +787,8 @@ Heron.options.map.toolbar = [
             //http://wiki.openstreetmap.org/wiki/Nominatim#Parameters
             url: 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=0&countrycodes=SK&limit=20&dedupe=1',
             //url: 'http://photon.komoot.de/api',
-            xtype: 'hr_geocodercombo',
+            // hr_geocodercombo + hľadanie vo vektorových vrstvách (js/vector_search.js)
+            xtype: 'hr_vectorgeocodercombo',
             id: 'hr_geocodercombo',
             layer: new OpenLayers.Layer.Vector("Location", {
                 styleMap: new OpenLayers.Style({
@@ -798,13 +799,14 @@ Heron.options.map.toolbar = [
                     graphicTitle: "${name}"
                 })
             }),
-            emptyText: 'Hľadaj miesto, mesto, dedinu v SK',
+            emptyText: 'Hľadaj miesto, mesto, dedinu v SK alebo vo vrstvách (napr. He 504)',
             width: 420,
             zoom: 13,
             minChars: 3,
-            tooltip: "Hľadať ...",
+            tooltip: "Hľadať ..."
         }
     },
+].concat(VectorSearch.toolbarItems()).concat([
 
     { type: "-" },
     //SM, 13.01.2020 >>>
@@ -1253,7 +1255,7 @@ Heron.options.map.toolbar = [
         }
     },
 
-];
+]);
 
 
 Heron.options.map.statusbar = [

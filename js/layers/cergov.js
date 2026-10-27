@@ -234,14 +234,31 @@ Heron.scratch.layermap.cergov_jprl_zhluky = new OpenLayers.Layer.Vector("PP Čer
 });
 (function() {
   var poly = Heron.scratch.layermap.cergov_jprl_cisla, zhluky = Heron.scratch.layermap.cergov_jprl_zhluky;
-  var loaded = false;
-  function loadIfNeeded() {
-    if (loaded || !poly.map || !poly.getVisibility() || poly.map.getResolution() > 6) return;
-    loaded = true;
+  var loading = false, waiting = [];
+  function load(callback) {
+    if (poly.features.length) { if (callback) callback(); return; }
+    if (callback) waiting.push(callback);
+    if (loading) return;
+    loading = true;
     poly.protocol.read({callback: function(resp) {
-      if (resp.success()) { poly.addFeatures(resp.features); } else { loaded = false; }
+      loading = false;
+      if (resp.success()) poly.addFeatures(resp.features);
+      var cbs = waiting; waiting = [];
+      cbs.forEach(function(cb) { cb(); });
     }});
   }
+  function loadIfNeeded() {
+    if (poly.map && poly.getVisibility() && poly.map.getResolution() <= 6) load();
+  }
+  // Hľadanie (js/vector_search.js): "He 504a/2"; body popisov sa nehľadajú.
+  poly.searchLoad = load;
+  poly.searchText = function(f) {
+    var a = f.attributes;
+    if (!a.c) return null;
+    var base = a.lc.replace(" (ostatné)", "");
+    return base.substring(0, 2) + (base !== a.lc ? "O" : "") + " " + a.c;
+  };
+  zhluky.searchable = false;
   poly.events.on({
     // setTimeout: zmena viditeľnosti inej vrstvy priamo v tomto evente zlyhá v GeoExt (toggleCheck)
     visibilitychanged: function() { setTimeout(function() { zhluky.setVisibility(poly.getVisibility()); loadIfNeeded(); }, 0); },
