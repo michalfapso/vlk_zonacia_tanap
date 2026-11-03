@@ -806,7 +806,8 @@ Heron.options.map.toolbar = [
             tooltip: "Hľadať ..."
         }
     },
-].concat(VectorSearch.toolbarItems()).concat([
+].concat(VectorSearch.toolbarItems())
+  .concat(typeof Integracia !== "undefined" ? Integracia.toolbarItems() : []).concat([
 
     { type: "-" },
     //SM, 13.01.2020 >>>

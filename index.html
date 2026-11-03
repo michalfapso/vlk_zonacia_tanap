@@ -135,12 +135,14 @@
     <script src="js/layers/bratislava_psol.js?v=3"></script>
     <script src="js/layers/starina_psol_style.js?v=1"></script>
     <script src="js/layers/starina_psol.js?v=1"></script>
-	    <script src="js/layers/cergov_style.js?v=504c96e8"></script>
-    <script src="js/layers/cergov.js?v=4d8a8599"></script>
+	    <script src="js/layers/cergov_style.js?v=476fe3ed"></script>
+    <script src="js/layers/cergov.js?v=948124c2"></script>
 	<script type="text/javascript" src="js/config/heron_layers.js"></script>
 	<script type="text/javascript" src="js/config/heron_layertree.js"></script>
 	<script type="text/javascript" src="js/vector_search.js?v=9"></script>
-	<script type="text/javascript" src="js/config/heron_config.js?v=4"></script></head>
+	<script type="text/javascript" src="js/integracia_algo.js?v=2"></script>
+	<script type="text/javascript" src="js/integracia.js?v=2"></script>
+	<script type="text/javascript" src="js/config/heron_config.js?v=5"></script></head>
 
 <body>
 <!-- CERGOV_SVG_DEFS_START -->
@@ -170,39 +172,57 @@
   <pattern id="pattern_lesysr" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
     <circle cx="5" cy="5" r="2.5" fill="#1F4E79"/>
   </pattern>
-  <!-- SOP T2: svetlé modro-zelené vodorovné čiary (CHKO) -->
-  <pattern id="pattern_sop2" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-    <line x1="0" y1="4" x2="8" y2="4" stroke="#2980B9" stroke-width="1.2"/>
+  <!-- Súčasný stupeň 2 (ŠOP SR): riedke prerušované vodorovné čiary -->
+  <pattern id="pattern_sop2" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="6" x2="12" y2="6" stroke="#8E24AA" stroke-width="1.2" stroke-dasharray="5 3"/>
   </pattern>
-  <!-- SOP T3: žlto-oranžové čiary 45° (PR, CHA, PP) -->
-  <pattern id="pattern_sop3" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-    <line x1="4" y1="-4" x2="4" y2="12" stroke="#E67E00" stroke-width="1.5"/>
+  <!-- Súčasný stupeň 3 (ŠOP SR): riedke prerušované vodorovné čiary -->
+  <pattern id="pattern_sop3" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="6" x2="12" y2="6" stroke="#2E9E44" stroke-width="1.2" stroke-dasharray="5 3"/>
   </pattern>
-  <!-- SOP T4: oranžové krížové šrafovanie (NPR, NPP) -->
-  <pattern id="pattern_sop4" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-    <line x1="4" y1="0" x2="4" y2="8" stroke="#E05000" stroke-width="1.5"/>
-    <line x1="0" y1="4" x2="8" y2="4" stroke="#E05000" stroke-width="1.5"/>
+  <!-- Súčasný stupeň 4 (ŠOP SR): riedke prerušované vodorovné čiary -->
+  <pattern id="pattern_sop4" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="6" x2="12" y2="6" stroke="#F28C00" stroke-width="1.2" stroke-dasharray="5 3"/>
   </pattern>
-  <!-- SOP T5: husté tmavočervené čiary (NP, PPR) -->
-  <pattern id="pattern_sop5" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-    <line x1="2" y1="-2" x2="2" y2="6" stroke="#C0392B" stroke-width="2"/>
+  <!-- Súčasný stupeň 5 (ŠOP SR): riedke prerušované vodorovné čiary -->
+  <pattern id="pattern_sop5" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="6" x2="12" y2="6" stroke="#D62728" stroke-width="1.2" stroke-dasharray="5 3"/>
   </pattern>
-  <!-- Návrh zonácie T2: riedke fialové bodky (bezlesie) — dobre viditeľné na zelenom OSM -->
+  <!-- Návrh zonácie stupeň 2 -->
   <pattern id="pattern_navrh2" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
     <circle cx="5" cy="5" r="1.8" fill="#8E24AA"/>
   </pattern>
-  <!-- Návrh zonácie T3: tenké tyrkysové čiary 45° -->
+  <!-- Návrh zonácie stupeň 3 -->
   <pattern id="pattern_navrh3" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-    <line x1="4" y1="-4" x2="4" y2="12" stroke="#17A2B8" stroke-width="1.5"/>
+    <line x1="4" y1="-4" x2="4" y2="12" stroke="#2E9E44" stroke-width="1.5"/>
   </pattern>
-  <!-- Návrh zonácie T4: tyrkysové krížové šrafovanie -->
+  <!-- Návrh zonácie stupeň 4 -->
   <pattern id="pattern_navrh4" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-    <line x1="4" y1="0" x2="4" y2="8" stroke="#0F6674" stroke-width="1.5"/>
-    <line x1="0" y1="4" x2="8" y2="4" stroke="#0F6674" stroke-width="1.5"/>
+    <line x1="4" y1="0" x2="4" y2="8" stroke="#F28C00" stroke-width="1.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#F28C00" stroke-width="1.5"/>
   </pattern>
-  <!-- Návrh zonácie T5: husté tmavotyrkysové čiary -->
+  <!-- Návrh zonácie stupeň 5 -->
   <pattern id="pattern_navrh5" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-    <line x1="2" y1="-2" x2="2" y2="6" stroke="#053742" stroke-width="2"/>
+    <line x1="2" y1="-2" x2="2" y2="6" stroke="#D62728" stroke-width="2"/>
+  </pattern>
+  <!-- Enklávy zjednotené do stupňa 2: vzor návrhu na nepriehľadnom bielom pozadí -->
+  <pattern id="pattern_enklava2" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+    <rect x="0" y="0" width="10" height="10" fill="#FFFFFF"/>
+    <circle cx="5" cy="5" r="1.8" fill="#8E24AA"/>
+  </pattern>
+  <!-- Enklávy zjednotené do stupňa 3: vzor návrhu na nepriehľadnom bielom pozadí -->
+  <pattern id="pattern_enklava3" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <rect x="0" y="0" width="8" height="8" fill="#FFFFFF"/>
+    <line x1="4" y1="-4" x2="4" y2="12" stroke="#2E9E44" stroke-width="1.5"/>
+  </pattern>
+  <!-- Enklávy zjednotené do stupňa 4: vzor návrhu na nepriehľadnom bielom pozadí -->
+  <pattern id="pattern_enklava4" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect x="0" y="0" width="8" height="8" fill="#FFFFFF"/>
+    <line x1="4" y1="0" x2="4" y2="8" stroke="#F28C00" stroke-width="1.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#F28C00" stroke-width="1.5"/>
+  </pattern>
+  <!-- Enklávy zjednotené do stupňa 5: vzor návrhu na nepriehľadnom bielom pozadí -->
+  <pattern id="pattern_enklava5" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <rect x="0" y="0" width="4" height="4" fill="#FFFFFF"/>
+    <line x1="2" y1="-2" x2="2" y2="6" stroke="#D62728" stroke-width="2"/>
   </pattern>
 </defs>
 </svg>

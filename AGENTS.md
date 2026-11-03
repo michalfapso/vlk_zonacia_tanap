@@ -89,6 +89,10 @@ js/layers/
   zonacia_*_style.js        — colour rules per zone (A/B/C/D) for TANAP/NAPANT/Poloniny
   cergov.js                 — Prírodný park Čergov GeoJSON layers
   cergov_style.js           — age-class colour gradient + SVG pattern fills for Čergov
+                              (generated: stupeň ochrany colours 2 violet / 3 green / 4 orange / 5 red;
+                              cergov_sop2..5 = current degree from ŠOP SR (dashed), cergov_navrh2..5 = proposal,
+                              cergov_enklavy4/5 = enclaves unified to the surrounding degree, opaque white
+                              pattern background masks the proposal below)
 
 js/config/
   heron_layers.js           — collects Heron.scratch.layermap → Heron.options.map.layers
@@ -113,3 +117,5 @@ Append `?v=N` to `<script src="...">` URLs in `index.html` when deploying update
 ## Hľadanie vo vrstvách
 
 Pole hľadania miest v toolbare (`heron_config.js`, xtype `hr_vectorgeocodercombo` = Heron `hr_geocodercombo` rozšírený v `js/vector_search.js`) popri Nominatime hľadá aj vo vektorových vrstvách; v zozname je sekcia "Vo vrstvách" (klik priblíži na nájdené prvky) nad sekciou miest z OSM. Prehľadávajú sa len zapnuté vrstvy, automaticky podľa hodnôt atribútov; voliteľne `searchText: function(feature)` (vlastný text, zobrazí sa aj ako popis zvýraznenia) a `searchLoad: function(callback)` (načítanie prvkov na požiadanie); `searchable: false` vrstvu vylúči. Príklad: JPRL v `js/layers/cergov.js` (generuje `scripts/lib/svg_patterns.py` v Čergov pipeline).
+
+Panel "Integrácia dielcov" (tlačidlo v toolbare, `js/integracia.js` + `js/integracia_algo.js`, vrstva `cergov_integracia` "PP Čergov — Integrácia dielcov (návrh)"): interaktívne zvýšenie stupňa ochrany lesných JPRL obklopených vyšším stupňom v PP Čergov. Dáta generuje Čergov pipeline (`scripts/14_generate_integracia_graf.py`): `cergov/integracia_graf_cergov.json` (stĺpcový graf susednosti) a `cergov/integracia_jprl_cergov.json` (polygóny v kompaktnom formáte, EPSG:3857, delta kódovanie, bez reprojekcie). Načítajú sa až pri otvorení panela. `integracia_algo.js` je 1:1 port `scripts/lib/integracia.py`, zhodu stráži `tests/test_integracia_parity.py` (pri zmene algoritmu meň oba súbory). Export JSON spracuje `scripts/09 --integracia` (statické vrstvy `cergov_integracia3..5`). Klik na mapu panel zachytáva len vtedy, keď je okno otvorené.

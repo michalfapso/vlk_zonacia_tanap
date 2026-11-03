@@ -203,6 +203,7 @@ layers = [
     Heron.scratch.layermap.cergov_chvu_hranica,
     Heron.scratch.layermap.cergov_uev_hranica,
     Heron.scratch.layermap.cergov_lesne_celky,
+    Heron.scratch.layermap.cergov_lhc,
     Heron.scratch.layermap.cergov_mchu,
     Heron.scratch.layermap.cergov_salamandria,
     Heron.scratch.layermap.cergov_chranene,
@@ -220,6 +221,9 @@ layers = [
     Heron.scratch.layermap.cergov_navrh3,
     Heron.scratch.layermap.cergov_navrh4,
     Heron.scratch.layermap.cergov_navrh5,
+    Heron.scratch.layermap.cergov_enklavy4,
+    Heron.scratch.layermap.cergov_enklavy5,
+    Heron.scratch.layermap.cergov_integracia,
     Heron.scratch.layermap.cergov_jprl_zhluky,
     Heron.scratch.layermap.cergov_jprl_cisla,
 // CERGOV_LAYERS_END

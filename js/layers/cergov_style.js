@@ -79,30 +79,56 @@ var cergovUevHranicaStyleMap = new OpenLayers.StyleMap({"default": new OpenLayer
   strokeColor: "#1A5276", strokeWidth: 3, fillOpacity: 0, strokeDashstyle: "dash"
 })});
 
-// --- SOP T2: modré vodorovné čiary (CHKO) ---
+// --- Súčasný stupeň 2 (ŠOP SR): riedke prerušované čiary, prerušovaný obrys ---
 var cergovSop2StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_sop2)", fillOpacity: 1, strokeColor: "#2980B9", strokeWidth: 0.5
+  fillColor: "url(#pattern_sop2)", fillOpacity: 1, strokeColor: "#8E24AA", strokeWidth: 1.2, strokeDashstyle: "dash"
 })});
 
-// --- SOP T3: oranžové šikmé čiary (PR, PP, CHA) ---
+// --- Súčasný stupeň 3 (ŠOP SR): riedke prerušované čiary, prerušovaný obrys ---
 var cergovSop3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_sop3)", fillOpacity: 1, strokeColor: "#E67E00", strokeWidth: 0.5
+  fillColor: "url(#pattern_sop3)", fillOpacity: 1, strokeColor: "#2E9E44", strokeWidth: 1.2, strokeDashstyle: "dash"
 })});
 
-// --- SOP T4: oranžové krížové šrafovanie (NPR, NPP) ---
+// --- Súčasný stupeň 4 (ŠOP SR): riedke prerušované čiary, prerušovaný obrys ---
 var cergovSop4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_sop4)", fillOpacity: 1, strokeColor: "#E05000", strokeWidth: 0.8
+  fillColor: "url(#pattern_sop4)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 1.2, strokeDashstyle: "dash"
 })});
 
-// --- SOP T5: tmavočervené husté šrafovanie (NP, PPR) ---
+// --- Súčasný stupeň 5 (ŠOP SR): riedke prerušované čiary, prerušovaný obrys ---
 var cergovSop5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_sop5)", fillOpacity: 1, strokeColor: "#C0392B", strokeWidth: 0.8
+  fillColor: "url(#pattern_sop5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 1.2, strokeDashstyle: "dash"
 })});
 
-// --- Návrh zonácie T2: riedke fialové bodky (bezlesie) ---
+// --- Návrh zonácie stupeň 2 ---
 var cergovNavrh2StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_navrh2)", fillOpacity: 1, strokeColor: "#8E24AA", strokeWidth: 0.8
 })});
+
+// --- Návrh zonácie stupeň 3 ---
+var cergovNavrh3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh3)", fillOpacity: 1, strokeColor: "#2E9E44", strokeWidth: 0.8
+})});
+
+// --- Návrh zonácie stupeň 4 ---
+var cergovNavrh4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh4)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 0.8
+})});
+
+// --- Návrh zonácie stupeň 5 ---
+var cergovNavrh5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 0.8
+})});
+
+// --- Enklávy zjednotené do stupňa 4: nepriehľadný vzor zakrýva základný návrh, hrubý obrys ---
+var cergovEnklava4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_enklava4)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3
+})});
+
+// --- Enklávy zjednotené do stupňa 5: nepriehľadný vzor zakrýva základný návrh, hrubý obrys ---
+var cergovEnklava5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_enklava5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 3
+})});
+
 
 // --- Čísla JPRL: tenký obrys s číslom (priblížené) ---
 // Mierka cez pravidlo, nie maxResolution vrstvy: vrstva mimo rozsahu by bola
@@ -143,21 +169,6 @@ var cergovJprlZhlukyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayer
   }
 }})});
 
-// --- Návrh zonácie T3: tenké tyrkysové šikmé čiary ---
-var cergovNavrh3StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_navrh3)", fillOpacity: 1, strokeColor: "#17A2B8", strokeWidth: 0.5
-})});
-
-// --- Návrh zonácie T4: tyrkysové krížové šrafovanie ---
-var cergovNavrh4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_navrh4)", fillOpacity: 1, strokeColor: "#0F6674", strokeWidth: 0.8
-})});
-
-// --- Návrh zonácie T5: husté tmavotyrkysové čiary ---
-var cergovNavrh5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_navrh5)", fillOpacity: 1, strokeColor: "#053742", strokeWidth: 0.8
-})});
-
 // --- MCHU rezervácie s názvami ---
 var cergovMchuStyle = new OpenLayers.Style({
   fillColor: "#27AE60", fillOpacity: 0.25,
@@ -177,6 +188,14 @@ var cergovSalamStyle = new OpenLayers.Style({
   fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
 });
 var cergovSalamStyleMap = new OpenLayers.StyleMap({"default": cergovSalamStyle});
+
+// --- Hranice LHC (LHP orezané na PP): modrosivá čiara s popiskom "názov (KPL)" ---
+var cergovLhcStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  strokeColor: "#37474F", strokeWidth: 2, fillOpacity: 0, strokeDashstyle: "dot",
+  label: "${nazov} (${kpl})",
+  fontColor: "#263238", fontSize: "11px", fontFamily: "Arial, sans-serif",
+  fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+})});
 
 // --- Hranica lesných celkov (LC): hnedá bodkovaná čiara s popiskom ---
 var cergovLesneCelkyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
