@@ -44,9 +44,9 @@ var cergovVT7StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style
   fillColor: "url(#pattern_vt7)", fillOpacity: 1, strokeColor: "#6A0DAD", strokeWidth: 0.5
 })});
 
-// --- Ochranné lesy: červená šikmá šrafáž (45°) ---
+// --- Ochranné lesy: plošná červená (odlíši OL v návrhu 5. SO, ktorý je šrafáž) ---
 var cergovOchrStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_ochranne)", fillOpacity: 1, strokeColor: "#CC0000", strokeWidth: 0.8
+  fillColor: "#D62728", fillOpacity: 0.6, strokeColor: "#8B0000", strokeWidth: 1
 })});
 
 // --- Chránené územia: zelená šikmá šrafáž (135°, opačný smer) ---
@@ -204,3 +204,21 @@ var cergovLesneCelkyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayer
   fontColor: "#5A3A1B", fontSize: "10px", fontFamily: "Arial, sans-serif",
   fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
 })});
+// --- Mikropovodia (scripts/15): obrys + jemná výplň, popisok "názov / plocha v PP";
+//     mimo_pasma = 1 (plocha v PP mimo pásma alternatívy) = čiarkovaný obrys ---
+function cergovMikropovodiaStyleMap(farba) {
+  var style = new OpenLayers.Style({
+    strokeColor: farba, strokeWidth: 2, fillColor: farba, fillOpacity: 0.08,
+    label: "${nazov}\n${plocha_km2} km²",
+    fontColor: "#0D2A4A", fontSize: "10px", fontFamily: "Arial, sans-serif",
+    fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+  }, {rules: [
+    new OpenLayers.Rule({filter: new OpenLayers.Filter.Comparison({type: "==", property: "mimo_pasma", value: 1}),
+                         symbolizer: {strokeDashstyle: "dash"}}),
+    new OpenLayers.Rule({elseFilter: true})
+  ]});
+  return new OpenLayers.StyleMap({"default": style});
+}
+var cergovMikro1StyleMap = cergovMikropovodiaStyleMap("#1565C0");
+var cergovMikro2StyleMap = cergovMikropovodiaStyleMap("#6A1B9A");
+var cergovMikro3StyleMap = cergovMikropovodiaStyleMap("#00695C");
