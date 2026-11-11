@@ -391,6 +391,7 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PP Čergov — Mikropovodia do 5 km²"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Mikropovodia 5–10 km²"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Mikropovodia nad 10 km²"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Mikropovodia, horné úseky → 4. SO"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Vodárenské zdroje (ŠGÚDŠ)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Odbery povrchovej vody (SHMÚ)"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Povodia vodárenských tokov"},

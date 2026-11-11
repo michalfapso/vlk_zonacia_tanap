@@ -209,7 +209,7 @@ var cergovLesneCelkyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayer
 function cergovMikropovodiaStyleMap(farba) {
   var style = new OpenLayers.Style({
     strokeColor: farba, strokeWidth: 2, fillColor: farba, fillOpacity: 0.08,
-    label: "${nazov}\n${plocha_km2} km²",
+    label: "${id} ${nazov}\n${plocha_km2} km²",
     fontColor: "#0D2A4A", fontSize: "10px", fontFamily: "Arial, sans-serif",
     fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
   }, {rules: [
@@ -222,6 +222,13 @@ function cergovMikropovodiaStyleMap(farba) {
 var cergovMikro1StyleMap = cergovMikropovodiaStyleMap("#1565C0");
 var cergovMikro2StyleMap = cergovMikropovodiaStyleMap("#6A1B9A");
 var cergovMikro3StyleMap = cergovMikropovodiaStyleMap("#00695C");
+// --- Mikropovodia vybrané do 4. SO (scripts/09, pokyn 2026-11-11): hrubý oranžový obrys ---
+var cergovMikro4soStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  strokeColor: "#E65100", strokeWidth: 4, strokeDashstyle: "dash", fillOpacity: 0,
+  label: "${id} ${nazov}\n→ 4. SO",
+  fontColor: "#BF360C", fontSize: "11px", fontFamily: "Arial, sans-serif",
+  fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+})});
 // --- Vodárenské zdroje (scripts/17): body ŠGÚDŠ (kruh) a odbery povrchovej vody
 //     SHMÚ (trojuholník), modré s popiskom; povodia vodárenských tokov = modrá výplň ---
 function cergovVodZdrojStyleMap(tvar, polomer, farba) {

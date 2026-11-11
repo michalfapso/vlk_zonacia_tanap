@@ -220,6 +220,7 @@ layers = [
     Heron.scratch.layermap.cergov_mikro1,
     Heron.scratch.layermap.cergov_mikro2,
     Heron.scratch.layermap.cergov_mikro3,
+    Heron.scratch.layermap.cergov_mikro4so,
     Heron.scratch.layermap.cergov_povodia_vt,
     Heron.scratch.layermap.cergov_navrh2,
     Heron.scratch.layermap.cergov_navrh3,
