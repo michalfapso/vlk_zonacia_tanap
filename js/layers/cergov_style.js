@@ -129,9 +129,9 @@ var cergovEnklava5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.
   fillColor: "url(#pattern_enklava5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 3
 })});
 
-// --- JPRL zvýšené na 4. SO kvôli mikropovodiam (pokyn 2026-11-11): ako enklávy, bodkovaný obrys ---
+// --- JPRL zvýšené na 4. SO kvôli mikropovodiam (pokyn 2026-11-11): šikmé (×) šrafovanie, bodkovaný obrys ---
 var cergovNavrhMikro4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_enklava4)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3, strokeDashstyle: "dot"
+  fillColor: "url(#pattern_navrh4_mikro)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3, strokeDashstyle: "dot"
 })});
 
 

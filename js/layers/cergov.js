@@ -276,7 +276,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh3: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 3", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t3_cergov_d.geojson?v=6599aee1",
+      url: "cergov/navrh_zonacie_t3_cergov_d.geojson?v=58c0791d",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
