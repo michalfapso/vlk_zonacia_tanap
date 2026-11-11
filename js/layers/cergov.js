@@ -219,6 +219,39 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: cergovMikro3StyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
+  cergov_povodia_vt: new OpenLayers.Layer.Vector("PP Čergov — Povodia vodárenských tokov", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/povodia_vodarenskych_tokov_cergov.geojson?v=5597b0ac",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326")
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovPovodiaVtStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
+  cergov_vz_sguds: new OpenLayers.Layer.Vector("PP Čergov — Vodárenské zdroje (ŠGÚDŠ)", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/vodarenske_zdroje_sguds_cergov.geojson?v=55cf0cdf",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326")
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovVzSgudsStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
+  cergov_vz_shmu: new OpenLayers.Layer.Vector("PP Čergov — Odbery povrchovej vody (SHMÚ)", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/odbery_pv_shmu_cergov.geojson?v=4a493706",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326")
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovVzShmuStyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
   cergov_navrh2: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 2 (bezlesie)", {
     protocol: new OpenLayers.Protocol.HTTP({
       url: "cergov/navrh_zonacie_t2_cergov_d.geojson?v=1026bfa8",

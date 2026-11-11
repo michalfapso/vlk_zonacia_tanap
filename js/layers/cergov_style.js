@@ -222,3 +222,23 @@ function cergovMikropovodiaStyleMap(farba) {
 var cergovMikro1StyleMap = cergovMikropovodiaStyleMap("#1565C0");
 var cergovMikro2StyleMap = cergovMikropovodiaStyleMap("#6A1B9A");
 var cergovMikro3StyleMap = cergovMikropovodiaStyleMap("#00695C");
+// --- Vodárenské zdroje (scripts/17): body ŠGÚDŠ (kruh) a odbery povrchovej vody
+//     SHMÚ (trojuholník), modré s popiskom; povodia vodárenských tokov = modrá výplň ---
+function cergovVodZdrojStyleMap(tvar, polomer, farba) {
+  return new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+    graphicName: tvar, pointRadius: polomer, fillColor: farba, fillOpacity: 0.9,
+    strokeColor: "#FFFFFF", strokeWidth: 1.5,
+    label: "${nazov}", labelYOffset: -(polomer + 8),
+    fontColor: "#0D2A4A", fontSize: "10px", fontFamily: "Arial, sans-serif",
+    fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+  })});
+}
+var cergovVzSgudsStyleMap = cergovVodZdrojStyleMap("circle", 5, "#1E88E5");
+var cergovVzShmuStyleMap = cergovVodZdrojStyleMap("triangle", 8, "#0D47A1");
+var cergovPovodiaVtStyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  strokeColor: "#1565C0", strokeWidth: 2, strokeDashstyle: "dash",
+  fillColor: "#64B5F6", fillOpacity: 0.25,
+  label: "${nazov}\n${plocha_v_pp_ha} ha v PP",
+  fontColor: "#0D2A4A", fontSize: "11px", fontFamily: "Arial, sans-serif",
+  fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
+})});
