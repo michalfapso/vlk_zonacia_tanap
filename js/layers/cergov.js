@@ -276,7 +276,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh3: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 3", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t3_cergov_d.geojson?v=58c0791d",
+      url: "cergov/navrh_zonacie_t3_cergov_d.geojson?v=6599aee1",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -287,7 +287,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 4", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t4_cergov_d.geojson?v=637f73b5",
+      url: "cergov/navrh_zonacie_t4_cergov_d.geojson?v=c9c15d1e",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -305,6 +305,17 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     }),
     strategies: [new OpenLayers.Strategy.Fixed()],
     styleMap: cergovNavrh5StyleMap,
+    isBaseLayer: false, hideInLegend: false, visibility: false
+  }),
+  cergov_navrh_mikro4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 4, mikropovodia", {
+    protocol: new OpenLayers.Protocol.HTTP({
+      url: "cergov/navrh_zonacie_mikropovodia_t4_cergov_d.geojson?v=4b6a821d",
+      format: new OpenLayers.Format.GeoJSON({
+        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
+      })
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed()],
+    styleMap: cergovNavrhMikro4StyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
   cergov_enklavy4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie: zjednotenie enkláv do 4. stupňa", {

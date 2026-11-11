@@ -129,6 +129,11 @@ var cergovEnklava5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.
   fillColor: "url(#pattern_enklava5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 3
 })});
 
+// --- JPRL zvýšené na 4. SO kvôli mikropovodiam (pokyn 2026-11-11): ako enklávy, bodkovaný obrys ---
+var cergovNavrhMikro4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_enklava4)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3, strokeDashstyle: "dot"
+})});
+
 
 // --- Čísla JPRL: tenký obrys s číslom (priblížené) ---
 // Mierka cez pravidlo, nie maxResolution vrstvy: vrstva mimo rozsahu by bola
@@ -209,7 +214,7 @@ var cergovLesneCelkyStyleMap = new OpenLayers.StyleMap({"default": new OpenLayer
 function cergovMikropovodiaStyleMap(farba) {
   var style = new OpenLayers.Style({
     strokeColor: farba, strokeWidth: 2, fillColor: farba, fillOpacity: 0.08,
-    label: "${id} ${nazov}\n${plocha_km2} km²",
+    label: "${id}\n${nazov}",
     fontColor: "#0D2A4A", fontSize: "10px", fontFamily: "Arial, sans-serif",
     fontWeight: "bold", labelAlign: "cm", labelOutlineColor: "#FFFFFF", labelOutlineWidth: 2
   }, {rules: [

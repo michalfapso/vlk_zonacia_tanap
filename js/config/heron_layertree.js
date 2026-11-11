@@ -399,6 +399,7 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 3"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 4"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 5"},
+                {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie, stupeň 4, mikropovodia"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie: zjednotenie enkláv do 4. stupňa"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Návrh zonácie: zjednotenie enkláv do 5. stupňa"},
                 {nodeType: "gx_layer", layer: "PP Čergov — Integrácia dielcov (návrh)"},
