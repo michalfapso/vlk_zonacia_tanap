@@ -134,6 +134,11 @@ var cergovNavrhMikro4StyleMap = new OpenLayers.StyleMap({"default": new OpenLaye
   fillColor: "url(#pattern_navrh4_mikro)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3, strokeDashstyle: "dot"
 })});
 
+// --- Bezlesie uprostred 4./5. SO zvýšené na 4. SO (pokyn 2026-11-13): šrafovanie 4. SO s bodkami, prerušovaný obrys ---
+var cergovNavrhObklopene4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
+  fillColor: "url(#pattern_navrh4_obklopene)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 2.5, strokeDashstyle: "dash"
+})});
+
 
 // --- Čísla JPRL: tenký obrys s číslom (priblížené) ---
 // Mierka cez pravidlo, nie maxResolution vrstvy: vrstva mimo rozsahu by bola

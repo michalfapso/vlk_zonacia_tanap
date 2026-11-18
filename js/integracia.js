@@ -1,6 +1,7 @@
 /*
  * Panel "Integrácia dielcov" (PP Čergov): interaktívne zvýšenie stupňa ochrany
- * lesných JPRL obkolesených vyšším stupňom (pozri js/integracia_algo.js).
+ * lesných JPRL a bezlesia obkolesených vyšším stupňom (pozri js/integracia_algo.js;
+ * bezlesie sa nezvyšuje nad 4. SO).
  *
  * - tlačidlo v Heron toolbare (Integracia.toolbarItems(), heron_config.js)
  *   otvorí okno s nastaveniami; graf a polygóny (cergovIntegraciaData z
@@ -8,7 +9,7 @@
  *   stiahnu až pri prvom otvorení okna alebo zapnutí vrstvy,
  * - zmenené JPRL kreslí do vrstvy Heron.scratch.layermap.cergov_integracia
  *   ("PP Čergov — Integrácia dielcov (návrh)"),
- * - kým je okno otvorené, klik na lesnú JPRL otvorí ručnú zmenu stupňa
+ * - kým je okno otvorené, klik na lesnú JPRL alebo bezlesie otvorí ručnú zmenu stupňa
  *   (zatvorené okno = kliky na mapu fungujú ako predtým),
  * - export/import JSON (pre pipeline: docs/integracia_dielcov.json ->
  *   scripts/09 --integracia), rozpracovaný stav v localStorage.
@@ -22,6 +23,8 @@ var Integracia = (function() {
   var LABEL_MAX_RES = 6;          // popisy JPRL od zoomu 15 (ako vrstva čísel JPRL)
   var DRAFT_KEY = "integracia_dielcov_draft";
   var EXPORT_VERZIA = 1;
+  var GRAF_VERZIA = 3;            // formát grafu (scripts/lib/integracia.py:GRAF_VERZIA)
+  var CAP_BEZLESIE = A.CAP_BEZLESIE;
 
   var g = null, P = null, polys = null, bounds = null;   // dáta (po načítaní)
   var loading = false, waiting = [];
@@ -86,6 +89,10 @@ var Integracia = (function() {
       if (--left) { return; }
       loading = false;
       if (err) { status("Chyba pri načítaní: " + err.message); return; }
+      if (!graf || graf.v !== GRAF_VERZIA) {
+        status("Graf integrácie má nepodporovaný formát (v" + (graf && graf.v) + ", čakám v" + GRAF_VERZIA + ") — spusti scripts/14 a 05.");
+        return;
+      }
       decodePolygons(poly);
       g = graf; P = A.prepare(g);
       Integracia.loadMs = Date.now() - t0;
@@ -168,11 +175,11 @@ var Integracia = (function() {
       n++; area += a;
       if (v.dovod === A.ZDROJ_RUCNE) { nr++; }
     }
-    var h = "<b>Zmenené JPRL: " + n + " (" + ha(area) + " ha)</b>, z toho ručne " + nr +
-      "<table class='int-tab'><tr><th>prechod</th><th>JPRL</th><th>ha</th></tr>";
+    var h = "<b>Zmenené dielce: " + n + " (" + ha(area) + " ha)</b>, z toho ručne " + nr +
+      "<table class='int-tab'><tr><th>prechod</th><th>dielcov</th><th>ha</th></tr>";
     var keys = Object.keys(by).sort();
     for (t = 0; t < keys.length; t++) { h += "<tr><td>" + keys[t] + "</td><td>" + by[keys[t]].n + "</td><td>" + ha(by[keys[t]].a) + "</td></tr>"; }
-    h += "</table><table class='int-tab'><tr><th>LC</th><th>JPRL</th><th>ha</th></tr>";
+    h += "</table><table class='int-tab'><tr><th>LC</th><th>dielcov</th><th>ha</th></tr>";
     keys = Object.keys(lc).sort();
     for (t = 0; t < keys.length; t++) { h += "<tr><td>" + esc(keys[t]) + "</td><td>" + lc[keys[t]].n + "</td><td>" + ha(lc[keys[t]].a) + "</td></tr>"; }
     h += "</table><div class='int-small'>skupín: " + result.groups.length + ", výpočet " + Integracia.runMs + " ms</div>";
@@ -180,7 +187,7 @@ var Integracia = (function() {
     var warn = A.perkolacia(nastavenia)
       ? "<b>Pozor:</b> 1 + w<sub>SR</sub> + w<sub>vek</sub> = " + (1 + nastavenia.w_sr + nastavenia.w_vek).toFixed(2) +
         " &gt; q/(1−q) = " + (nastavenia.q / (1 - nastavenia.q)).toFixed(2) +
-        ": pričleniť sa môžu aj skupiny s väčšinou hranice s nižším stupňom (rast sa môže „prelievať“)."
+        ": pričleniť sa môže aj dielec s väčšinou hranice s nižším stupňom."
       : "";
     setHtml(ui.warn, warn);
     ui.warn.setVisible(!!warn);
@@ -231,15 +238,16 @@ var Integracia = (function() {
     nastavenia = copy(A.DEFAULTS);
     for (k in (js.nastavenia || {})) {
       if (A.DEFAULTS.hasOwnProperty(k)) {
-        nastavenia[k] = typeof A.DEFAULTS[k] === "boolean" ? !!js.nastavenia[k] : +js.nastavenia[k];
+        nastavenia[k] = +js.nastavenia[k];
       }
     }
     rucne = {};
     var list = js.rucne || [];
     for (var t = 0; t < list.length; t++) {
       var i = idxOf(list[t].idps), s = +list[t].stupen;
-      if (i === undefined) { msgs.push("JPRL " + (list[t].oznacenie || list[t].idps) + " nie je v grafe — vynechaná"); continue; }
+      if (i === undefined) { msgs.push("Dielec " + (list[t].oznacenie || list[t].idps) + " nie je v grafe — vynechaný"); continue; }
       if (s < g.s[i]) { msgs.push(g.lbl[i] + ": " + s + ". SO je pod súčasným stupňom " + g.s[i] + " — zvýšené"); s = g.s[i]; }
+      if (s > horny(i)) { msgs.push(g.lbl[i] + ": " + s + ". SO je nad najvyšším stupňom bezlesia " + horny(i) + " — znížené"); s = horny(i); }
       rucne[i] = Math.max(2, Math.min(5, s));
     }
     if (js.graf_verzia && js.graf_verzia !== g.h) {
@@ -302,6 +310,9 @@ var Integracia = (function() {
     }
   }
 
+  /** Najvyšší stupeň, na ktorý sa dá dielec ručne nastaviť (bezlesie 4, ak nemá súčasný vyšší). */
+  function horny(i) { return g.t[i] >= 1 ? Math.max(CAP_BEZLESIE, g.s[i]) : 5; }
+
   function setRucne(i, s) {
     if (s === null) { delete rucne[i]; } else { rucne[i] = s; }
     recompute();
@@ -310,7 +321,8 @@ var Integracia = (function() {
   function popupHtml(i) {
     var man = rucne.hasOwnProperty(i);
     var dov = man ? A.ZDROJ_RUCNE : (result.deg[i] !== g.d[i] ? result.dovody[i] : "bez zmeny");
-    return "<div class='int-pop'><b>" + esc(g.lbl[i]) + "</b> (" + esc(g.lc[g.l[i]]) + ", " + ha(g.a[i]) + " ha)<br>" +
+    var druh = g.t[i] === 2 ? "bezlesie na hranici PP, algoritmus ho nezvyšuje" : (g.t[i] === 1 ? "bezlesie" : esc(g.lc[g.l[i]]));
+    return "<div class='int-pop'><b>" + esc(g.lbl[i]) + "</b> (" + druh + ", " + ha(g.a[i]) + " ha)<br>" +
       "základný návrh: <b>" + g.d[i] + ". SO</b><br>" +
       "súčasný stupeň: " + (g.s[i] ? g.s[i] + ". SO" : "—") + "<br>" +
       "výsledok: <b>" + result.deg[i] + ". SO</b>" + (man ? " (ručne)" : "") + "<br>" +
@@ -322,16 +334,17 @@ var Integracia = (function() {
     setSel(i);
     var buttons = [];
     [2, 3, 4, 5].forEach(function(s) {
-      var pod = s < g.s[i];
-      buttons.push({text: s + ". SO", disabled: pod, pressed: rucne[i] === s, enableToggle: false,
+      var pod = s < g.s[i], nad = s > horny(i);
+      buttons.push({text: s + ". SO", disabled: pod || nad, pressed: rucne[i] === s, enableToggle: false,
         tooltip: pod ? "Pod súčasný stupeň ochrany " + g.s[i] + " (tabuľka / ŠOP SR) znížiť nemožno"
-                     : "Ručne nastaviť " + s + ". stupeň (má prednosť pred algoritmom)",
+                     : (nad ? "Bezlesie sa nezvyšuje nad " + CAP_BEZLESIE + ". stupeň"
+                            : "Ručne nastaviť " + s + ". stupeň (má prednosť pred algoritmom)"),
         handler: function() { setRucne(i, s); openPopup(i, xy); }});
     });
     buttons.push({text: "zrušiť ručnú zmenu", disabled: !rucne.hasOwnProperty(i),
       handler: function() { setRucne(i, null); openPopup(i, xy); }});
     popup = new Ext.Window({
-      title: "JPRL " + g.lbl[i], width: 380, autoHeight: true, resizable: false, closeAction: "close",
+      title: (g.t[i] >= 1 ? "Bezlesie " : "JPRL ") + g.lbl[i], width: 380, autoHeight: true, resizable: false, closeAction: "close",
       html: popupHtml(i), bodyStyle: "padding:6px", buttonAlign: "left", fbar: buttons,
       listeners: {close: function() { popup = null; setSel(-1); }}
     });
@@ -375,13 +388,6 @@ var Integracia = (function() {
     return [lbl, sl];
   }
 
-  function checkbox(key, label) {
-    var cb = new Ext.form.Checkbox({boxLabel: label, checked: nastavenia[key],
-      listeners: {check: function(c, v) { nastavenia[key] = v; schedule(); }}});
-    ui[key] = {set: function(v) { cb.suspendEvents(); cb.setValue(v); cb.resumeEvents(); }};
-    return cb;
-  }
-
   function syncControls() {
     if (!win) { return; }
     for (var k in A.DEFAULTS) { if (A.DEFAULTS.hasOwnProperty(k) && ui[k]) { ui[k].set(nastavenia[k]); } }
@@ -390,13 +396,15 @@ var Integracia = (function() {
   function createWindow() {
     ui.stats = new Ext.BoxComponent({html: "", style: "margin-top:8px"});
     ui.warn = new Ext.BoxComponent({html: "", cls: "int-warn", hidden: true});
+    ui.help = new Ext.BoxComponent({cls: "int-small", style: "margin-top:8px", html:
+      "Program vyberie zo všetkých možných skupín naraz tú, ktorej zvýšením sa hranice medzi stupňami najviac skrátia; " +
+      "nová hranica s nižším stupňom (aj okraj PP) sa ráta q/(1−q)-krát, zaniknutá hranica s vyšším stupňom 1-krát " +
+      "(hranica porastu Lesov SR 1+w<sub>SR</sub>-krát). Výsledok nezávisí od poradia a pri znížení q dielce len pribúdajú."});
     var items = [].concat(
-      slider("q", "q — potrebný podiel hranice s vyšším stupňom", 50, 90, 100),
+      slider("q", "q — váha novej hranice s nižším stupňom", 50, 90, 100),
       slider("w_sr", "w<sub>SR</sub> — váha podielu Lesy SR", 0, 100, 100),
       slider("w_vek", "w<sub>vek</sub> — váha veku (min(vek,120)/120)", 0, 100, 100),
-      [checkbox("kaskada", "kaskáda (opakovať do ustálenia)"),
-       checkbox("bezlesie_nizsi", "hranica s bezlesím = nižší stupeň"),
-       ui.warn, ui.stats]);
+      [ui.help, ui.warn, ui.stats]);
     win = new Ext.Window({
       title: "Integrácia dielcov (návrh)", width: 330, height: 560, autoScroll: true, closeAction: "hide",
       bodyStyle: "padding:8px; background:#FFF", items: items, constrain: true,
