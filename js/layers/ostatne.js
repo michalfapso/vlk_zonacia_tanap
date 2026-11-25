@@ -90,7 +90,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
 
     orog: new OpenLayers.Layer.WMS(
         "Geomorfologické jednotky",
-        'http://gis.geology.sk/arcgis/services/WMS/GMC/MapServer/WMSServer?VERSION=1.3.0',
+        'https://ags.geology.sk/arcgis/services/WebServices/GMC50/MapServer/WMSServer?VERSION=1.3.0',
         { layers: "0,1", format: "image/png", transparent: true, crs: 'EPSG:3857' },
         { isBaseLayer: false, visibility: false, hideInLegend: false, featureInfoFormat: "application/vnd.ogc.wms_xml", attribution: '<span>&copy;&nbsp;<a target="_blank" href="https://www.geology.sk">Štátny geologický ústav Dionýza Štúra</a></span>', projection: 'EPSG:3857' }
     ),
