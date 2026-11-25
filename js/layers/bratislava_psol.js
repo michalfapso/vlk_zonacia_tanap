@@ -103,7 +103,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   psol_bratislava_dk_zonacia: new OpenLayers.Layer.Vector("CHA Devínske Karpaty — Návrh zonácie A/B (25.11.2026)", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "bratislava_psol/devinske_karpaty_zonacia.geojson?v=2",
+      url: "bratislava_psol/devinske_karpaty_zonacia.geojson?v=3",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
