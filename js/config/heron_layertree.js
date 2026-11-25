@@ -417,7 +417,12 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Ostatné subjekty"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy, PÔVODNÁ CHYBNÁ vrstva)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy)"},
-                {nodeType: "gx_layer", layer: "PSoL Bratislava — Bezzásahové referenčné plochy do 31.12.2025 (štátne lesy)"}
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — Bezzásahové referenčné plochy do 31.12.2025 (štátne lesy)"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — LESY SR: Vekové triedy VT1-4"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — LESY SR: VT5-6 (81-120r)"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — LESY SR: VT7 (120+r)"},
+                {nodeType: "gx_layer", layer: "CHA Devínske Karpaty — Návrh zonácie A/B (25.11.2026)"},
+                {nodeType: "gx_layer", layer: "PSoL Bratislava — JPRL (hranice a čísla, plán 2016-2025)"}
         ]
     },
 // PSOL_BRATISLAVA_TREE_END
