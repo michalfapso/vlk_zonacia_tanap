@@ -242,7 +242,6 @@ layers = [
     Heron.scratch.layermap.psol_bratislava_mestske_lesy,
     Heron.scratch.layermap.psol_bratislava_ostatni,
     Heron.scratch.layermap.psol_bratislava_tazba,
-    Heron.scratch.layermap.psol_bratislava_tazba_povodna_chybna,
     Heron.scratch.layermap.psol_bratislava_bezzasahove_do_2025_12_31,
     Heron.scratch.layermap.psol_bratislava_vek_vt1_4,
     Heron.scratch.layermap.psol_bratislava_vt5_6,

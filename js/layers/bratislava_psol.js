@@ -46,17 +46,6 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     styleMap: psolBratislavaTazbaStyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
-  psol_bratislava_tazba_povodna_chybna: new OpenLayers.Layer.Vector("PSoL Bratislava — Plánovaná ťažba (štátne lesy, PÔVODNÁ CHYBNÁ vrstva)", {
-    protocol: new OpenLayers.Protocol.HTTP({
-      url: "bratislava_psol/jprl_statne_lesy_tazba_bratislava_povodna_chybna.geojson",
-      format: new OpenLayers.Format.GeoJSON({
-        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
-      })
-    }),
-    strategies: [new OpenLayers.Strategy.Fixed()],
-    styleMap: psolBratislavaTazbaStyleMap,
-    isBaseLayer: false, hideInLegend: false, visibility: false
-  }),
   psol_bratislava_bezzasahove_do_2025_12_31: new OpenLayers.Layer.Vector("PSoL Bratislava — Bezzásahové referenčné plochy do 31.12.2025 (štátne lesy)", {
     protocol: new OpenLayers.Protocol.HTTP({
       url: "bratislava_psol/bezzasahove_do_2025-12-31.geojson",

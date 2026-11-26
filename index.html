@@ -131,14 +131,14 @@
 	<script type="text/javascript" src="js/local_layer_loader.js"></script>
 
 
-    <script src="js/layers/bratislava_psol_style.js?v=4"></script>
-    <script src="js/layers/bratislava_psol.js?v=6"></script>
+    <script src="js/layers/bratislava_psol_style.js?v=5"></script>
+    <script src="js/layers/bratislava_psol.js?v=7"></script>
     <script src="js/layers/starina_psol_style.js?v=1"></script>
     <script src="js/layers/starina_psol.js?v=1"></script>
 	    <script src="js/layers/cergov_style.js?v=78d49898"></script>
     <script src="js/layers/cergov.js?v=a6852c64"></script>
-	<script type="text/javascript" src="js/config/heron_layers.js"></script>
-	<script type="text/javascript" src="js/config/heron_layertree.js"></script>
+	<script type="text/javascript" src="js/config/heron_layers.js?v=2"></script>
+	<script type="text/javascript" src="js/config/heron_layertree.js?v=2"></script>
 	<script type="text/javascript" src="js/vector_search.js?v=9"></script>
 	<script type="text/javascript" src="js/integracia_algo.js?v=2"></script>
 	<script type="text/javascript" src="js/integracia.js?v=2"></script>
@@ -228,6 +228,16 @@
   <pattern id="pattern_navrh4_obklopene" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
     <line x1="4" y1="0" x2="4" y2="8" stroke="#F28C00" stroke-width="1.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#F28C00" stroke-width="1.5"/>
     <circle cx="4.0" cy="4.0" r="1.6" fill="#F28C00"/>
+  </pattern>
+  <!-- PSoL Bratislava: drobné bodky podľa obhospodarovateľa (štátne / mestské / ostatné lesy) -->
+  <pattern id="pattern_psol_statne" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+    <circle cx="3" cy="3" r="1.2" fill="#0B4F1C"/>
+  </pattern>
+  <pattern id="pattern_psol_mestske" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+    <circle cx="3" cy="3" r="1.2" fill="#7B1FA2"/>
+  </pattern>
+  <pattern id="pattern_psol_ostatni" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+    <circle cx="3" cy="3" r="1.2" fill="#E65100"/>
   </pattern>
 </defs>
 </svg>

@@ -415,7 +415,7 @@ var treeTheme = [
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Štátne lesy (LESY SR, š.p.)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Mestské lesy Bratislava"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Ostatné subjekty"},
-                {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy, PÔVODNÁ CHYBNÁ vrstva)"},
+                {nodeType: "gx_layer", layer: "Maloplošné chránené územia", text: "Maloplošné chránené územia SR (ŠOP SR)", qtip: "&copy; ŠOP SR"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Plánovaná ťažba (štátne lesy)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — Bezzásahové referenčné plochy do 31.12.2025 (štátne lesy)"},
                 {nodeType: "gx_layer", layer: "PSoL Bratislava — LESY SR: Vekové triedy VT1-4"},
