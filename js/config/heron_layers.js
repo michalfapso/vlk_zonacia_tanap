@@ -228,8 +228,6 @@ layers = [
     Heron.scratch.layermap.cergov_navrh5,
     Heron.scratch.layermap.cergov_navrh_mikro4,
     Heron.scratch.layermap.cergov_navrh_obkl4,
-    Heron.scratch.layermap.cergov_enklavy4,
-    Heron.scratch.layermap.cergov_enklavy5,
     Heron.scratch.layermap.cergov_integracia,
     Heron.scratch.layermap.cergov_vz_sguds,
     Heron.scratch.layermap.cergov_vz_shmu,

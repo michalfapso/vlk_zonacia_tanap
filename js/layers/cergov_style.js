@@ -119,16 +119,6 @@ var cergovNavrh5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.St
   fillColor: "url(#pattern_navrh5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 0.8
 })});
 
-// --- Enklávy zjednotené do stupňa 4: nepriehľadný vzor zakrýva základný návrh, hrubý obrys ---
-var cergovEnklava4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_enklava4)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3
-})});
-
-// --- Enklávy zjednotené do stupňa 5: nepriehľadný vzor zakrýva základný návrh, hrubý obrys ---
-var cergovEnklava5StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
-  fillColor: "url(#pattern_enklava5)", fillOpacity: 1, strokeColor: "#D62728", strokeWidth: 3
-})});
-
 // --- JPRL zvýšené na 4. SO kvôli mikropovodiam (pokyn 2026-11-11): šikmé (×) šrafovanie, bodkovaný obrys ---
 var cergovNavrhMikro4StyleMap = new OpenLayers.StyleMap({"default": new OpenLayers.Style({
   fillColor: "url(#pattern_navrh4_mikro)", fillOpacity: 1, strokeColor: "#F28C00", strokeWidth: 3, strokeDashstyle: "dot"

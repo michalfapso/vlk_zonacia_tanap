@@ -276,7 +276,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh3: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 3", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t3_cergov_d.geojson?v=5c057b5e",
+      url: "cergov/navrh_zonacie_t3_cergov_d.geojson?v=52226c5f",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -287,7 +287,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 4", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t4_cergov_d.geojson?v=f5376616",
+      url: "cergov/navrh_zonacie_t4_cergov_d.geojson?v=5a83f392",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -298,7 +298,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh5: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 5", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_t5_cergov_d.geojson?v=9e3dd776",
+      url: "cergov/navrh_zonacie_t5_cergov_d.geojson?v=d2d2f01a",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -309,7 +309,7 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
   }),
   cergov_navrh_mikro4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie, stupeň 4, mikropovodia", {
     protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_mikropovodia_t4_cergov_d.geojson?v=8b1c19d3",
+      url: "cergov/navrh_zonacie_mikropovodia_t4_cergov_d.geojson?v=456a93b7",
       format: new OpenLayers.Format.GeoJSON({
         internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
       })
@@ -327,28 +327,6 @@ OpenLayers.Util.extend(Heron.scratch.layermap, {
     }),
     strategies: [new OpenLayers.Strategy.Fixed()],
     styleMap: cergovNavrhObklopene4StyleMap,
-    isBaseLayer: false, hideInLegend: false, visibility: false
-  }),
-  cergov_enklavy4: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie: zjednotenie enkláv do 4. stupňa", {
-    protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_enklavy_t4_cergov_d.geojson?v=befab3b5",
-      format: new OpenLayers.Format.GeoJSON({
-        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
-      })
-    }),
-    strategies: [new OpenLayers.Strategy.Fixed()],
-    styleMap: cergovEnklava4StyleMap,
-    isBaseLayer: false, hideInLegend: false, visibility: false
-  }),
-  cergov_enklavy5: new OpenLayers.Layer.Vector("PP Čergov — Návrh zonácie: zjednotenie enkláv do 5. stupňa", {
-    protocol: new OpenLayers.Protocol.HTTP({
-      url: "cergov/navrh_zonacie_enklavy_t5_cergov_d.geojson?v=f9e1a165",
-      format: new OpenLayers.Format.GeoJSON({
-        internalProjection: new OpenLayers.Projection("EPSG:3857"), externalProjection: new OpenLayers.Projection("EPSG:4326"), ignoreExtraDims: true
-      })
-    }),
-    strategies: [new OpenLayers.Strategy.Fixed()],
-    styleMap: cergovEnklava5StyleMap,
     isBaseLayer: false, hideInLegend: false, visibility: false
   }),
 });
@@ -400,8 +378,8 @@ Heron.scratch.layermap.cergov_jprl_zhluky = new OpenLayers.Layer.Vector("PP Čer
 
 // Integrácia dielcov: dáta pre js/integracia.js (scripts/14 -> scripts/05)
 var cergovIntegraciaData = {
-  graf: {url: "cergov/integracia_graf_cergov.json?v=787ad167"},
-  polygony: {url: "cergov/integracia_jprl_cergov.json?v=a44a5f5a"}
+  graf: {url: "cergov/integracia_graf_cergov.json?v=c30c5057"},
+  polygony: {url: "cergov/integracia_jprl_cergov.json?v=2f6400a6"}
 };
 Heron.scratch.layermap.cergov_integracia = new OpenLayers.Layer.Vector("PP Čergov — Integrácia dielcov (návrh)", {
   isBaseLayer: false, hideInLegend: false, visibility: false
