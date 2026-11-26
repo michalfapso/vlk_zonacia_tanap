@@ -401,7 +401,7 @@ var Integracia = (function() {
       "nová hranica s nižším stupňom (aj okraj PP) sa ráta q/(1−q)-krát, zaniknutá hranica s vyšším stupňom 1-krát " +
       "(hranica porastu Lesov SR 1+w<sub>SR</sub>-krát). Výsledok nezávisí od poradia a pri znížení q dielce len pribúdajú."});
     var items = [].concat(
-      slider("q", "q — váha novej hranice s nižším stupňom", 50, 90, 100),
+      slider("q", "q — váha novej hranice s nižším stupňom", 50, 95, 100),
       slider("w_sr", "w<sub>SR</sub> — váha podielu Lesy SR", 0, 100, 100),
       slider("w_vek", "w<sub>vek</sub> — váha veku (min(vek,120)/120)", 0, 100, 100),
       [ui.help, ui.warn, ui.stats]);

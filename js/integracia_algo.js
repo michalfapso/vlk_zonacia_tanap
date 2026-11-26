@@ -36,7 +36,7 @@
     var VEK_REF = 120;
     var TARGETS = [5, 4, 3];
     var CAP_BEZLESIE = 4;
-    var DEFAULTS = {q: 0.65, w_sr: 0.5, w_vek: 0};
+    var DEFAULTS = {q: 0.9, w_sr: 0.5, w_vek: 0};
     var ZDROJ_RUCNE = "ručná zmena (panel Integrácia dielcov)";
 
     function prepare(g) {
